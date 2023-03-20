@@ -12,5 +12,15 @@ namespace Marketplace.Tests
 
 			Assert.Equal(firstAmount, secondAmount);
 		}
+
+		[Fact]
+		public void Sum_of_money_gives_full_amount()
+		{
+			var firstAmount = new Money(5);
+			var secondAmount = new Money(10);
+			var thirdAmount = new Money(15);
+
+			Assert.Equal(firstAmount + secondAmount, thirdAmount);
+		}
 	}
 }

@@ -55,5 +55,25 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 		}
 
 		public decimal Amount { get; }
+
+		public Money Add(Money money)
+		{
+			return new Money(money.Amount + this.Amount);
+		}
+
+		public Money Subtract(Money money)
+		{
+			return new Money(money.Amount - this.Amount);
+		}
+
+		public static Money operator + (Money arg1, Money arg2)
+		{
+			return arg1.Add(arg2);
+		}
+
+		public static Money operator -(Money arg1, Money arg2)
+		{
+			return arg1.Subtract(arg2);
+		}
 	}
 }
