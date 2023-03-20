@@ -1,4 +1,4 @@
-﻿using Marketplace.Domain.ClassifiedAds.ValueObjects;
+﻿using Marketplace.Domain.ClassifiedAd.ValueObjects;
 
 namespace Marketplace.Tests
 {
@@ -7,8 +7,8 @@ namespace Marketplace.Tests
 		[Fact]
 		public void Money_objects_with_the_same_amount_should_be_equal()
 		{
-			var firstAmount = new Money(5);
-			var secondAmount = new Money(5);
+			var firstAmount = Money.FromDecimal(5);
+			var secondAmount = Money.FromDecimal(5);
 
 			Assert.Equal(firstAmount, secondAmount);
 		}
@@ -16,9 +16,9 @@ namespace Marketplace.Tests
 		[Fact]
 		public void Sum_of_money_gives_full_amount()
 		{
-			var firstAmount = new Money(5);
-			var secondAmount = new Money(10);
-			var thirdAmount = new Money(15);
+			var firstAmount = Money.FromDecimal(5);
+			var secondAmount = Money.FromDecimal(10);
+			var thirdAmount = Money.FromDecimal(15);
 
 			Assert.Equal(firstAmount + secondAmount, thirdAmount);
 		}
