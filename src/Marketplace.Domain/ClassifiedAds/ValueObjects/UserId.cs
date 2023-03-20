@@ -2,7 +2,7 @@
 
 namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
-    public class UserId
+    public record UserId
     {
         private readonly Guid _userId;
 

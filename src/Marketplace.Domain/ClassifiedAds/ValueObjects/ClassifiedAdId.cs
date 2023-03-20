@@ -2,7 +2,7 @@
 
 namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
-    public class ClassifiedAdId
+    public record ClassifiedAdId
     {
         private readonly Guid _value;
 
