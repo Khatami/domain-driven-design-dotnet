@@ -14,5 +14,11 @@
 		public string Text { get; }
 
 		public static ClassifiedAdText FromString(string text) => new ClassifiedAdText(text);
+
+
+		public static implicit operator string(ClassifiedAdText text)
+		{
+			return text.ToString();
+		}
 	}
 }

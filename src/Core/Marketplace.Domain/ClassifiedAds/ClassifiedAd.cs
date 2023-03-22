@@ -1,10 +1,12 @@
-﻿using Marketplace.Domain.ClassifiedAds.Enums;
+﻿using Framework;
+using Marketplace.Domain.ClassifiedAds.Enums;
+using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-	public class ClassifiedAd
+	public class ClassifiedAd : Entity
 	{
 		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
 		{
@@ -13,6 +15,8 @@ namespace Marketplace.Domain.ClassifiedAds
 			State = ClassifiedAdState.Inactive;
 
 			EnsureValidState();
+
+			Raise(new ClassifiedAdCreated(id, ownerId));
 		}
 
 		public void SetTitle(ClassifiedAdTitle title)
@@ -20,6 +24,8 @@ namespace Marketplace.Domain.ClassifiedAds
 			Title = title;
 
 			EnsureValidState();
+
+			Raise(new ClassifiedAdTitleChanged(Id, title));
 		}
 
 		public void UpdateText(ClassifiedAdText text)
@@ -27,6 +33,8 @@ namespace Marketplace.Domain.ClassifiedAds
 			Text = text;
 
 			EnsureValidState();
+
+			Raise(new ClassifiedAdTextChanged(Id, text));
 		}
 
 		public void UpdatePrice(Price price)
@@ -34,6 +42,8 @@ namespace Marketplace.Domain.ClassifiedAds
 			Price = price;
 
 			EnsureValidState();
+
+			Raise(new ClassifiedAdPriceUpdated(Id, price.Amount, price.Currency.CurrencyCode));
 		}
 
 		public void RequestToPublish()
@@ -41,6 +51,8 @@ namespace Marketplace.Domain.ClassifiedAds
 			State = ClassifiedAdState.PendingReview;
 
 			EnsureValidState();
+
+			Raise(new ClassifiedAdSentForReview(Id));
 		}
 
 		private void EnsureValidState()

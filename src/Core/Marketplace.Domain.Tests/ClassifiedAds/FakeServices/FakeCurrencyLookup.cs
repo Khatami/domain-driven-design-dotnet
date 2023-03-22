@@ -1,7 +1,7 @@
 ﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.ClassifiedAds.Metadata;
 
-namespace Marketplace.Tests.ClassifiedAds.FakeServices
+namespace Marketplace.Domain.Tests.ClassifiedAds.FakeServices
 {
 	public class FakeCurrencyLookup : ICurrencyLookup
 	{

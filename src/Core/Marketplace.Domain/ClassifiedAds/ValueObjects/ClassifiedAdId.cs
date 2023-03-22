@@ -13,5 +13,10 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 		}
 
 		public Guid Value { get; }
+
+		public static implicit operator Guid(ClassifiedAdId value)
+		{
+			return value.Value;
+		}
 	}
 }

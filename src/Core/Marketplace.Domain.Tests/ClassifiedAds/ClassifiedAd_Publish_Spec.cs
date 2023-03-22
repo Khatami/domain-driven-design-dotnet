@@ -3,9 +3,9 @@ using Marketplace.Domain.ClassifiedAds.Arguments;
 using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Tests.ClassifiedAds.FakeServices;
+using Marketplace.Domain.Tests.ClassifiedAds.FakeServices;
 
-namespace Marketplace.Tests.ClassifiedAds
+namespace Marketplace.Domain.Tests.ClassifiedAds
 {
 	public class ClassifiedAd_Publish_Spec
 	{

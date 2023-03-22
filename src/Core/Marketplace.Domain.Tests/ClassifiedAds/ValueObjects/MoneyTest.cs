@@ -2,9 +2,9 @@
 using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Tests.ClassifiedAds.FakeServices;
+using Marketplace.Domain.Tests.ClassifiedAds.FakeServices;
 
-namespace Marketplace.Tests.ClassifiedAds.ValueObjects
+namespace Marketplace.Domain.Tests.ClassifiedAds.ValueObjects
 {
 	public class MoneyTest
 	{

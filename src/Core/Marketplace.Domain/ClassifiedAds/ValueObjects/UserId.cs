@@ -9,9 +9,14 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 			if (userId == default)
 				throw new ArgumentException("OwnerId must be set", nameof(userId));
 
-			_userId = userId;
+			Id = userId;
 		}
 
-		public Guid _userId { get; }
+		public Guid Id { get; }
+
+		public static implicit operator Guid(UserId userid)
+		{
+			return userid.Id;
+		}
 	}
 }
