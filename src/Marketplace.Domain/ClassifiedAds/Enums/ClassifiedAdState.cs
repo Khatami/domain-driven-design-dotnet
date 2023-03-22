@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Domain.ClassifiedAd.Enums
+﻿namespace Marketplace.Domain.ClassifiedAds.Enums
 {
 	public enum ClassifiedAdState
 	{

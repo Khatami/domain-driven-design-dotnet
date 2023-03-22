@@ -1,8 +1,8 @@
-﻿using Marketplace.Domain.ClassifiedAd.Enums;
-using Marketplace.Domain.ClassifiedAd.Exceptions;
-using Marketplace.Domain.ClassifiedAd.ValueObjects;
+﻿using Marketplace.Domain.ClassifiedAds.Enums;
+using Marketplace.Domain.ClassifiedAds.Exceptions;
+using Marketplace.Domain.ClassifiedAds.ValueObjects;
 
-namespace Marketplace.Domain.ClassifiedAd
+namespace Marketplace.Domain.ClassifiedAds
 {
 	public class ClassifiedAd
 	{
@@ -15,14 +15,14 @@ namespace Marketplace.Domain.ClassifiedAd
 			EnsureValidState();
 		}
 
-		public void SetTitle(string title)
+		public void SetTitle(ClassifiedAdTitle title)
 		{
 			Title = title;
 
 			EnsureValidState();
 		}
 
-		public void UpdateText(string text)
+		public void UpdateText(ClassifiedAdText text)
 		{
 			Text = text;
 
@@ -61,7 +61,7 @@ namespace Marketplace.Domain.ClassifiedAd
 					if (Text == null)
 						throw new InvalidEntityStateException(this, "text cannot be empty");
 
-					if (Price?.Amount == 0)
+					if (Price == null || Price.Amount == 0)
 						throw new InvalidEntityStateException(this, "amount cannot be zero");
 					break;
 			}
@@ -71,9 +71,9 @@ namespace Marketplace.Domain.ClassifiedAd
 
 		public UserId OwnerId { get; }
 
-		public string Title { get; private set; }
+		public ClassifiedAdTitle Title { get; private set; }
 
-		public string Text { get; private set; }
+		public ClassifiedAdText Text { get; private set; }
 
 		public Price Price { get; private set; }
 

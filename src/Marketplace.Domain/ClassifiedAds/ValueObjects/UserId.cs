@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Marketplace.Domain.ClassifiedAd.ValueObjects
+namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
 	public record UserId
 	{

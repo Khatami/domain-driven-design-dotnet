@@ -1,19 +1,16 @@
-﻿using Marketplace.Domain.ClassifiedAd.Arguments;
-using Marketplace.Domain.ClassifiedAd.DomainServices;
-using Marketplace.Domain.ClassifiedAd.Exceptions;
-using Marketplace.Domain.ClassifiedAd.Metadata;
+﻿using Marketplace.Domain.ClassifiedAds.Arguments;
+using Marketplace.Domain.ClassifiedAds.DomainServices;
+using Marketplace.Domain.ClassifiedAds.Exceptions;
+using Marketplace.Domain.ClassifiedAds.Metadata;
 
-namespace Marketplace.Domain.ClassifiedAd.ValueObjects
+namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
-    public record Money
+	public record Money
 	{
 		protected Money(MoneyArguments moneyArguments)
 		{
 			if (string.IsNullOrWhiteSpace(moneyArguments.Currency))
 				throw new ArgumentException("currencyCode must be set", nameof(moneyArguments.Currency));
-
-			if (moneyArguments.Amount == default)
-				throw new ArgumentException("OwnerId must be set", nameof(moneyArguments.Amount));
 
 			var currency = moneyArguments.CurrencyLookup.FindCurrency(moneyArguments.Currency);
 

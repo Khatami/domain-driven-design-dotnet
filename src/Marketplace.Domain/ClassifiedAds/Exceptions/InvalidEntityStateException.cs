@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Domain.ClassifiedAd.Exceptions
+﻿namespace Marketplace.Domain.ClassifiedAds.Exceptions
 {
 	public class InvalidEntityStateException : Exception
 	{

@@ -1,9 +1,9 @@
-﻿using Marketplace.Domain.ClassifiedAd.DomainServices;
-using Marketplace.Domain.ClassifiedAd.Metadata;
+﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
+using Marketplace.Domain.ClassifiedAds.Metadata;
 
-namespace Marketplace.Tests.ClassifiedAd
+namespace Marketplace.Tests.ClassifiedAds.FakeServices
 {
-    public class FakeCurrencyLookup : ICurrencyLookup
+	public class FakeCurrencyLookup : ICurrencyLookup
 	{
 		private static readonly IEnumerable<CurrencyDetails> _currencies = new[]
 		{
