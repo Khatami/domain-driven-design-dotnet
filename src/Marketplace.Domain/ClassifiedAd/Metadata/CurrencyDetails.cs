@@ -1,6 +1,6 @@
 ﻿namespace Marketplace.Domain.ClassifiedAd.Metadata
 {
-    public record CurrencyDetails
+    public class CurrencyDetails
     {
         public string CurrencyCode { get; set; }
 

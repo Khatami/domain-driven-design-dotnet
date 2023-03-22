@@ -7,10 +7,6 @@ namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 {
     public record Money
 	{
-		public decimal Amount { get; }
-
-		public CurrencyDetails Currency { get; }
-
 		protected Money(MoneyArguments moneyArguments)
 		{
 			if (string.IsNullOrWhiteSpace(moneyArguments.Currency))
@@ -77,5 +73,9 @@ namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 		{
 			return $"{Currency.CurrencyCode} {Amount}";
 		}
+
+		public decimal Amount { get; }
+
+		public CurrencyDetails Currency { get; }
 	}
 }

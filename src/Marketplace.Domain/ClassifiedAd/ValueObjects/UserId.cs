@@ -4,8 +4,6 @@ namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 {
 	public record UserId
 	{
-		private readonly Guid _userId;
-
 		public UserId(Guid userId)
 		{
 			if (userId == default)
@@ -13,5 +11,7 @@ namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 
 			_userId = userId;
 		}
+
+		public Guid _userId { get; }
 	}
 }
