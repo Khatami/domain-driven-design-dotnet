@@ -15,9 +15,9 @@
 
 		public static ClassifiedAdTitle FromString(string title) => new ClassifiedAdTitle(title);
 
-		public static implicit operator string(ClassifiedAdTitle text)
+		public static implicit operator string(ClassifiedAdTitle self)
 		{
-			return text.ToString();
+			return self.ToString();
 		}
 	}
 }

@@ -14,9 +14,9 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 
 		public Guid Id { get; }
 
-		public static implicit operator Guid(UserId userid)
+		public static implicit operator Guid(UserId self)
 		{
-			return userid.Id;
+			return self.Id;
 		}
 	}
 }

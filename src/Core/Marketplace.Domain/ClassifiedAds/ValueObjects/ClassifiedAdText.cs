@@ -16,9 +16,9 @@
 		public static ClassifiedAdText FromString(string text) => new ClassifiedAdText(text);
 
 
-		public static implicit operator string(ClassifiedAdText text)
+		public static implicit operator string(ClassifiedAdText self)
 		{
-			return text.ToString();
+			return self.ToString();
 		}
 	}
 }
