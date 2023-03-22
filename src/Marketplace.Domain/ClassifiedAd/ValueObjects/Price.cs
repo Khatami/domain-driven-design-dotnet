@@ -1,13 +1,14 @@
-﻿using Marketplace.Domain.ClassifiedAd.DomainServices;
+﻿using Marketplace.Domain.ClassifiedAd.Arguments;
+using Marketplace.Domain.ClassifiedAd.DomainServices;
 
 namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 {
 	public record Price : Money
 	{
-		public Price(decimal amount, string currencyCode, ICurrencyLookup currencyLookup) : base(amount, currencyCode, currencyLookup)
+		public Price(MoneyArguments moneyArguments) : base(moneyArguments)
 		{
-			if (amount < 0)
-				throw new ArgumentException("Price cannot be negative", nameof(amount));
+			if (moneyArguments.Amount < 0)
+				throw new ArgumentException("Price cannot be negative", nameof(moneyArguments.Amount));
 		}
 	}
 }

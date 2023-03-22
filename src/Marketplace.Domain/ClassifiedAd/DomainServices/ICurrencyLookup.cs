@@ -1,6 +1,8 @@
-﻿namespace Marketplace.Domain.ClassifiedAd.DomainServices
+﻿using Marketplace.Domain.ClassifiedAd.Metadata;
+
+namespace Marketplace.Domain.ClassifiedAd.DomainServices
 {
-	public interface ICurrencyLookup
+    public interface ICurrencyLookup
 	{
 		CurrencyDetails FindCurrency(string currencyCode);
 	}

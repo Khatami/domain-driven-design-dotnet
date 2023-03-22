@@ -1,31 +1,33 @@
-﻿using Marketplace.Domain.ClassifiedAd.DomainServices;
+﻿using Marketplace.Domain.ClassifiedAd.Arguments;
+using Marketplace.Domain.ClassifiedAd.DomainServices;
 using Marketplace.Domain.ClassifiedAd.Exceptions;
+using Marketplace.Domain.ClassifiedAd.Metadata;
 
 namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 {
-	public record Money
+    public record Money
 	{
 		public decimal Amount { get; }
 
 		public CurrencyDetails Currency { get; }
 
-		protected Money(decimal amount, string currencyCode, ICurrencyLookup currencyLookup)
+		protected Money(MoneyArguments moneyArguments)
 		{
-			if (string.IsNullOrWhiteSpace(currencyCode))
-				throw new ArgumentException("currencyCode must be set", nameof(currencyCode));
+			if (string.IsNullOrWhiteSpace(moneyArguments.Currency))
+				throw new ArgumentException("currencyCode must be set", nameof(moneyArguments.Currency));
 
-			if (amount == default)
-				throw new ArgumentException("OwnerId must be set", nameof(amount));
+			if (moneyArguments.Amount == default)
+				throw new ArgumentException("OwnerId must be set", nameof(moneyArguments.Amount));
 
-			var currency = currencyLookup.FindCurrency(currencyCode);
+			var currency = moneyArguments.CurrencyLookup.FindCurrency(moneyArguments.Currency);
 
 			if (currency.IsUse == false)
-				throw new ArgumentException($"Currency {currencyCode} is not valid");
+				throw new ArgumentException($"Currency {moneyArguments.Currency} is not valid");
 
-			if (decimal.Round(amount, currency.DecimalPoints) != amount)
-				throw new ArgumentOutOfRangeException(nameof(amount), "Amount cannot have more than two decimals");
+			if (decimal.Round(moneyArguments.Amount, currency.DecimalPoints) != moneyArguments.Amount)
+				throw new ArgumentOutOfRangeException(nameof(moneyArguments.Amount), "Amount cannot have more than two decimals");
 
-			Amount = amount;
+			Amount = moneyArguments.Amount;
 			Currency = currency;
 		}
 
@@ -35,9 +37,9 @@ namespace Marketplace.Domain.ClassifiedAd.ValueObjects
 			Currency = currency;
 		}
 
-		public static Money FromDecimal(decimal amount, string currency, ICurrencyLookup currencyLookup) => new Money(amount, currency, currencyLookup);
+		public static Money FromDecimal(MoneyArguments decimalMoneyArguments) => new Money(decimalMoneyArguments);
 
-		public static Money FromString(string amount, string currency, ICurrencyLookup currencyLookup) => new Money(decimal.Parse(amount), currency, currencyLookup);
+		public static Money FromString(string amount, string currency, ICurrencyLookup currencyLookup) => new Money(new MoneyArguments(decimal.Parse(amount), currency, currencyLookup));
 
 		public Money Add(Money money)
 		{

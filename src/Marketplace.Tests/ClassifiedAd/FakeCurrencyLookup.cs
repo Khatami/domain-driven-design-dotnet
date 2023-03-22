@@ -1,8 +1,9 @@
 ﻿using Marketplace.Domain.ClassifiedAd.DomainServices;
+using Marketplace.Domain.ClassifiedAd.Metadata;
 
 namespace Marketplace.Tests.ClassifiedAd
 {
-	public class FakeCurrencyLookup : ICurrencyLookup
+    public class FakeCurrencyLookup : ICurrencyLookup
 	{
 		private static readonly IEnumerable<CurrencyDetails> _currencies = new[]
 		{
