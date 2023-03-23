@@ -1,4 +1,6 @@
 ﻿using Framework;
+using Marketplace.Domain.ClassifiedAds.Arguments;
+using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
@@ -10,52 +12,60 @@ namespace Marketplace.Domain.ClassifiedAds
 	{
 		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
 		{
-			Id = id;
-			OwnerId = ownerId;
-			State = ClassifiedAdState.Inactive;
-
-			EnsureValidState();
-
-			Raise(new ClassifiedAdCreated(id, ownerId));
+			Apply(new ClassifiedAdCreated(id, ownerId));
 		}
 
 		public void SetTitle(ClassifiedAdTitle title)
 		{
-			Title = title;
-
-			EnsureValidState();
-
-			Raise(new ClassifiedAdTitleChanged(Id, title));
+			Apply(new ClassifiedAdTitleChanged(Id, title));
 		}
 
 		public void UpdateText(ClassifiedAdText text)
 		{
-			Text = text;
-
-			EnsureValidState();
-
-			Raise(new ClassifiedAdTextChanged(Id, text));
+			Apply(new ClassifiedAdTextChanged(Id, text));
 		}
 
 		public void UpdatePrice(Price price)
 		{
-			Price = price;
-
-			EnsureValidState();
-
-			Raise(new ClassifiedAdPriceUpdated(Id, price.Amount, price.Currency.CurrencyCode));
+			Apply(new ClassifiedAdPriceUpdated(Id, price.Amount, price.Currency.CurrencyCode));
 		}
 
 		public void RequestToPublish()
 		{
-			State = ClassifiedAdState.PendingReview;
-
-			EnsureValidState();
-
-			Raise(new ClassifiedAdSentForReview(Id));
+			Apply(new ClassifiedAdSentForReview(Id));
 		}
 
-		private void EnsureValidState()
+		protected override void When(object @event)
+		{
+			// advanced pattern matching
+			switch (@event)
+			{
+				case ClassifiedAdCreated e:
+					Id = new ClassifiedAdId(e.Id);
+					OwnerId = new UserId(e.OwnerId);
+					State = ClassifiedAdState.Inactive;
+					break;
+
+				case ClassifiedAdTitleChanged e:
+					Title = ClassifiedAdTitle.FromString(e.Title);
+					break;
+
+				case ClassifiedAdTextChanged e:
+					Text = ClassifiedAdText.FromString(e.AdText);
+					break;
+
+				case ClassifiedAdPriceUpdated e:
+					// Because Price is already validated by using LookupService, we can trust it
+					Price = new Price(e.Price, e.CurrencyCode);
+					break;
+
+				case ClassifiedAdSentForReview e:
+					State = ClassifiedAdState.PendingReview;
+					break;
+			}
+		}
+
+		protected override void EnsureValidState()
 		{
 			if (Id == null)
 				throw new InvalidEntityStateException(this, "title cannot be empty");
@@ -79,9 +89,9 @@ namespace Marketplace.Domain.ClassifiedAds
 			}
 		}
 
-		public ClassifiedAdId Id { get; }
+		public ClassifiedAdId Id { get; private set; }
 
-		public UserId OwnerId { get; }
+		public UserId OwnerId { get; private set; }
 
 		public ClassifiedAdTitle Title { get; private set; }
 

@@ -1,5 +1,6 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Arguments;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
+using Marketplace.Domain.ClassifiedAds.Metadata;
 
 namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
@@ -9,6 +10,10 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 		{
 			if (moneyArguments.Amount < 0)
 				throw new ArgumentException("Price cannot be negative", nameof(moneyArguments.Amount));
+		}
+
+		internal Price(decimal amount, string currency) : base(amount, new CurrencyDetails() { CurrencyCode = currency })
+		{
 		}
 
 		public new static Price FromDecimal(MoneyArguments decimalMoneyArguments) => new Price(decimalMoneyArguments);
