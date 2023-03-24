@@ -1,16 +1,24 @@
-﻿using Marketplace.Contracts;
+﻿using Marketplace.Application.ClassifiedAds.Services;
+using Marketplace.Application.Contracts.ClassifiedAds.V1;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/V1/[controller]")]
 	[ApiController]
 	public class ClassifiedAdsController : Controller
 	{
-		[HttpPost]
-		public async Task<IActionResult> Post(ClassifiedAds.V1.Create request)
+		private readonly ClassifiedAdsApplicationService _classifiedAdsApplicationService;
+
+		public ClassifiedAdsController(ClassifiedAdsApplicationService classifiedAdsApplicationService)
 		{
-			// Handle the request here
+			_classifiedAdsApplicationService = classifiedAdsApplicationService;
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Post(ClassifiedAd_Create_V1 request)
+		{
+			_classifiedAdsApplicationService.Handle(request);
 
 			return Ok();
 		}

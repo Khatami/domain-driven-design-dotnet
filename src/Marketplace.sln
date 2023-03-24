@@ -7,19 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-EndPoints", "04-EndPoint
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Infrastructure", "03-Infrastructure", "{2E908D7F-B838-4119-8587-E4DC276625DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework", "Framework\Framework.csproj", "{0B27B808-BF2E-435D-8737-54FB21B6A11E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Domain", "01-Domain", "{125F0354-5210-45BD-8C6F-9CBEC4BA126C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Application", "02-Application", "{6B8EACC5-F718-4C4F-BC18-C95E2A85229B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Domain", "1-Domain\Marketplace.Domain\Marketplace.Domain.csproj", "{6D5DC772-1711-4AD4-AE95-A3143D6DD126}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Domain.Tests", "1-Domain\Marketplace.Domain.Tests\Marketplace.Domain.Tests.csproj", "{79FE35BA-D793-42C0-A313-EFD46433054B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Application", "2-Application\Marketplace.Application\Marketplace.Application.csproj", "{0B217CCC-5C38-4C27-8B3E-3F858E609DB2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace", "04-EndPoints\Marketplace\Marketplace.csproj", "{A0C60E21-642A-4AE2-9D6B-9E7C288CC31F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Domain", "01-Domain\Marketplace.Domain\Marketplace.Domain.csproj", "{FE9A9F81-1EA5-4A3B-8E44-FC2F25715F83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Domain.Tests", "01-Domain\Marketplace.Domain.Tests\Marketplace.Domain.Tests.csproj", "{60091B4A-0E37-40ED-870D-DAFC1B56CA44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Application", "02-Application\Marketplace.Application\Marketplace.Application.csproj", "{E06026B3-75C8-4985-BDFF-FA7C1B3984A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Application.Contracts", "02-Application\Marketplace.Application.Contracts\Marketplace.Application.Contracts.csproj", "{69C3A4DA-0231-463E-8264-1D2178A46074}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,35 +27,36 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0B27B808-BF2E-435D-8737-54FB21B6A11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B27B808-BF2E-435D-8737-54FB21B6A11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B27B808-BF2E-435D-8737-54FB21B6A11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B27B808-BF2E-435D-8737-54FB21B6A11E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D5DC772-1711-4AD4-AE95-A3143D6DD126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D5DC772-1711-4AD4-AE95-A3143D6DD126}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D5DC772-1711-4AD4-AE95-A3143D6DD126}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D5DC772-1711-4AD4-AE95-A3143D6DD126}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79FE35BA-D793-42C0-A313-EFD46433054B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79FE35BA-D793-42C0-A313-EFD46433054B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79FE35BA-D793-42C0-A313-EFD46433054B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79FE35BA-D793-42C0-A313-EFD46433054B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B217CCC-5C38-4C27-8B3E-3F858E609DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B217CCC-5C38-4C27-8B3E-3F858E609DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B217CCC-5C38-4C27-8B3E-3F858E609DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B217CCC-5C38-4C27-8B3E-3F858E609DB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0C60E21-642A-4AE2-9D6B-9E7C288CC31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0C60E21-642A-4AE2-9D6B-9E7C288CC31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C60E21-642A-4AE2-9D6B-9E7C288CC31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C60E21-642A-4AE2-9D6B-9E7C288CC31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9A9F81-1EA5-4A3B-8E44-FC2F25715F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9A9F81-1EA5-4A3B-8E44-FC2F25715F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9A9F81-1EA5-4A3B-8E44-FC2F25715F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9A9F81-1EA5-4A3B-8E44-FC2F25715F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60091B4A-0E37-40ED-870D-DAFC1B56CA44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60091B4A-0E37-40ED-870D-DAFC1B56CA44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60091B4A-0E37-40ED-870D-DAFC1B56CA44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60091B4A-0E37-40ED-870D-DAFC1B56CA44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E06026B3-75C8-4985-BDFF-FA7C1B3984A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E06026B3-75C8-4985-BDFF-FA7C1B3984A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E06026B3-75C8-4985-BDFF-FA7C1B3984A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E06026B3-75C8-4985-BDFF-FA7C1B3984A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69C3A4DA-0231-463E-8264-1D2178A46074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69C3A4DA-0231-463E-8264-1D2178A46074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69C3A4DA-0231-463E-8264-1D2178A46074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69C3A4DA-0231-463E-8264-1D2178A46074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6D5DC772-1711-4AD4-AE95-A3143D6DD126} = {125F0354-5210-45BD-8C6F-9CBEC4BA126C}
-		{79FE35BA-D793-42C0-A313-EFD46433054B} = {125F0354-5210-45BD-8C6F-9CBEC4BA126C}
-		{0B217CCC-5C38-4C27-8B3E-3F858E609DB2} = {6B8EACC5-F718-4C4F-BC18-C95E2A85229B}
 		{A0C60E21-642A-4AE2-9D6B-9E7C288CC31F} = {9A4D9497-5B8A-4120-A0E6-48A4CC295610}
+		{FE9A9F81-1EA5-4A3B-8E44-FC2F25715F83} = {125F0354-5210-45BD-8C6F-9CBEC4BA126C}
+		{60091B4A-0E37-40ED-870D-DAFC1B56CA44} = {125F0354-5210-45BD-8C6F-9CBEC4BA126C}
+		{E06026B3-75C8-4985-BDFF-FA7C1B3984A6} = {6B8EACC5-F718-4C4F-BC18-C95E2A85229B}
+		{69C3A4DA-0231-463E-8264-1D2178A46074} = {6B8EACC5-F718-4C4F-BC18-C95E2A85229B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AB58BEE-655E-4F39-A64F-1BE735BFB935}

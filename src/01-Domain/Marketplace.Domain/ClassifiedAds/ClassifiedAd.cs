@@ -1,6 +1,4 @@
-﻿using Framework;
-using Marketplace.Domain.ClassifiedAds.Arguments;
-using Marketplace.Domain.ClassifiedAds.DomainServices;
+﻿using Marketplace.Domain.Base;
 using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
