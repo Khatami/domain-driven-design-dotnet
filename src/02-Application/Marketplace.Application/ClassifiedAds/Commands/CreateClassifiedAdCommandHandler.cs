@@ -3,7 +3,7 @@ using Marketplace.Application.Helpers;
 
 namespace Marketplace.Application.ClassifiedAds.Commands
 {
-    public class CreateClassifiedAdCommandHandler : IHandleCommand<ClassifiedAd_Create_V1>
+    internal class CreateClassifiedAdCommandHandler : IHandleCommand<ClassifiedAd_Create_V1>
     {
         public Task Handle(ClassifiedAd_Create_V1 command)
         {

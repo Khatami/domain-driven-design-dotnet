@@ -3,7 +3,7 @@ using Polly.Retry;
 
 namespace Marketplace.Application.Helpers
 {
-	public class RetryingCommandHandler<T> : IHandleCommand<T>
+	internal class RetryingCommandHandler<T> : IHandleCommand<T>
 	{
 		static RetryPolicy _policy = Policy
 			.Handle<InvalidOperationException>()
