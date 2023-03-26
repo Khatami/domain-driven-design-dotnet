@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClassifiedAds\Commands\" />
+    <Folder Include="ClassifiedAds\Services\" />
   </ItemGroup>
 
   <ItemGroup>

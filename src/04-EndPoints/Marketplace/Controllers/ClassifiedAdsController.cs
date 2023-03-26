@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.ClassifiedAds.Services;
-using Marketplace.Application.Contracts.ClassifiedAds.V1;
+﻿using Marketplace.Application.Contracts.ClassifiedAds.V1;
+using Marketplace.Application.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers
@@ -8,17 +8,17 @@ namespace Marketplace.Controllers
 	[ApiController]
 	public class ClassifiedAdsController : Controller
 	{
-		private readonly ClassifiedAdsApplicationService _classifiedAdsApplicationService;
+		private readonly IHandleCommand<ClassifiedAd_Create_V1> _createAdCommandHandler;
 
-		public ClassifiedAdsController(ClassifiedAdsApplicationService classifiedAdsApplicationService)
+		public ClassifiedAdsController(IHandleCommand<ClassifiedAd_Create_V1> createAdCommandHandler)
 		{
-			_classifiedAdsApplicationService = classifiedAdsApplicationService;
+			_createAdCommandHandler = createAdCommandHandler;
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Post(ClassifiedAd_Create_V1 request)
 		{
-			_classifiedAdsApplicationService.Handle(request);
+			await _createAdCommandHandler.Handle(request);
 
 			return Ok();
 		}
