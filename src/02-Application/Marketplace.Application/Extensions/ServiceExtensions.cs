@@ -11,8 +11,8 @@ namespace Marketplace.Application.Extensions
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
-			services.AddScoped<IHandleCommand<ClassifiedAd_Create_V1>>
-				(q => new RetryingCommandHandler<ClassifiedAd_Create_V1>(new CreateClassifiedAdCommandHandler()));
+			services.AddScoped<IHandleCommand<CreateClassifiedAd_V1>>
+				(q => new RetryingCommandHandler<CreateClassifiedAd_V1>(new CreateClassifiedAdCommandHandler()));
 
 			services.AddScoped<IClassifiedAdService, ClassifiedAdService>();
 

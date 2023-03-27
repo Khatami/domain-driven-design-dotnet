@@ -9,10 +9,10 @@ namespace Marketplace.Controllers
 	[ApiController]
 	public class ClassifiedAdsController : Controller
 	{
-		private readonly IHandleCommand<ClassifiedAd_Create_V1> _createAdCommandHandler;
+		private readonly IHandleCommand<CreateClassifiedAd_V1> _createAdCommandHandler;
 		private readonly IClassifiedAdService _classifiedAdService;
 
-		public ClassifiedAdsController(IHandleCommand<ClassifiedAd_Create_V1> createAdCommandHandler,
+		public ClassifiedAdsController(IHandleCommand<CreateClassifiedAd_V1> createAdCommandHandler,
 			IClassifiedAdService classifiedAdService)
 		{
 			_createAdCommandHandler = createAdCommandHandler;
@@ -20,7 +20,7 @@ namespace Marketplace.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(ClassifiedAd_Create_V1 request)
+		public async Task<IActionResult> Post(CreateClassifiedAd_V1 request)
 		{
 			// await _createAdCommandHandler.Handle(request);
 
@@ -31,7 +31,7 @@ namespace Marketplace.Controllers
 
 		[Route("name")]
 		[HttpPut]
-		public async Task<IActionResult> Put(ClassifiedAd_SetTitle_V1 request)
+		public async Task<IActionResult> Put(SetClassifiedAdTitle_V1 request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -40,7 +40,7 @@ namespace Marketplace.Controllers
 
 		[Route("text")]
 		[HttpPut]
-		public async Task<IActionResult> Put(ClassifiedAd_UpdateText_V1 request)
+		public async Task<IActionResult> Put(UpdateClassifiedAdText_V1 request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -49,7 +49,7 @@ namespace Marketplace.Controllers
 
 		[Route("price")]
 		[HttpPut]
-		public async Task<IActionResult> Put(ClassifiedAd_UpdatePrice_V1 request)
+		public async Task<IActionResult> Put(UpdateClassifiedAdPrice_V1 request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -58,7 +58,7 @@ namespace Marketplace.Controllers
 
 		[Route("publish")]
 		[HttpPut]
-		public async Task<IActionResult> Put(ClassifiedAd_RequestToPublish_V1 request)
+		public async Task<IActionResult> Put(RequestClassifiedAdToPublish_V1 request)
 		{
 			await _classifiedAdService.Handle(request);
 

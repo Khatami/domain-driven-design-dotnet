@@ -3,9 +3,9 @@ using Marketplace.Application.Helpers;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers
 {
-	internal class CreateClassifiedAdCommandHandler : IHandleCommand<ClassifiedAd_Create_V1>
+	internal class CreateClassifiedAdCommandHandler : IHandleCommand<CreateClassifiedAd_V1>
 	{
-		public Task Handle(ClassifiedAd_Create_V1 command)
+		public Task Handle(CreateClassifiedAd_V1 command)
 		{
 			return Task.CompletedTask;
 		}
