@@ -1,6 +1,6 @@
-﻿namespace Marketplace.Application.Helpers
+﻿namespace Marketplace.Domain.Helpers
 {
-	public interface IEntityStore
+	public interface IBaseRepository
 	{
 		Task<T> Load<T>(string id);
 

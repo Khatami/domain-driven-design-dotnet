@@ -3,7 +3,7 @@
 	/// <summary>
 	/// It's completely against SRP
 	/// </summary>
-	public interface IClassifiedAdService
+	public interface IClassifiedAdApplicationService
 	{
 		Task Handle(object command);
 	}

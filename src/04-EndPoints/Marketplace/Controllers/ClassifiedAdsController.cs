@@ -10,10 +10,10 @@ namespace Marketplace.Controllers
 	public class ClassifiedAdsController : Controller
 	{
 		private readonly IHandleCommand<CreateClassifiedAd_V1> _createAdCommandHandler;
-		private readonly IClassifiedAdService _classifiedAdService;
+		private readonly IClassifiedAdApplicationService _classifiedAdService;
 
 		public ClassifiedAdsController(IHandleCommand<CreateClassifiedAd_V1> createAdCommandHandler,
-			IClassifiedAdService classifiedAdService)
+			IClassifiedAdApplicationService classifiedAdService)
 		{
 			_createAdCommandHandler = createAdCommandHandler;
 			_classifiedAdService = classifiedAdService;

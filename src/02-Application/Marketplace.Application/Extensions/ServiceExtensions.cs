@@ -11,10 +11,11 @@ namespace Marketplace.Application.Extensions
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)
 		{
+			// Composition pattern
 			services.AddScoped<IHandleCommand<CreateClassifiedAd_V1>>
 				(q => new RetryingCommandHandler<CreateClassifiedAd_V1>(new CreateClassifiedAdCommandHandler()));
 
-			services.AddScoped<IClassifiedAdService, ClassifiedAdService>();
+			services.AddScoped<IClassifiedAdApplicationService, ClassifiedAdApplicationService>();
 
 			return services;
 		}
