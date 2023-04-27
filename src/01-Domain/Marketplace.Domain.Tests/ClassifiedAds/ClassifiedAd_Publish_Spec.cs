@@ -30,6 +30,16 @@ namespace Marketplace.Domain.Tests.ClassifiedAds
 		}
 
 		[Fact]
+		public void Check_picture_resize_event()
+		{
+			_classifiedAd.AddPicture(new Uri("https://cdn.marketplace.com"), new PictureSize(900, 1000));
+
+			_classifiedAd.Pictures[0].Resize(new PictureSize(500, 900));
+
+			Assert.Equal(3, _classifiedAd.GetChanges().Count());
+		}
+
+		[Fact]
 		public void Cannot_publish_without_title()
 		{
 			_classifiedAd.UpdateText(ClassifiedAdText.FromString("Please buy my stuff"));
