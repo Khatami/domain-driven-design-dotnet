@@ -1,12 +1,10 @@
-﻿using System.Security.Cryptography;
-
-namespace Marketplace.Domain.Helpers
+﻿namespace Marketplace.Domain.Helpers
 {
-	public abstract class Entity<TId>
+	public abstract class AggregateRoot<TId>
 	{
 		private readonly List<object> _changes;
 
-		protected Entity()
+		protected AggregateRoot()
 		{
 			_changes = new List<object>();
 		}
@@ -16,6 +14,7 @@ namespace Marketplace.Domain.Helpers
 		protected void Apply(object @event)
 		{
 			When(@event);
+			EnsureValidState();
 			_changes.Add(@event);
 		}
 
@@ -27,5 +26,7 @@ namespace Marketplace.Domain.Helpers
 		}
 
 		public void ClearChanges() => _changes.Clear();
+
+		protected abstract void EnsureValidState();
 	}
 }

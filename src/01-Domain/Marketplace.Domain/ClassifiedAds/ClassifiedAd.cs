@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain.ClassifiedAds.Enums;
+﻿using Marketplace.Domain.ClassifiedAds.Entities;
+using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
@@ -6,7 +7,7 @@ using Marketplace.Domain.Helpers;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-	public class ClassifiedAd : Entity
+	public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
 		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
 		{
@@ -31,6 +32,11 @@ namespace Marketplace.Domain.ClassifiedAds
 		public void RequestToPublish()
 		{
 			Apply(new ClassifiedAdSentForReview(Id));
+		}
+
+		public void AddPicture(Uri pictureUri, PictureSize pictureSize)
+		{
+			Apply(new PictureAddedToAClassifiedAd(Guid.NewGuid(), Id, pictureUri.ToString(), pictureSize.Height, pictureSize.Width));
 		}
 
 		protected override void When(object @event)
@@ -60,6 +66,12 @@ namespace Marketplace.Domain.ClassifiedAds
 				case ClassifiedAdSentForReview e:
 					State = ClassifiedAdState.PendingReview;
 					break;
+
+				case PictureAddedToAClassifiedAd e:
+					var newPicture = new Picture(new PictureSize(e.Height, e.Width), new Uri(e.Url), Pictures.Max(x => x.Order) + 1);
+
+					_pictures.Add(newPicture);
+					break;
 			}
 		}
 
@@ -87,8 +99,6 @@ namespace Marketplace.Domain.ClassifiedAds
 			}
 		}
 
-		public ClassifiedAdId Id { get; private set; }
-
 		public UserId OwnerId { get; private set; }
 
 		public ClassifiedAdTitle Title { get; private set; }
@@ -100,5 +110,14 @@ namespace Marketplace.Domain.ClassifiedAds
 		public ClassifiedAdState State { get; private set; }
 
 		public UserId ApprovedBy { get; private set; }
+
+		private List<Picture> _pictures = new();
+		public IReadOnlyList<Picture> Pictures
+		{
+			get
+			{
+				return _pictures;
+			}
+		}
 	}
 }
