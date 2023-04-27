@@ -3,11 +3,10 @@ using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Domain.Helpers;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-	public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
+    public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
 		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
 		{
@@ -29,15 +28,66 @@ namespace Marketplace.Domain.ClassifiedAds
 			Apply(new ClassifiedAdPriceUpdated(Id, price.Amount, price.Currency.CurrencyCode));
 		}
 
-		public void RequestToPublish()
+		public void RequestToPublish(Guid approvedById)
 		{
-			Apply(new ClassifiedAdSentForReview(Id));
+			Apply(new ClassifiedAdSentForReview(Id, approvedById));
 		}
 
 		public void AddPicture(Uri pictureUri, PictureSize pictureSize)
 		{
-			Apply(new PictureAddedToAClassifiedAd(Guid.NewGuid(), Id, pictureUri.ToString(), pictureSize.Height, pictureSize.Width));
+			int order = 1;
+
+			if (Pictures.Any())
+				order = Pictures?.Max(x => x.Order) ?? 0 + 1;
+
+			Apply(new PictureAddedToAClassifiedAd
+			(
+				Guid.NewGuid(),
+				Id, 
+				pictureUri.ToString(), 
+				pictureSize.Height, 
+				pictureSize.Width, 
+				order
+			));
 		}
+
+		public UserId OwnerId { get; private set; }
+
+		public ClassifiedAdTitle Title { get; private set; }
+
+		public ClassifiedAdText Text { get; private set; }
+
+		public Price Price { get; private set; }
+
+		public ClassifiedAdState State { get; private set; }
+
+		public UserId ApprovedBy { get; private set; }
+
+		private List<Picture> _pictures = new();
+		public IReadOnlyList<Picture> Pictures
+		{
+			get
+			{
+				return _pictures;
+			}
+		}
+
+		private Picture? FindPicture(PictureId id)
+		{
+			return Pictures.FirstOrDefault(q => q.Id == id);
+		}
+
+		public void ResizePicture(PictureId pictureId, PictureSize newSize)
+		{
+			var picture = FindPicture(pictureId);
+
+			if (picture == null)
+				throw new InvalidOperationException("Cannot resize a picture that I don't have");
+
+			picture.Resize(newSize);
+		}
+
+		private Picture? FirstPicture => Pictures.OrderBy(q => q.Order).FirstOrDefault();
 
 		protected override void When(object @event)
 		{
@@ -65,16 +115,18 @@ namespace Marketplace.Domain.ClassifiedAds
 
 				case ClassifiedAdSentForReview e:
 					State = ClassifiedAdState.PendingReview;
+					ApprovedBy = new UserId(e.ApprovedById);
 					break;
 
 				case PictureAddedToAClassifiedAd e:
-					var newPicture = new Picture(new PictureSize(e.Height, e.Width), new Uri(e.Url), Pictures.Max(x => x.Order) + 1);
-
+					var newPicture = new Picture(Apply);
+					ApplyToEntity(newPicture, e);
 					_pictures.Add(newPicture);
 					break;
 			}
 		}
 
+		// To Check Entity Invariant
 		protected override void EnsureValidState()
 		{
 			if (Id == null)
@@ -86,6 +138,25 @@ namespace Marketplace.Domain.ClassifiedAds
 			switch (State)
 			{
 				case ClassifiedAdState.PendingReview:
+					if (Title == null)
+						throw new InvalidEntityStateException(this, "title cannot be empty");
+
+					if (Text == null)
+						throw new InvalidEntityStateException(this, "text cannot be empty");
+
+					if (Price == null || Price.Amount == 0)
+						throw new InvalidEntityStateException(this, "amount cannot be zero");
+
+					if (ApprovedBy == null)
+						throw new InvalidEntityStateException(this, "ApprovedBy cannot be null");
+
+					if (FirstPicture == null)
+						throw new InvalidEntityStateException(this, "FirstPicture cannot be null");
+
+					if (FirstPicture.Size.Width < 600 || FirstPicture.Size.Height < 800)
+						throw new InvalidPictureSizeException("First Picture should be larger than 600X800 pixel");
+					break;
+
 				case ClassifiedAdState.Active:
 					if (Title == null)
 						throw new InvalidEntityStateException(this, "title cannot be empty");
@@ -95,28 +166,10 @@ namespace Marketplace.Domain.ClassifiedAds
 
 					if (Price == null || Price.Amount == 0)
 						throw new InvalidEntityStateException(this, "amount cannot be zero");
+
+					if (FirstPicture == null)
+						throw new InvalidEntityStateException(this, "FirstPicture cannot be null");
 					break;
-			}
-		}
-
-		public UserId OwnerId { get; private set; }
-
-		public ClassifiedAdTitle Title { get; private set; }
-
-		public ClassifiedAdText Text { get; private set; }
-
-		public Price Price { get; private set; }
-
-		public ClassifiedAdState State { get; private set; }
-
-		public UserId ApprovedBy { get; private set; }
-
-		private List<Picture> _pictures = new();
-		public IReadOnlyList<Picture> Pictures
-		{
-			get
-			{
-				return _pictures;
 			}
 		}
 	}

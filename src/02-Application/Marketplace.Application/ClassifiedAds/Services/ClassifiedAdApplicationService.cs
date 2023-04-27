@@ -79,7 +79,7 @@ namespace Marketplace.Application.ClassifiedAds.Services
 					if (classifiedAd == null)
 						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
-					classifiedAd.RequestToPublish();
+					classifiedAd.RequestToPublish(Guid.NewGuid());
 
 					await _classifiedAdRepository.Save(classifiedAd);
 					break;
