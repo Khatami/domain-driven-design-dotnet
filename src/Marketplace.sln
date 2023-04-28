@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Application.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Persistence.RavenDB", "03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj", "{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5939F889-2A4A-403A-BD2E-44D24762A1A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
