@@ -15,11 +15,15 @@ namespace Marketplace.Application.ClassifiedAds.Services
 	{
 		private readonly IClassifiedAdRepository _classifiedAdRepository;
 		private readonly ICurrencyLookup _currencyLookup;
+		private readonly IUnitOfWork _unitOfWork;
 
-		public ClassifiedAdApplicationService(IClassifiedAdRepository classifiedAdRepository, ICurrencyLookup currencyLookup)
+		public ClassifiedAdApplicationService(IClassifiedAdRepository classifiedAdRepository,
+			ICurrencyLookup currencyLookup,
+			IUnitOfWork unitOfWork)
 		{
 			_classifiedAdRepository = classifiedAdRepository;	
 			_currencyLookup = currencyLookup;
+			_unitOfWork = unitOfWork;
 		}
 
 		public async Task Handle(object command)
@@ -30,58 +34,60 @@ namespace Marketplace.Application.ClassifiedAds.Services
 			switch (command)
 			{
 				case CreateClassifiedAd_V1 cmd:
-					var exists = await _classifiedAdRepository.Exists<ClassifiedAd>(cmd.Id.ToString());
+					var exists = await _classifiedAdRepository.Exists(new ClassifiedAdId(cmd.Id));
 
 					if (exists)
 						throw new InvalidOperationException($"Entitywith id {cmd.Id} already exists");
 
 					classifiedAd = new ClassifiedAd(new ClassifiedAdId(cmd.Id), new UserId(cmd.OwnerId));
 
-					await _classifiedAdRepository.Save(classifiedAd);
+					await _classifiedAdRepository.Add(classifiedAd);
+
+					await _unitOfWork.Commit();
 					break;
 
 				case SetClassifiedAdTitle_V1 cmd:
-					classifiedAd = await _classifiedAdRepository.Load<ClassifiedAd>(cmd.Id.ToString());
+					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
 						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
 					classifiedAd.SetTitle(ClassifiedAdTitle.FromString(cmd.Title));
 
-					await _classifiedAdRepository.Save(classifiedAd);
+					await _unitOfWork.Commit();
 					break;
 
 				case UpdateClassifiedAdText_V1 cmd:
-					classifiedAd = await _classifiedAdRepository.Load<ClassifiedAd>(cmd.Id.ToString());
+					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
 						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
 					classifiedAd.UpdateText(ClassifiedAdText.FromString(cmd.Text));
 
-					await _classifiedAdRepository.Save(classifiedAd);
+					await _unitOfWork.Commit();
 					break;
 
 				case UpdateClassifiedAdPrice_V1 cmd:
-					classifiedAd = await _classifiedAdRepository.Load<ClassifiedAd>(cmd.Id.ToString());
+					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
 						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
 					classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(cmd.Price, cmd.Currency, _currencyLookup)));
 
-					await _classifiedAdRepository.Save(classifiedAd);
+					await _unitOfWork.Commit();
 					break;
 
 				case RequestClassifiedAdToPublish_V1 cmd:
-					classifiedAd = await _classifiedAdRepository.Load<ClassifiedAd>(cmd.Id.ToString());
+					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
 						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
 					classifiedAd.RequestToPublish(Guid.NewGuid());
 
-					await _classifiedAdRepository.Save(classifiedAd);
+					await _unitOfWork.Commit();
 					break;
 
 				default:

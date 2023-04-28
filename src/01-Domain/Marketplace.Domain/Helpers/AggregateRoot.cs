@@ -1,6 +1,4 @@
-﻿using Marketplace.Domain.Helpers;
-
-namespace Marketplace.Domain
+﻿namespace Marketplace.Domain.Helpers
 {
     public abstract class AggregateRoot<TId>
     {

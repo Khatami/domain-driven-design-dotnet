@@ -1,9 +1,10 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Helpers;
 
 namespace Marketplace.Domain.ClassifiedAds.Entities
 {
-	public class Picture : Entity<PictureId>
+    public class Picture : Entity<PictureId>
 	{
 		public Picture(Action<object> applier) : base(applier)
 		{

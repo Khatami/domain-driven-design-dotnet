@@ -1,11 +1,13 @@
 using Marketplace.Application.Extensions;
 using Marketplace.Extensions;
+using Marketplace.Persistence.RavenDB.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
+builder.Services.AddRavenDBServices();
 builder.Services.AddEdgeServices();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
