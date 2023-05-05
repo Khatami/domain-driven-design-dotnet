@@ -19,6 +19,8 @@ namespace Marketplace.Extensions
 
 			store.Initialize();
 
+			services.AddScoped(c => store.OpenAsyncSession());
+
 			return services;
 		}
 	}
