@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Application.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Application.Tests", "02-Application\Marketplace.Application.Tests\Marketplace.Application.Tests.csproj", "{BC300D6C-6A1A-4CFD-9D31-757F0DE13B14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Persistence.RavenDB", "03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj", "{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Persistence.RavenDB", "03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj", "{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5939F889-2A4A-403A-BD2E-44D24762A1A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Persistence.EF", "03-Infrastructure\Marketplace.Persistence.EF\Marketplace.Persistence.EF.csproj", "{F77CFB7B-3638-4AF0-90BB-B40439ACA253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F77CFB7B-3638-4AF0-90BB-B40439ACA253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77CFB7B-3638-4AF0-90BB-B40439ACA253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77CFB7B-3638-4AF0-90BB-B40439ACA253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77CFB7B-3638-4AF0-90BB-B40439ACA253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{69C3A4DA-0231-463E-8264-1D2178A46074} = {6B8EACC5-F718-4C4F-BC18-C95E2A85229B}
 		{BC300D6C-6A1A-4CFD-9D31-757F0DE13B14} = {6B8EACC5-F718-4C4F-BC18-C95E2A85229B}
 		{7ECF1F37-F4D4-4316-A18F-F74C50DC4D9A} = {2E908D7F-B838-4119-8587-E4DC276625DD}
+		{F77CFB7B-3638-4AF0-90BB-B40439ACA253} = {2E908D7F-B838-4119-8587-E4DC276625DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AB58BEE-655E-4F39-A64F-1BE735BFB935}
