@@ -12,7 +12,7 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 				throw new ArgumentException("Price cannot be negative", nameof(moneyArguments.Amount));
 		}
 
-		internal Price(decimal amount, string currency) : base(amount, new CurrencyDetails() { CurrencyCode = currency })
+		internal Price(decimal amount, string currency) : base(amount, new Currency() { CurrencyCode = currency })
 		{
 		}
 

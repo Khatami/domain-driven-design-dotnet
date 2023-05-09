@@ -1,6 +1,6 @@
 ﻿namespace Marketplace.Domain.ClassifiedAds.Metadata
 {
-	public class CurrencyDetails
+	public class Currency
 	{
 		public string CurrencyCode { get; set; }
 
@@ -9,6 +9,6 @@
 		public int DecimalPoints { get; set; }
 
 
-		public static CurrencyDetails None = new CurrencyDetails { IsUse = false };
+		public static Currency None = new Currency { IsUse = false };
 	}
 }

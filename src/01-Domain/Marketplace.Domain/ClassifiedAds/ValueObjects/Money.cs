@@ -24,7 +24,7 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 			Currency = currency;
 		}
 
-		protected Money(decimal amount, CurrencyDetails currency)
+		protected Money(decimal amount, Currency currency)
 		{
 			Amount = amount;
 			Currency = currency;
@@ -73,6 +73,6 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 
 		public decimal Amount { get; }
 
-		public CurrencyDetails Currency { get; }
+		public Currency Currency { get; }
 	}
 }

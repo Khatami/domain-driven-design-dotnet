@@ -5,27 +5,27 @@ namespace Marketplace.Domain.Tests.ClassifiedAds.FakeServices
 {
 	public class FakeCurrencyLookup : ICurrencyLookup
 	{
-		private static readonly IEnumerable<CurrencyDetails> _currencies = new[]
+		private static readonly IEnumerable<Currency> _currencies = new[]
 		{
-			new CurrencyDetails()
+			new Currency()
 			{
 				CurrencyCode = "EUR",
 				DecimalPoints = 2,
 				IsUse = true
 			},
-			new CurrencyDetails()
+			new Currency()
 			{
 				CurrencyCode = "USD",
 				DecimalPoints = 2,
 				IsUse = true
 			},
-			new CurrencyDetails()
+			new Currency()
 			{
 				CurrencyCode = "JPY",
 				DecimalPoints = 2,
 				IsUse = true
 			},
-			new CurrencyDetails()
+			new Currency()
 			{
 				CurrencyCode = "DEM",
 				DecimalPoints = 2,
@@ -33,11 +33,11 @@ namespace Marketplace.Domain.Tests.ClassifiedAds.FakeServices
 			}
 		};
 
-		public CurrencyDetails FindCurrency(string currencyCode)
+		public Currency FindCurrency(string currencyCode)
 		{
 			var currency = _currencies.FirstOrDefault(q => q.CurrencyCode == currencyCode);
 
-			return currency ?? CurrencyDetails.None;
+			return currency ?? Currency.None;
 		}
 	}
 }

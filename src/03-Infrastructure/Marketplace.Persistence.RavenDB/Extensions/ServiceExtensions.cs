@@ -1,7 +1,8 @@
 ﻿using Marketplace.Application.Helpers;
+using Marketplace.Domain.ClassifiedAds;
+using Marketplace.Persistence.RavenDB.ClassifiedAds;
 using Marketplace.Persistence.RavenDB.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
-using static Raven.Client.Constants;
 
 namespace Marketplace.Persistence.RavenDB.Extensions
 {
@@ -10,6 +11,7 @@ namespace Marketplace.Persistence.RavenDB.Extensions
 		public static IServiceCollection AddRavenDBServices(this IServiceCollection services)
 		{
 			services.AddScoped<IUnitOfWork, RavenDBUnitOfWork>();
+			services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
 
 			return services;
 		}

@@ -4,6 +4,6 @@ namespace Marketplace.Domain.ClassifiedAds.DomainServices
 {
 	public interface ICurrencyLookup
 	{
-		CurrencyDetails FindCurrency(string currencyCode);
+		Currency FindCurrency(string currencyCode);
 	}
 }
