@@ -2,6 +2,8 @@
 {
 	public record ClassifiedAdTitle
 	{
+		private ClassifiedAdTitle() { }
+
 		// Factory Pattern
 		private ClassifiedAdTitle(string title)
 		{
@@ -11,13 +13,13 @@
 			Title = title;
 		}
 
-		public string Title { get; }
+		public string Title { get; private set; }
 
 		public static ClassifiedAdTitle FromString(string title) => new ClassifiedAdTitle(title);
 
 		public static implicit operator string(ClassifiedAdTitle self)
 		{
-			return self.ToString();
+			return self.Title;
 		}
 	}
 }

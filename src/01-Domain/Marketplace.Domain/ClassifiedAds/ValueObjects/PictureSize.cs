@@ -2,6 +2,8 @@
 {
 	public record PictureSize
 	{
+		private PictureSize() { }
+
 		public PictureSize(int width, int height)
 		{
 			if (width < 0)
@@ -14,8 +16,8 @@
 			this.Height = height;
 		}
 
-		public int Width { get; }
+		public int Width { get; private set; }
 
-		public int Height { get; }
+		public int Height { get; private set; }
 	}
 }

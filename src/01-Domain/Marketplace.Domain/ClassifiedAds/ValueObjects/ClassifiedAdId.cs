@@ -4,6 +4,8 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
 	public record ClassifiedAdId
 	{
+		private ClassifiedAdId() { }
+
 		public ClassifiedAdId(Guid value)
 		{
 			if (value == default)
@@ -12,7 +14,7 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 			Value = value;
 		}
 
-		public Guid Value { get; }
+		public Guid Value { get; private set; }
 
 		public static implicit operator Guid(ClassifiedAdId self)
 		{

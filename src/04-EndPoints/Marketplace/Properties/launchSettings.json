@@ -1,30 +1,30 @@
 {
-  "profiles": {
-    "Marketplace": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "marketplace/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5086"
-    },
-    "WSL": {
-      "commandName": "WSL2",
-      "launchBrowser": true,
-      "launchUrl": "http://localhost:5086/marketplace/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:5086"
-      },
-      "distributionName": ""
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/marketplace/swagger",
-      "publishAllPorts": true
-    }
-  }
+	"profiles": {
+		"Marketplace": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"launchUrl": "marketplace/swagger",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			},
+			"dotnetRunMessages": true,
+			"applicationUrl": "http://localhost:5086"
+		},
+		"WSL": {
+			"commandName": "WSL2",
+			"launchBrowser": true,
+			"launchUrl": "http://localhost:5086/marketplace/swagger",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"ASPNETCORE_URLS": "http://localhost:5086"
+			},
+			"distributionName": ""
+		},
+		"Docker": {
+			"commandName": "Docker",
+			"launchBrowser": true,
+			"launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/marketplace/swagger",
+			"publishAllPorts": true
+		}
+	}
 }
