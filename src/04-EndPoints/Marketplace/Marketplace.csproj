@@ -17,6 +17,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\02-Application\Marketplace.Application\Marketplace.Application.csproj" />
+	  <ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.EF\Marketplace.Persistence.EF.csproj" />
 	  <ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj" />
 	</ItemGroup>
 
