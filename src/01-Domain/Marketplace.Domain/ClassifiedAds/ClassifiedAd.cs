@@ -54,6 +54,8 @@ namespace Marketplace.Domain.ClassifiedAds
 			));
 		}
 
+		public Guid ClassifiedAdId { get; private set; }
+
 		public UserId OwnerId { get; private set; }
 
 		public ClassifiedAdTitle Title { get; private set; }
@@ -99,6 +101,7 @@ namespace Marketplace.Domain.ClassifiedAds
 			{
 				case ClassifiedAdCreated e:
 					Id = new ClassifiedAdId(e.Id);
+					ClassifiedAdId = e.Id;
 					OwnerId = new UserId(e.OwnerId);
 					State = ClassifiedAdState.Inactive;
 					break;

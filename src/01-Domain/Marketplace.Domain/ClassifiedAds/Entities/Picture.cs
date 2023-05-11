@@ -12,6 +12,8 @@ namespace Marketplace.Domain.ClassifiedAds.Entities
 		{
 		}
 
+		public Guid PictureId { get; private set; }
+
 		public PictureSize Size { get; private set; }
 
 		public Uri Location { get; private set; }
@@ -29,6 +31,7 @@ namespace Marketplace.Domain.ClassifiedAds.Entities
 			{
 				case PictureAddedToAClassifiedAd e:
 					Id = new PictureId(e.PictureId);
+					PictureId = e.PictureId;
 					Size = new PictureSize(e.Width, e.Height);
 					Location = new Uri(e.Url);
 					Order = e.Order;

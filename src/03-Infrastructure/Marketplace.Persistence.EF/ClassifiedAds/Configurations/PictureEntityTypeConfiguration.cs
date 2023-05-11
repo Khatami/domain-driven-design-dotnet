@@ -8,8 +8,9 @@ namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
     {
         public void Configure(EntityTypeBuilder<Picture> builder)
         {
-            builder.HasKey(q => q.Id);
+            builder.HasKey(q => q.PictureId);
 
+            builder.OwnsOne(q => q.Id);
 			builder.OwnsOne(q => q.Size);
 		}
     }

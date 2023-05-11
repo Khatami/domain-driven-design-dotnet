@@ -9,8 +9,9 @@ namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
 	{
 		public void Configure(EntityTypeBuilder<ClassifiedAd> builder)
 		{
-			builder.HasKey(x => x.Id);
+			builder.HasKey(x => x.ClassifiedAdId);
 
+			builder.OwnsOne(x => x.Id);
 			builder.OwnsOne(x => x.Price, p => p.OwnsOne(q => q.Currency));
 			builder.OwnsOne(x => x.OwnerId);
 			builder.OwnsOne(x => x.Title);
