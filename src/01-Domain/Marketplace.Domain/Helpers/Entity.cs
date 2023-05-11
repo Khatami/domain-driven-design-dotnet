@@ -6,6 +6,8 @@ namespace Marketplace.Domain.Helpers
     {
         private readonly Action<object> _applier;
 
+        protected Entity() { }
+
         protected Entity(Action<object> applier)
         {
             _applier = applier;

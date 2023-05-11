@@ -7,11 +7,11 @@ namespace Marketplace.Extensions
 	{
 		public static void EnsureDatabase(this IApplicationBuilder app)
 		{
-			var context = app.ApplicationServices.GetRequiredService<ClassifiedAdDbContext>();
-
-			if (context.Database.EnsureCreated() == false)
+			using (var scope = app.ApplicationServices.CreateScope())
 			{
-				context.Database.Migrate();
+				var context = scope.ServiceProvider.GetRequiredService<ClassifiedAdDbContext>();
+
+				context.Database.EnsureCreated();
 			}
 		}
 	}

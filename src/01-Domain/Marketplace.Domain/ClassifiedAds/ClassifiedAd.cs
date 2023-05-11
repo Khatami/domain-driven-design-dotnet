@@ -9,6 +9,8 @@ namespace Marketplace.Domain.ClassifiedAds
 {
     public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
+		private ClassifiedAd() { }
+
 		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
 		{
 			Apply(new ClassifiedAdCreated(id, ownerId));

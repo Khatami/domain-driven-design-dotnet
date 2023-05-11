@@ -1,5 +1,6 @@
 ﻿using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Persistence.EF.ClassifiedAds;
+using Marketplace.Persistence.EF.ClassifiedAds.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -28,6 +29,7 @@ namespace Marketplace.Persistence.EF
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.ApplyConfiguration(new ClassifiedAdEntityTypeConfiguration());
+			modelBuilder.ApplyConfiguration(new PictureEntityTypeConfiguration());
 
 			base.OnModelCreating(modelBuilder);
 		}

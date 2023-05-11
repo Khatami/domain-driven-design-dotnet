@@ -7,7 +7,7 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
 	public record Money
 	{
-		private Money() { }
+		protected Money() { }
 
 		protected Money(MoneyArguments moneyArguments)
 		{

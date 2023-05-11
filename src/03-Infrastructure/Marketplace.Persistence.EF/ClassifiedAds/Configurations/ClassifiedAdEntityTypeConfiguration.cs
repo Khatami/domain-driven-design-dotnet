@@ -1,23 +1,21 @@
 ﻿using Marketplace.Domain.ClassifiedAds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
 {
-    internal class ClassifiedAdEntityTypeConfiguration : IEntityTypeConfiguration<ClassifiedAd>
-    {
-        public void Configure(EntityTypeBuilder<ClassifiedAd> builder)
-        {
-            builder
-                .OwnsOne(x => x.Id, q =>
-                {
-                    q.Property(p => p.Value)
-                        .HasColumnType(SqlDbType.UniqueIdentifier.ToString())
-                        .IsRequired()
-                        .HasColumnName(nameof(ClassifiedAd.Id));
-                })
-                .HasKey(x => x.Id);
-        }
-    }
+	internal class ClassifiedAdEntityTypeConfiguration : IEntityTypeConfiguration<ClassifiedAd>
+	{
+		public void Configure(EntityTypeBuilder<ClassifiedAd> builder)
+		{
+			builder.HasKey(x => x.Id);
+
+			builder.OwnsOne(x => x.Price, p => p.OwnsOne(q => q.Currency));
+			builder.OwnsOne(x => x.OwnerId);
+			builder.OwnsOne(x => x.Title);
+			builder.OwnsOne(x => x.Text);
+			builder.OwnsOne(x => x.ApprovedBy);
+		}
+	}
 }

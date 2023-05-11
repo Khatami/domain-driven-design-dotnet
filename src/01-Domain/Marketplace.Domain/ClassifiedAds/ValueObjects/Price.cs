@@ -6,6 +6,8 @@ namespace Marketplace.Domain.ClassifiedAds.ValueObjects
 {
 	public record Price : Money
 	{
+		private Price() { }
+
 		public Price(MoneyArguments moneyArguments) : base(moneyArguments)
 		{
 			if (moneyArguments.Amount < 0)

@@ -6,6 +6,8 @@ namespace Marketplace.Domain.ClassifiedAds.Entities
 {
     public class Picture : Entity<PictureId>
 	{
+		private Picture() { }
+
 		public Picture(Action<object> applier) : base(applier)
 		{
 		}
