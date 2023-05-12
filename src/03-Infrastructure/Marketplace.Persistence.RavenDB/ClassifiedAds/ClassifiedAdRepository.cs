@@ -1,11 +1,11 @@
 ﻿using Marketplace.Domain;
 using Marketplace.Domain.ClassifiedAds;
-using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Shared.ValueObjects;
 using Raven.Client.Documents.Session;
 
 namespace Marketplace.Persistence.RavenDB.ClassifiedAds
 {
-	public class ClassifiedAdRepository : IClassifiedAdRepository
+    public class ClassifiedAdRepository : IClassifiedAdRepository
 	{
 		private readonly IAsyncDocumentSession _session;
 

@@ -1,5 +1,5 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Application.Helpers;
+using Marketplace.Application.Shared;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers
 {

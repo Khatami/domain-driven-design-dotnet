@@ -2,7 +2,7 @@
 using Marketplace.Application.ClassifiedAds.Services;
 using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Helpers;
+using Marketplace.Application.Shared;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Marketplace.Application.Extensions

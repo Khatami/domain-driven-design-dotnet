@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Helpers;
+﻿using Marketplace.Application.Shared;
 using Raven.Client.Documents.Session;
 
 namespace Marketplace.Persistence.RavenDB.UnitOfWork

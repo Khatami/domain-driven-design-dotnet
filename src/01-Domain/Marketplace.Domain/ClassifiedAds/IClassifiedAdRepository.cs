@@ -1,8 +1,8 @@
-﻿using Marketplace.Domain.ClassifiedAds.ValueObjects;
+﻿using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-	public interface IClassifiedAdRepository
+    public interface IClassifiedAdRepository
 	{
 		Task Add(ClassifiedAd entity);
 

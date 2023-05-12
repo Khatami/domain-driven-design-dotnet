@@ -1,11 +1,11 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Helpers;
+using Marketplace.Application.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers
 {
-    [Route("api/V1/[controller]")]
+	[Route("api/V1/[controller]")]
 	[ApiController]
 	public class ClassifiedAdsController : Controller
 	{

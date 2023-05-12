@@ -3,6 +3,7 @@ using Marketplace.Domain.ClassifiedAds.Arguments;
 using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.Tests.ClassifiedAds.FakeServices;
 
 namespace Marketplace.Domain.Tests.ClassifiedAds

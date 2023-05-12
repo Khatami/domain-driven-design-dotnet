@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Helpers;
+﻿using Marketplace.Application.Shared;
 
 namespace Marketplace.Persistence.EF.UnitOfWork
 {

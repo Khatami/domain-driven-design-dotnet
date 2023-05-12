@@ -1,10 +1,11 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Helpers;
+using Marketplace.Application.Shared;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAds.Arguments;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.Services
 {

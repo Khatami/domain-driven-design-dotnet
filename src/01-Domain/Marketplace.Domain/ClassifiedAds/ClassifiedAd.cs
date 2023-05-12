@@ -4,11 +4,13 @@ using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Domain.Shared.Helpers;
+using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
     public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
+		// for impedence mismatch
 		private ClassifiedAd() { }
 
 		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
