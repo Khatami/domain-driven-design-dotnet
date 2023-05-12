@@ -58,15 +58,15 @@ namespace Marketplace.Domain.ClassifiedAds
 
 		public UserId OwnerId { get; private set; }
 
-		public ClassifiedAdTitle Title { get; private set; }
+		public ClassifiedAdTitle? Title { get; private set; }
 
-		public ClassifiedAdText Text { get; private set; }
+		public ClassifiedAdText? Text { get; private set; }
 
-		public Price Price { get; private set; }
+		public Price? Price { get; private set; }
 
 		public ClassifiedAdState State { get; private set; }
 
-		public UserId ApprovedBy { get; private set; }
+		public UserId? ApprovedBy { get; private set; }
 
 		private List<Picture> _pictures = new();
 		public IReadOnlyList<Picture> Pictures
