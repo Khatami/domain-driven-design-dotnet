@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Marketplace.Domain.Helpers
+namespace Marketplace.Domain.Shared.Helpers
 {
     public abstract class Entity<TId> : IInternalEventHandler
     {

@@ -1,8 +1,8 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Arguments;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
-using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Domain.Tests.ClassifiedAds.FakeServices;
+using Marketplace.Domain.UserProfiles.Exceptions;
 
 namespace Marketplace.Domain.Tests.ClassifiedAds.ValueObjects
 {
@@ -71,7 +71,7 @@ namespace Marketplace.Domain.Tests.ClassifiedAds.ValueObjects
 			var firstAmount = Money.FromDecimal(new MoneyArguments(5, "EUR", _currencyLookup));
 			var secondAmount = Money.FromDecimal(new MoneyArguments(5, "USD", _currencyLookup));
 
-			Assert.Throws<CurrencyMismatchException>(() => firstAmount + secondAmount);
+			Assert.Throws<ProfanityFoundException>(() => firstAmount + secondAmount);
 		}
 
 		[Fact]
@@ -80,7 +80,7 @@ namespace Marketplace.Domain.Tests.ClassifiedAds.ValueObjects
 			var firstAmount = Money.FromDecimal(new MoneyArguments(5, "EUR", _currencyLookup));
 			var secondAmount = Money.FromDecimal(new MoneyArguments(5, "USD", _currencyLookup));
 
-			Assert.Throws<CurrencyMismatchException>(() => firstAmount - secondAmount);
+			Assert.Throws<ProfanityFoundException>(() => firstAmount - secondAmount);
 		}
 	}
 }

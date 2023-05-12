@@ -1,5 +1,4 @@
 ﻿using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Domain.Helpers;
 
 namespace Marketplace.Domain.ClassifiedAds
 {

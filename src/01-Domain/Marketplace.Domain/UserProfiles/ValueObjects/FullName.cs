@@ -2,12 +2,14 @@
 {
 	public record FullName
 	{
-		public string Value { get; }
+		private FullName() { }
 
 		private FullName(string value)
 		{
 			Value = value;
 		}
+
+		public string Value { get; }
 
 		public static FullName FromString(string fullName)
 		{

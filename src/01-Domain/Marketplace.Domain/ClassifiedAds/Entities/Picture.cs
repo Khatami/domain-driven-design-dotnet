@@ -1,6 +1,6 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Domain.Helpers;
+using Marketplace.Domain.Shared.Helpers;
 
 namespace Marketplace.Domain.ClassifiedAds.Entities
 {
