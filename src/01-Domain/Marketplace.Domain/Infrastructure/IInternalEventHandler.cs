@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Domain.Shared.Helpers
+﻿namespace Marketplace.Domain.Infrastructure
 {
     public interface IInternalEventHandler
     {

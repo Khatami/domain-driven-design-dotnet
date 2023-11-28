@@ -1,9 +1,9 @@
-﻿using Marketplace.Domain.Shared.Delegates;
+﻿using Marketplace.Domain.UserProfiles.Delegates;
 using Marketplace.Domain.UserProfiles.Exceptions;
 
 namespace Marketplace.Domain.UserProfiles.ValueObjects
 {
-	public record DisplayName
+    public record DisplayName
 	{
 		private DisplayName() { }
 

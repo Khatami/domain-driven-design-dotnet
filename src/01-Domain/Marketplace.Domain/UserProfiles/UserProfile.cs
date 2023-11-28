@@ -1,11 +1,11 @@
-﻿using Marketplace.Domain.Shared.Helpers;
+﻿using Marketplace.Domain.Infrastructure;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles.Events;
 using Marketplace.Domain.UserProfiles.ValueObjects;
 
 namespace Marketplace.Domain.UserProfiles
 {
-	public class UserProfile : AggregateRoot<UserId>
+    public class UserProfile : AggregateRoot<UserId>
 	{
 		// for impedence mismatch
 		private UserProfile() { }
@@ -25,7 +25,7 @@ namespace Marketplace.Domain.UserProfiles
 
 		public void UpdateDisplayName(FullName fullName)
 		{
-			Apply(new UserFullNameUpdated(Id, fullName));
+			Apply(new UserDisplayNameUpdated(Id, fullName));
 		}
 
 		public void UpdateProfilePhoto(Uri photoUri)

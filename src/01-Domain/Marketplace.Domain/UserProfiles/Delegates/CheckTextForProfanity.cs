@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Domain.Shared.Delegates
+﻿namespace Marketplace.Domain.UserProfiles.Delegates
 {
     public delegate bool CheckTextForProfanity(string text);
 }

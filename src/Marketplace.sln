@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Persistence.Rav
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5939F889-2A4A-403A-BD2E-44D24762A1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Persistence.EF", "03-Infrastructure\Marketplace.Persistence.EF\Marketplace.Persistence.EF.csproj", "{F77CFB7B-3638-4AF0-90BB-B40439ACA253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Persistence.EF", "03-Infrastructure\Marketplace.Persistence.EF\Marketplace.Persistence.EF.csproj", "{F77CFB7B-3638-4AF0-90BB-B40439ACA253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

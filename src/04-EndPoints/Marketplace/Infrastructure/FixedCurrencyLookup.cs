@@ -1,5 +1,6 @@
 ﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.ClassifiedAds.Metadata;
+using Marketplace.Domain.UserProfiles;
 
 namespace Marketplace.Infrastructure
 {

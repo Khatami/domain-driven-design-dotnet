@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Domain.Shared.Helpers
+﻿namespace Marketplace.Domain.Infrastructure
 {
     public abstract class AggregateRoot<TId>
     {
@@ -29,7 +29,7 @@
 
         protected abstract void EnsureValidState();
 
-        // We use this method to apply only changes to the entity, becase the event has been raised in the aggregate root and it has been added to _changes
+        // We use this method to apply only changes to the entity, because the event has been raised in the aggregate root and it has been added to _changes
         protected void ApplyToEntity(IInternalEventHandler entity, object @event)
         {
             entity?.Handle(@event);
