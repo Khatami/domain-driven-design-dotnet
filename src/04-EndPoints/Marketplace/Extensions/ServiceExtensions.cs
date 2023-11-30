@@ -1,6 +1,5 @@
 ﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Infrastructure;
-using Microsoft.Extensions.Configuration;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 
@@ -24,6 +23,8 @@ namespace Marketplace.Extensions
 
 			services.AddScoped<IAsyncDocumentSession>(c => store.OpenAsyncSession());
 			services.AddScoped<ICurrencyLookup, FixedCurrencyLookup>();
+
+			// TODO: Profanity Resolve
 
 			return services;
 		}

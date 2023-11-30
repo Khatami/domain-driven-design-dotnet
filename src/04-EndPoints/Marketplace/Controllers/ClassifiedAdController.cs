@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers
 {
-	[Route("api/V1/[controller]")]
+    [Route("api/V1/[controller]")]
 	[ApiController]
-	public class ClassifiedAdsController : Controller
+	public class ClassifiedAdController : Controller
 	{
-		private readonly IHandleCommand<CreateClassifiedAd_V1> _createAdCommandHandler;
+		private readonly IHandleCommand<CreateClassifiedAd> _createAdCommandHandler;
 		private readonly IClassifiedAdApplicationService _classifiedAdService;
 
-		public ClassifiedAdsController(IHandleCommand<CreateClassifiedAd_V1> createAdCommandHandler,
+		public ClassifiedAdController(IHandleCommand<CreateClassifiedAd> createAdCommandHandler,
 			IClassifiedAdApplicationService classifiedAdService)
 		{
 			_createAdCommandHandler = createAdCommandHandler;
@@ -20,9 +20,9 @@ namespace Marketplace.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(CreateClassifiedAd_V1 request)
+		public async Task<IActionResult> Post(CreateClassifiedAd request)
 		{
-			// await _createAdCommandHandler.Handle(request);
+			await _createAdCommandHandler.Handle(request);
 
 			await _classifiedAdService.Handle(request);
 
@@ -31,7 +31,7 @@ namespace Marketplace.Controllers
 
 		[Route("name")]
 		[HttpPut]
-		public async Task<IActionResult> Put(SetClassifiedAdTitle_V1 request)
+		public async Task<IActionResult> Put(SetClassifiedAdTitle request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -40,7 +40,7 @@ namespace Marketplace.Controllers
 
 		[Route("text")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateClassifiedAdText_V1 request)
+		public async Task<IActionResult> Put(UpdateClassifiedAdText request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -49,7 +49,7 @@ namespace Marketplace.Controllers
 
 		[Route("price")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateClassifiedAdPrice_V1 request)
+		public async Task<IActionResult> Put(UpdateClassifiedAdPrice request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -58,7 +58,7 @@ namespace Marketplace.Controllers
 
 		[Route("publish")]
 		[HttpPut]
-		public async Task<IActionResult> Put(RequestClassifiedAdToPublish_V1 request)
+		public async Task<IActionResult> Put(RequestClassifiedAdToPublish request)
 		{
 			await _classifiedAdService.Handle(request);
 

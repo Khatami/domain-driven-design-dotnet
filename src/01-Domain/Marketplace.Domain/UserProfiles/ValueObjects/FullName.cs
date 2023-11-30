@@ -4,7 +4,7 @@
 	{
 		private FullName() { }
 
-		private FullName(string value)
+		internal FullName(string value)
 		{
 			Value = value;
 		}

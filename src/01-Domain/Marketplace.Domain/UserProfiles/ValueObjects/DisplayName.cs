@@ -7,7 +7,7 @@ namespace Marketplace.Domain.UserProfiles.ValueObjects
 	{
 		private DisplayName() { }
 
-		private DisplayName(string displayName)
+		internal DisplayName(string displayName)
 		{
 			Value = displayName;
 		}

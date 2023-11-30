@@ -3,8 +3,8 @@
     /// <summary>
     /// the implementation completely against SRP
     /// </summary>
-    public interface IClassifiedAdApplicationService
-    {
+    public interface IUserProfileApplicationService
+	{
         Task Handle(object command);
     }
 }

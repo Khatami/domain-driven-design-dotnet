@@ -23,9 +23,9 @@ namespace Marketplace.Domain.UserProfiles
 			Apply(new UserFullNameUpdated(Id, fullName));
 		}
 
-		public void UpdateDisplayName(FullName fullName)
+		public void UpdateDisplayName(DisplayName displayName)
 		{
-			Apply(new UserDisplayNameUpdated(Id, fullName));
+			Apply(new UserDisplayNameUpdated(Id, displayName));
 		}
 
 		public void UpdateProfilePhoto(Uri photoUri)
@@ -48,16 +48,16 @@ namespace Marketplace.Domain.UserProfiles
 				case UserRegistered e:
 					Id = new UserId(e.UserId);
 					UserId = e.UserId;
-					FullName = FullName.FromString(e.FullName);
-					DisplayName = DisplayName.FromString(e.DisplayName, null);
+					FullName = new FullName(e.FullName);
+					DisplayName = new DisplayName(e.DisplayName);
 					break;
 
 				case UserFullNameUpdated e:
-					FullName = FullName.FromString(e.FullName);
+					FullName = new FullName(e.FullName);
 					break;
 
 				case UserDisplayNameUpdated e:
-					DisplayName = DisplayName.FromString(e.DisplayName, null);
+					DisplayName = new DisplayName(e.DisplayName);
 					break;
 
 				case ProfilePhotoUpdated e:

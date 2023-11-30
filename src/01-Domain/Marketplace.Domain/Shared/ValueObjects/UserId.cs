@@ -18,5 +18,10 @@
         {
             return self.Id;
         }
-    }
+
+		public static implicit operator string(UserId self)
+		{
+			return self.Id.ToString();
+		}
+	}
 }

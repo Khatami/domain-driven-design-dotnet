@@ -34,7 +34,7 @@ namespace Marketplace.Application.ClassifiedAds.Services
 			// Advanced pattern-matching
 			switch (command)
 			{
-				case CreateClassifiedAd_V1 cmd:
+				case CreateClassifiedAd cmd:
 					var exists = await _classifiedAdRepository.Exists(new ClassifiedAdId(cmd.Id));
 
 					if (exists)
@@ -47,7 +47,7 @@ namespace Marketplace.Application.ClassifiedAds.Services
 					await _unitOfWork.Commit();
 					break;
 
-				case SetClassifiedAdTitle_V1 cmd:
+				case SetClassifiedAdTitle cmd:
 					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
@@ -58,7 +58,7 @@ namespace Marketplace.Application.ClassifiedAds.Services
 					await _unitOfWork.Commit();
 					break;
 
-				case UpdateClassifiedAdText_V1 cmd:
+				case UpdateClassifiedAdText cmd:
 					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
@@ -69,7 +69,7 @@ namespace Marketplace.Application.ClassifiedAds.Services
 					await _unitOfWork.Commit();
 					break;
 
-				case UpdateClassifiedAdPrice_V1 cmd:
+				case UpdateClassifiedAdPrice cmd:
 					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
@@ -80,7 +80,7 @@ namespace Marketplace.Application.ClassifiedAds.Services
 					await _unitOfWork.Commit();
 					break;
 
-				case RequestClassifiedAdToPublish_V1 cmd:
+				case RequestClassifiedAdToPublish cmd:
 					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
 					if (classifiedAd == null)
