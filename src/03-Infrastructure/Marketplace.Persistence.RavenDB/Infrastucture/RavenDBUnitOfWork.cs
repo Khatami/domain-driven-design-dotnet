@@ -1,9 +1,9 @@
-﻿using Marketplace.Application.Shared;
+﻿using Marketplace.Application.Infrastructure;
 using Raven.Client.Documents.Session;
 
 namespace Marketplace.Persistence.RavenDB.Infrastucture
 {
-    public class RavenDBUnitOfWork : IUnitOfWork
+	public class RavenDBUnitOfWork : IUnitOfWork
     {
         private readonly IAsyncDocumentSession _session;
 

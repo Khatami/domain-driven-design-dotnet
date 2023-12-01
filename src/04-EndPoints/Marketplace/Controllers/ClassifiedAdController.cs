@@ -1,11 +1,11 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Shared;
+using Marketplace.Application.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers
 {
-    [Route("api/V1/[controller]")]
+	[Route("api/V1/[controller]")]
 	[ApiController]
 	public class ClassifiedAdController : Controller
 	{
@@ -22,7 +22,7 @@ namespace Marketplace.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Post(CreateClassifiedAd request)
 		{
-			await _createAdCommandHandler.Handle(request);
+			// await _createAdCommandHandler.Handle(request);
 
 			await _classifiedAdService.Handle(request);
 

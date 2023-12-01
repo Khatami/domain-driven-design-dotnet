@@ -1,4 +1,5 @@
 ﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
+using Marketplace.Domain.UserProfiles.Delegates;
 using Marketplace.Infrastructure;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -24,7 +25,11 @@ namespace Marketplace.Extensions
 			services.AddScoped<IAsyncDocumentSession>(c => store.OpenAsyncSession());
 			services.AddScoped<ICurrencyLookup, FixedCurrencyLookup>();
 
-			// TODO: Profanity Resolve
+			var purgomalumClient = new PurgomalumClient();
+			services.AddSingleton<CheckTextForProfanity>(text =>
+			{
+				return purgomalumClient.CheckForProfanity(text).Result;
+			});
 
 			return services;
 		}

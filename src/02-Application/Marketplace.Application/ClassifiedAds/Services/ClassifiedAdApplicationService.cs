@@ -1,6 +1,6 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Shared;
+using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAds.Arguments;
 using Marketplace.Domain.ClassifiedAds.DomainServices;

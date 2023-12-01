@@ -1,6 +1,6 @@
-﻿using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
-using Marketplace.Application.Shared;
+﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+using Marketplace.Application.Contracts.UserProfiles.IServices;
+using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Domain.UserProfiles.Delegates;
@@ -8,20 +8,20 @@ using Marketplace.Domain.UserProfiles.ValueObjects;
 
 namespace Marketplace.Application.UserProfiles.Services
 {
-    internal class UserProfileApplicationService : IUserProfileApplicationService
+	internal class UserProfileApplicationService : IUserProfileApplicationService
 	{
 		private readonly IUserProfileRepository _repository;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly CheckTextForProfanity _checkText;
 
-		public UserProfileApplicationService(IUserProfileRepository repository,
-			IUnitOfWork unitOfWork,
-			CheckTextForProfanity checkText)
-		{
-			_repository = repository;
-			_unitOfWork = unitOfWork;
-			_checkText = checkText;
-		}
+		//public UserProfileApplicationService(IUserProfileRepository repository,
+		//	IUnitOfWork unitOfWork,
+		//	CheckTextForProfanity checkText)
+		//{
+		//	_repository = repository;
+		//	_unitOfWork = unitOfWork;
+		//	_checkText = checkText;
+		//}
 
 		public async Task Handle(object command)
 		{

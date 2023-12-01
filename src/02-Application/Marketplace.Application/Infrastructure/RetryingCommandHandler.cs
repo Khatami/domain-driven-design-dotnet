@@ -1,7 +1,7 @@
 ﻿using Polly;
 using Polly.Retry;
 
-namespace Marketplace.Application.Shared
+namespace Marketplace.Application.Infrastructure
 {
 	internal class RetryingCommandHandler<T> : IHandleCommand<T>
 	{

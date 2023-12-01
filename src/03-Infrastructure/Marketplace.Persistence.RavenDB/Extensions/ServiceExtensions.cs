@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Shared;
+﻿using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Persistence.RavenDB.ClassifiedAds;

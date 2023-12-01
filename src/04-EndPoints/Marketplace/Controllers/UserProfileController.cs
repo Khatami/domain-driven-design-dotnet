@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+using Marketplace.Application.Contracts.UserProfiles.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers

@@ -1,10 +1,9 @@
 ﻿using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.Shared.ValueObjects;
-using Marketplace.Persistence.EF;
 
 namespace Marketplace.Persistence.EF.ClassifiedAds
 {
-    public class ClassifiedAdRepository : IClassifiedAdRepository
+	public class ClassifiedAdRepository : IClassifiedAdRepository
 	{
 		private readonly ClassifiedAdDbContext _dbContext;
 

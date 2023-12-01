@@ -1,7 +1,7 @@
-﻿using Marketplace.Application.Shared;
+﻿using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Persistence.EF.ClassifiedAds;
-using Marketplace.Persistence.EF.UnitOfWork;
+using Marketplace.Persistence.EF.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

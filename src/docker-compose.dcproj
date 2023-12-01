@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>5939f889-2a4a-403a-bd2e-44d24762a1a5</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/{Scheme}://{ServiceHost}:{ServicePort}/marketplace/swagger</DockerServiceUrl>
+	  <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>marketplace</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

@@ -1,10 +1,10 @@
-﻿namespace Marketplace.Application.Contracts.ClassifiedAds.IServices
+﻿namespace Marketplace.Application.Contracts.UserProfiles.IServices
 {
-    /// <summary>
-    /// the implementation completely against SRP
-    /// </summary>
-    public interface IUserProfileApplicationService
+	/// <summary>
+	/// the implementation completely against SRP
+	/// </summary>
+	public interface IUserProfileApplicationService
 	{
-        Task Handle(object command);
-    }
+		Task Handle(object command);
+	}
 }

@@ -1,6 +1,7 @@
 using Marketplace.Application.Extensions;
 using Marketplace.Extensions;
 using Marketplace.Persistence.EF.Extensions;
+using Marketplace.Persistence.RavenDB.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
-//builder.Services.AddRavenDBServices();
-builder.Services.AddEFServices(builder.Configuration);
+builder.Services.AddRavenDBServices();
+//builder.Services.AddEFServices(builder.Configuration);
 
 builder.Services.AddEdgeServices(builder.Configuration);
 
@@ -19,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.EnsureDatabase();
+//app.EnsureDatabase();
 
 app.UsePathBase("/marketplace");
 

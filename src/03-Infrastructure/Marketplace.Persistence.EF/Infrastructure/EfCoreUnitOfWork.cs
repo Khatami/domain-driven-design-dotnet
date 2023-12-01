@@ -1,6 +1,6 @@
-﻿using Marketplace.Application.Shared;
+﻿using Marketplace.Application.Infrastructure;
 
-namespace Marketplace.Persistence.EF.UnitOfWork
+namespace Marketplace.Persistence.EF.Infrastructure
 {
 	public class EfCoreUnitOfWork : IUnitOfWork
 	{

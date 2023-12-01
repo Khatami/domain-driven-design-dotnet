@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Application.Shared
+﻿namespace Marketplace.Application.Infrastructure
 {
 	public interface IHandleCommand<T>
 	{
