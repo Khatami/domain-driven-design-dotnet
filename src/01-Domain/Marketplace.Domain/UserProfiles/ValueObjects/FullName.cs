@@ -13,7 +13,7 @@
 
 		public static FullName FromString(string fullName)
 		{
-			if (string.IsNullOrWhiteSpace(fullName) == false)
+			if (string.IsNullOrWhiteSpace(fullName))
 				throw new ArgumentNullException(nameof(fullName));
 
 			return new FullName(fullName);

@@ -13,8 +13,8 @@ namespace Marketplace.Infrastructure
 		public PurgomalumClient(HttpClient httpClient) => _httpClient = httpClient;
 		public async Task<bool> CheckForProfanity(string text)
 		{
-			var result = await _httpClient.GetAsync(
-			QueryHelpers.AddQueryString("https://www.purgomalum.com/service/containsprofanity", "text", text));
+			var url = QueryHelpers.AddQueryString("https://www.purgomalum.com/service/containsprofanity", "text", text);
+			var result = await _httpClient.GetAsync(url);
 
 			var value = await result.Content.ReadAsStringAsync();
 			return bool.Parse(value);

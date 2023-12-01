@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
+// TODO: check Persistence
 builder.Services.AddRavenDBServices();
 //builder.Services.AddEFServices(builder.Configuration);
 
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// TODO: check Persistence
 //app.EnsureDatabase();
 
 app.UsePathBase("/marketplace");

@@ -14,14 +14,14 @@ namespace Marketplace.Application.UserProfiles.Services
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly CheckTextForProfanity _checkText;
 
-		//public UserProfileApplicationService(IUserProfileRepository repository,
-		//	IUnitOfWork unitOfWork,
-		//	CheckTextForProfanity checkText)
-		//{
-		//	_repository = repository;
-		//	_unitOfWork = unitOfWork;
-		//	_checkText = checkText;
-		//}
+		public UserProfileApplicationService(IUserProfileRepository repository,
+			IUnitOfWork unitOfWork,
+			CheckTextForProfanity checkText)
+		{
+			_repository = repository;
+			_unitOfWork = unitOfWork;
+			_checkText = checkText;
+		}
 
 		public async Task Handle(object command)
 		{
@@ -33,8 +33,7 @@ namespace Marketplace.Application.UserProfiles.Services
 
 					var userProfile = new UserProfile(new UserId(cmd.UserId),
 						FullName.FromString(cmd.FullName),
-						DisplayName.FromString(cmd.DisplayName,
-						_checkText));
+						DisplayName.FromString(cmd.DisplayName, _checkText));
 
 					await _repository.Add(userProfile);
 					await _unitOfWork.Commit();
