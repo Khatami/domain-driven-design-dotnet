@@ -9,91 +9,91 @@ using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.Services
 {
-	/// <summary>
-	/// It's completely against SRP
-	/// </summary>
-	internal class ClassifiedAdApplicationService : IClassifiedAdApplicationService
-	{
-		private readonly IClassifiedAdRepository _classifiedAdRepository;
-		private readonly ICurrencyLookup _currencyLookup;
-		private readonly IUnitOfWork _unitOfWork;
+    /// <summary>
+    /// It's completely against SRP
+    /// </summary>
+    internal class ClassifiedAdApplicationService : IClassifiedAdApplicationService
+    {
+        private readonly IClassifiedAdRepository _classifiedAdRepository;
+        private readonly ICurrencyLookup _currencyLookup;
+        private readonly IUnitOfWork _unitOfWork;
 
-		public ClassifiedAdApplicationService(IClassifiedAdRepository classifiedAdRepository,
-			ICurrencyLookup currencyLookup,
-			IUnitOfWork unitOfWork)
-		{
-			_classifiedAdRepository = classifiedAdRepository;	
-			_currencyLookup = currencyLookup;
-			_unitOfWork = unitOfWork;
-		}
+        public ClassifiedAdApplicationService(IClassifiedAdRepository classifiedAdRepository,
+            ICurrencyLookup currencyLookup,
+            IUnitOfWork unitOfWork)
+        {
+            _classifiedAdRepository = classifiedAdRepository;
+            _currencyLookup = currencyLookup;
+            _unitOfWork = unitOfWork;
+        }
 
-		public async Task Handle(object command)
-		{
-			ClassifiedAd classifiedAd;
+        public async Task Handle(object command)
+        {
+            ClassifiedAd classifiedAd;
 
-			// Advanced pattern-matching
-			switch (command)
-			{
-				case CreateClassifiedAd cmd:
-					var exists = await _classifiedAdRepository.Exists(new ClassifiedAdId(cmd.Id));
+            // Advanced pattern-matching
+            switch (command)
+            {
+                case CreateClassifiedAd cmd:
+                    var exists = await _classifiedAdRepository.Exists(new ClassifiedAdId(cmd.Id));
 
-					if (exists)
-						throw new InvalidOperationException($"Entitywith id {cmd.Id} already exists");
+                    if (exists)
+                        throw new InvalidOperationException($"Entitywith id {cmd.Id} already exists");
 
-					classifiedAd = new ClassifiedAd(new ClassifiedAdId(cmd.Id), new UserId(cmd.OwnerId));
+                    classifiedAd = new ClassifiedAd(new ClassifiedAdId(cmd.Id), new UserId(cmd.OwnerId));
 
-					await _classifiedAdRepository.Add(classifiedAd);
+                    await _classifiedAdRepository.Add(classifiedAd);
 
-					await _unitOfWork.Commit();
-					break;
+                    await _unitOfWork.Commit();
+                    break;
 
-				case SetClassifiedAdTitle cmd:
-					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
+                case SetClassifiedAdTitle cmd:
+                    classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
-					if (classifiedAd == null)
-						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
+                    if (classifiedAd == null)
+                        throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
-					classifiedAd.SetTitle(ClassifiedAdTitle.FromString(cmd.Title));
+                    classifiedAd.SetTitle(ClassifiedAdTitle.FromString(cmd.Title));
 
-					await _unitOfWork.Commit();
-					break;
+                    await _unitOfWork.Commit();
+                    break;
 
-				case UpdateClassifiedAdText cmd:
-					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
+                case UpdateClassifiedAdText cmd:
+                    classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
-					if (classifiedAd == null)
-						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
+                    if (classifiedAd == null)
+                        throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
-					classifiedAd.UpdateText(ClassifiedAdText.FromString(cmd.Text));
+                    classifiedAd.UpdateText(ClassifiedAdText.FromString(cmd.Text));
 
-					await _unitOfWork.Commit();
-					break;
+                    await _unitOfWork.Commit();
+                    break;
 
-				case UpdateClassifiedAdPrice cmd:
-					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
+                case UpdateClassifiedAdPrice cmd:
+                    classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
-					if (classifiedAd == null)
-						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
+                    if (classifiedAd == null)
+                        throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
-					classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(cmd.Price, cmd.Currency, _currencyLookup)));
+                    classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(cmd.Price, cmd.Currency, _currencyLookup)));
 
-					await _unitOfWork.Commit();
-					break;
+                    await _unitOfWork.Commit();
+                    break;
 
-				case RequestClassifiedAdToPublish cmd:
-					classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
+                case RequestClassifiedAdToPublish cmd:
+                    classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(cmd.Id));
 
-					if (classifiedAd == null)
-						throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
+                    if (classifiedAd == null)
+                        throw new InvalidOperationException($"Entity with id {cmd.Id} cannot be found");
 
-					classifiedAd.RequestToPublish(Guid.NewGuid());
+                    classifiedAd.RequestToPublish(Guid.NewGuid());
 
-					await _unitOfWork.Commit();
-					break;
+                    await _unitOfWork.Commit();
+                    break;
 
-				default:
-					throw new InvalidOperationException($"Command type {command.GetType().FullName} is unkown");
-			}
-		}
-	}
+                default:
+                    throw new InvalidOperationException($"Command type {command.GetType().FullName} is unkown");
+            }
+        }
+    }
 }
