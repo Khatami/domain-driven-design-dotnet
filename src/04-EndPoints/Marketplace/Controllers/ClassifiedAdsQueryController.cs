@@ -1,30 +1,32 @@
-﻿using Marketplace.Application.Contracts.ClassifiedAds.Queries.QueryModels;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Marketplace.Application.Contracts.ClassifiedAds.Queries.QueryModels;
 
-namespace Marketplace.Controllers
+namespace Marketplace.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ClassifiedAdsQueryController : ControllerBase
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class ClassifiedAdsQueryController : ControllerBase
+	[HttpGet]
+	[Route("list")]
+	public Task<IActionResult> Get(GetPublishedClassifiedAds request)
 	{
-		[HttpGet]
-		[Route("list")]
-		public Task<IActionResult> Get(GetPublishedClassifiedAds request)
-		{
-		}
+		throw new System.NotImplementedException();
+	}
 
-		[HttpGet]
-		[Route("myads")]
-		public Task<IActionResult> Get(GetOwnersClassifiedAd request)
-		{
-		}
+	[HttpGet]
+	[Route("myads")]
+	public Task<IActionResult> Get(GetOwnersClassifiedAd request)
+	{
+		throw new System.NotImplementedException();
+	}
 
-		[HttpGet]
-		[ProducesResponseType((int)HttpStatusCode.OK)]
-		[ProducesResponseType((int)HttpStatusCode.NotFound)]
-		public Task<IActionResult> Get(GetPublicClassifiedAd request)
-		{
-		}
+	[HttpGet]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	[ProducesResponseType((int)HttpStatusCode.NotFound)]
+	public Task<IActionResult> Get(GetPublicClassifiedAd request)
+	{
+		throw new System.NotImplementedException();
 	}
 }

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\03-Infrastructure\Marketplace.Mediator\Marketplace.Mediator.csproj" />
+  </ItemGroup>
+
 </Project>

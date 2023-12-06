@@ -27,7 +27,7 @@ namespace Marketplace.Application.UserProfiles.Services
 		{
 			switch (command)
 			{
-				case RegisterUser cmd:
+				case RegisterUserCommand cmd:
 					if (await _repository.Exists(new UserId(cmd.UserId)))
 						throw new InvalidOperationException($"Entity with id {cmd.UserId} already exists");
 
@@ -39,15 +39,15 @@ namespace Marketplace.Application.UserProfiles.Services
 					await _unitOfWork.Commit();
 					break;
 
-				case UpdateUserFullName cmd:
+				case UpdateUserFullNameCommand cmd:
 					await HandleUpdate(cmd.UserId, profile => profile.UpdateFullName(FullName.FromString(cmd.FullName)));
 					break;
 
-				case UpdateUserDisplayName cmd:
+				case UpdateUserDisplayNameCommand cmd:
 					await HandleUpdate(cmd.UserId, profile => profile.UpdateDisplayName(DisplayName.FromString(cmd.DisplayName, _checkText)));
 					break;
 
-				case UpdateUserProfilePhoto cmd:
+				case UpdateUserProfilePhotoCommand cmd:
 					await HandleUpdate(cmd.UserId, profile => profile.UpdateProfilePhoto(new Uri(cmd.PhotoUrl)));
 					break;
 

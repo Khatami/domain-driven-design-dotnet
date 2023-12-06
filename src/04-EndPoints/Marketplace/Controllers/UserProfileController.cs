@@ -16,7 +16,7 @@ namespace Marketplace.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(RegisterUser request)
+		public async Task<IActionResult> Post(RegisterUserCommand request)
 		{
 			await _userProfileApplicationService.Handle(request);
 
@@ -25,7 +25,7 @@ namespace Marketplace.Controllers
 
 		[Route("fullname")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateUserFullName request)
+		public async Task<IActionResult> Put(UpdateUserFullNameCommand request)
 		{
 			await _userProfileApplicationService.Handle(request);
 
@@ -34,7 +34,7 @@ namespace Marketplace.Controllers
 
 		[Route("displayname")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateUserDisplayName request)
+		public async Task<IActionResult> Put(UpdateUserDisplayNameCommand request)
 		{
 			await _userProfileApplicationService.Handle(request);
 
@@ -43,7 +43,7 @@ namespace Marketplace.Controllers
 
 		[Route("photo")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateUserProfilePhoto request)
+		public async Task<IActionResult> Put(UpdateUserProfilePhotoCommand request)
 		{
 			await _userProfileApplicationService.Handle(request);
 

@@ -9,10 +9,10 @@ namespace Marketplace.Controllers
 	[ApiController]
 	public class ClassifiedAdController : Controller
 	{
-		private readonly IHandleCommand<CreateClassifiedAd> _createAdCommandHandler;
+		private readonly IHandleCommand<CreateClassifiedAdCommand> _createAdCommandHandler;
 		private readonly IClassifiedAdApplicationService _classifiedAdService;
 
-		public ClassifiedAdController(IHandleCommand<CreateClassifiedAd> createAdCommandHandler,
+		public ClassifiedAdController(IHandleCommand<CreateClassifiedAdCommand> createAdCommandHandler,
 			IClassifiedAdApplicationService classifiedAdService)
 		{
 			_createAdCommandHandler = createAdCommandHandler;
@@ -20,7 +20,7 @@ namespace Marketplace.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(CreateClassifiedAd request)
+		public async Task<IActionResult> Post(CreateClassifiedAdCommand request)
 		{
 			// await _createAdCommandHandler.Handle(request);
 
@@ -31,7 +31,7 @@ namespace Marketplace.Controllers
 
 		[Route("name")]
 		[HttpPut]
-		public async Task<IActionResult> Put(SetClassifiedAdTitle request)
+		public async Task<IActionResult> Put(SetClassifiedAdTitleCommand request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -40,7 +40,7 @@ namespace Marketplace.Controllers
 
 		[Route("text")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateClassifiedAdText request)
+		public async Task<IActionResult> Put(UpdateClassifiedAdTextCommand request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -49,7 +49,7 @@ namespace Marketplace.Controllers
 
 		[Route("price")]
 		[HttpPut]
-		public async Task<IActionResult> Put(UpdateClassifiedAdPrice request)
+		public async Task<IActionResult> Put(UpdateClassifiedAdPriceCommand request)
 		{
 			await _classifiedAdService.Handle(request);
 
@@ -58,7 +58,7 @@ namespace Marketplace.Controllers
 
 		[Route("publish")]
 		[HttpPut]
-		public async Task<IActionResult> Put(RequestClassifiedAdToPublish request)
+		public async Task<IActionResult> Put(RequestClassifiedAdToPublishCommand request)
 		{
 			await _classifiedAdService.Handle(request);
 
