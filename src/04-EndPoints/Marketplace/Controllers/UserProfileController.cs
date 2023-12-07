@@ -1,6 +1,6 @@
-﻿using Marketplace.Mediator;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+using Marketplace.Application.Contracts.Infrastructure;
 
 namespace Marketplace.Controllers;
 
@@ -8,9 +8,9 @@ namespace Marketplace.Controllers;
 [Route("api/[controller]")]
 public class UserProfileController : ControllerBase
 {
-	private readonly ICustomMediator _mediator;
+	private readonly IMediator _mediator;
 
-	public UserProfileController(ICustomMediator mediator)
+	public UserProfileController(IMediator mediator)
 	{
 		_mediator = mediator;
 	}

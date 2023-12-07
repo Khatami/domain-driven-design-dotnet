@@ -3,10 +3,11 @@ using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+using Marketplace.Application.Contracts.Infrastructure;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 
-internal class UpdateClassifiedAdTextCommandHandler : Mediator.ICommandHandler<UpdateClassifiedAdTextCommand>
+internal class UpdateClassifiedAdTextCommandHandler : ICommandHandler<UpdateClassifiedAdTextCommand>
 {
 	private readonly IUnitOfWork _unitOfWork;
 	private readonly IClassifiedAdRepository _classifiedAdRepository;

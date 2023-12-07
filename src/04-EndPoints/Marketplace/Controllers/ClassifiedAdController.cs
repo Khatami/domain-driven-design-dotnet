@@ -1,6 +1,6 @@
-﻿using Marketplace.Mediator;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+using Marketplace.Application.Contracts.Infrastructure;
 
 namespace Marketplace.Controllers;
 
@@ -8,9 +8,9 @@ namespace Marketplace.Controllers;
 [Route("api/V1/[controller]")]
 public class ClassifiedAdController : Controller
 {
-	private readonly ICustomMediator _mediator;
+	private readonly IMediator _mediator;
 
-	public ClassifiedAdController(ICustomMediator mediator)
+	public ClassifiedAdController(IMediator mediator)
 	{
 		_mediator = mediator;
 	}

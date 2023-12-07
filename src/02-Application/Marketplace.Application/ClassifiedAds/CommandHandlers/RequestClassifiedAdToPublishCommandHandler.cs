@@ -2,10 +2,11 @@
 using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+using Marketplace.Application.Contracts.Infrastructure;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 
-internal class RequestClassifiedAdToPublishCommandHandler : Mediator.ICommandHandler<RequestClassifiedAdToPublishCommand>
+internal class RequestClassifiedAdToPublishCommandHandler : ICommandHandler<RequestClassifiedAdToPublishCommand>
 {
 	private readonly IUnitOfWork _unitOfWork;
 	private readonly IClassifiedAdRepository _classifiedAdRepository;

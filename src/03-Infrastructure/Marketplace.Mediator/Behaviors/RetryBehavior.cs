@@ -1,9 +1,12 @@
-﻿using Polly;
+﻿using MediatR;
+using Polly;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Marketplace.Mediator.Behaviors;
 
-public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TRequest, TResponse> where TRequest : ICommand<TResponse>
+public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TRequest, TResponse> where TRequest : Application.Contracts.Infrastructure.IRequest
 {
 	private readonly System.Collections.Generic.IList<IRetriableCommandWithValue<TRequest, TResponse>> _retryHandlers;
 
@@ -12,9 +15,7 @@ public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TReq
 		_retryHandlers = retryHandlers;
 	}
 
-	public async System.Threading.Tasks.Task<TResponse>Handle
-		(TRequest request, MediatR.RequestHandlerDelegate<TResponse> next,
-		System.Threading.CancellationToken cancellationToken)
+	public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
 	{
 		var retryHandler = _retryHandlers.FirstOrDefault();
 
@@ -24,13 +25,13 @@ public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TReq
 			return await next();
 		}
 
-		var circuitBreaker = Polly.Policy<TResponse>
+		var circuitBreaker = Polly.Policy
 			.Handle<System.Exception>()
 			.CircuitBreakerAsync(retryHandler.ExceptionsAllowedBeforeCircuitTrip, System.TimeSpan.FromMilliseconds(5000),
 			(exception, things) => { }, () => { });
 
 		var retryPolicy =
-			Polly.Policy<TResponse>
+			Polly.Policy
 			.Handle<System.Exception>()
 			.WaitAndRetryAsync(retryHandler.RetryAttempts, retryAttempt =>
 			{

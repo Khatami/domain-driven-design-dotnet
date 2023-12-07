@@ -1,10 +1,10 @@
-﻿using Marketplace.Mediator;
+﻿using Marketplace.Application.Contracts.Infrastructure;
 using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 using Marketplace.Application.Infrastructure;
 using Marketplace.Domain.Shared.ValueObjects;
-using Marketplace.Domain.UserProfiles.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Domain.UserProfiles.Delegates;
+using Marketplace.Domain.UserProfiles.ValueObjects;
 
 namespace Marketplace.Application.UserProfiles.CommandHandlers;
 

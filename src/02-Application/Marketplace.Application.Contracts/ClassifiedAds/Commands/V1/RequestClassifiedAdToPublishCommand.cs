@@ -1,6 +1,8 @@
-﻿namespace Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+﻿using Marketplace.Application.Contracts.Infrastructure;
 
-public class RequestClassifiedAdToPublishCommand : Mediator.ICommand
+namespace Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+
+public class RequestClassifiedAdToPublishCommand : IRequest
 {
 	public Guid Id { get; set; }
 }

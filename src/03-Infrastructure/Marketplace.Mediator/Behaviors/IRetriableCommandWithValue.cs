@@ -1,12 +1,14 @@
-﻿namespace Marketplace.Mediator.Behaviors;
+﻿using Marketplace.Application.Contracts.Infrastructure;
 
-public interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : ICommand<TResponse>
+namespace Marketplace.Mediator.Behaviors;
+
+public interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : IRequest
 {
-	internal int RetryAttempts => 1;
+	int RetryAttempts => 1;
 
-	internal int RetryDelay => 250;
+	int RetryDelay => 250;
 
-	internal bool RetryWithExponentialBackoff => false;
+	bool RetryWithExponentialBackoff => false;
 
-	internal int ExceptionsAllowedBeforeCircuitTrip => 1;
+	int ExceptionsAllowedBeforeCircuitTrip => 1;
 }

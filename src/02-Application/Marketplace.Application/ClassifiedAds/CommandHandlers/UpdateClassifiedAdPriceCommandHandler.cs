@@ -1,13 +1,15 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Domain.ClassifiedAds;
-using Marketplace.Domain.Shared.ValueObjects;
+using Marketplace.Application.Contracts.Infrastructure;
 using Marketplace.Application.Infrastructure;
+using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAds.Arguments;
-using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
+using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Shared.ValueObjects;
+
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 
-internal class UpdateClassifiedAdPriceCommandHandler : Mediator.ICommandHandler<UpdateClassifiedAdPriceCommand>
+internal class UpdateClassifiedAdPriceCommandHandler : ICommandHandler<UpdateClassifiedAdPriceCommand>
 {
 	private readonly IUnitOfWork _unitOfWork;
 	private readonly ICurrencyLookup _currencyLookup;

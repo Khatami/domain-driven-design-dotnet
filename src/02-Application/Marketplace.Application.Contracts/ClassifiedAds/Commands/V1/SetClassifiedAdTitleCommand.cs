@@ -1,6 +1,8 @@
-﻿namespace Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+﻿using Marketplace.Application.Contracts.Infrastructure;
 
-public class SetClassifiedAdTitleCommand : Mediator.ICommand
+namespace Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+
+public class SetClassifiedAdTitleCommand : IRequest
 {
 	public Guid Id { get; set; }
 

@@ -1,6 +1,8 @@
-﻿namespace Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+﻿using Marketplace.Application.Contracts.Infrastructure;
 
-public class RegisterUserCommand : Mediator.ICommand
+namespace Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+
+public class RegisterUserCommand : IRequest
 {
 	public Guid UserId { get; set; }
 
