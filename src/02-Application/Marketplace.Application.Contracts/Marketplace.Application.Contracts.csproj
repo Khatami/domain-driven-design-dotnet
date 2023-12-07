@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\01-Domain\Marketplace.Domain\Marketplace.Domain.csproj" />
-    <ProjectReference Include="..\..\03-Infrastructure\Marketplace.Mediator\Marketplace.Mediator.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,17 +10,6 @@ public class ClassifiedAdController : Controller
 {
 	private readonly ICustomMediator _mediator;
 
-	//private readonly IClassifiedAdApplicationService _classifiedAdService;
-	//private readonly IHandleCommand<CreateClassifiedAdCommand> _createAdCommandHandler;
-
-	//public ClassifiedAdController
-	//	(IClassifiedAdApplicationService classifiedAdService,
-	//	IHandleCommand<CreateClassifiedAdCommand> createAdCommandHandler)
-	//{
-	//	_classifiedAdService = classifiedAdService;
-	//	_createAdCommandHandler = createAdCommandHandler;
-	//}
-
 	public ClassifiedAdController(ICustomMediator mediator)
 	{
 		_mediator = mediator;

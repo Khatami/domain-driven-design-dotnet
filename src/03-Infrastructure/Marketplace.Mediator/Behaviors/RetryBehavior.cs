@@ -12,9 +12,7 @@ public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TReq
 		_retryHandlers = retryHandlers;
 	}
 
-	public async
-		System.Threading.Tasks.Task<TResponse>
-		Handle
+	public async System.Threading.Tasks.Task<TResponse>Handle
 		(TRequest request, MediatR.RequestHandlerDelegate<TResponse> next,
 		System.Threading.CancellationToken cancellationToken)
 	{
