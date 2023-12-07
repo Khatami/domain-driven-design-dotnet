@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Infrastructure;
+﻿using Marketplace.Application.Infrastructure.UnitOfWork;
 using Raven.Client.Documents.Session;
 
 namespace Marketplace.Persistence.RavenDB.Infrastucture

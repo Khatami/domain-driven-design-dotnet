@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Infrastructure;
+﻿using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Persistence.EF.ClassifiedAds;
 using Marketplace.Persistence.EF.Infrastructure;

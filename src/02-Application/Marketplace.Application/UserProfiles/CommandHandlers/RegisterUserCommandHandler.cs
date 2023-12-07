@@ -1,6 +1,6 @@
 ﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
-using Marketplace.Application.Infrastructure;
 using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Domain.UserProfiles.Delegates;

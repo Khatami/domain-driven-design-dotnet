@@ -1,6 +1,6 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Application.Infrastructure;
 using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.Shared.ValueObjects;
 
