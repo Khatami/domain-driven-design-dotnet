@@ -1,8 +1,9 @@
-﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
-using Marketplace.Domain.UserProfiles.Delegates;
+﻿using Raven.Client.Documents;
 using Marketplace.Infrastructure;
-using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
+using Marketplace.Mediator.Extensions;
+using Marketplace.Domain.UserProfiles.Delegates;
+using Marketplace.Domain.ClassifiedAds.DomainServices;
 
 namespace Marketplace.Extensions
 {
@@ -30,6 +31,9 @@ namespace Marketplace.Extensions
 			{
 				return purgomalumClient.CheckForProfanity(text).Result;
 			});
+
+			services.AddBehaviors();
+			services.AddMediatorServices();
 
 			return services;
 		}

@@ -1,53 +1,59 @@
-﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
-using Marketplace.Application.Contracts.UserProfiles.IServices;
+﻿using Marketplace.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 
-namespace Marketplace.Controllers
+namespace Marketplace.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class UserProfileController : ControllerBase
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class UserProfileController : ControllerBase
+	private readonly ICustomMediator _mediator;
+
+	public UserProfileController(ICustomMediator mediator)
 	{
-		private readonly IUserProfileApplicationService _userProfileApplicationService;
+		_mediator = mediator;
+	}
 
-		public UserProfileController(IUserProfileApplicationService userProfileApplicationService)
-		{
-			_userProfileApplicationService = userProfileApplicationService;
-		}
+	//private readonly IUserProfileApplicationService _userProfileApplicationService;
 
-		[HttpPost]
-		public async Task<IActionResult> Post(RegisterUserCommand request)
-		{
-			await _userProfileApplicationService.Handle(request);
+	//public UserProfileController(IUserProfileApplicationService userProfileApplicationService)
+	//{
+	//	_userProfileApplicationService = userProfileApplicationService;
+	//}
 
-			return Ok();
-		}
+	[HttpPost]
+	public async Task<IActionResult> Post(RegisterUserCommand request)
+	{
+		await _mediator.Send(request);
 
-		[Route("fullname")]
-		[HttpPut]
-		public async Task<IActionResult> Put(UpdateUserFullNameCommand request)
-		{
-			await _userProfileApplicationService.Handle(request);
+		return Ok();
+	}
 
-			return Ok();
-		}
+	[HttpPut]
+	[Route("fullName")]
+	public async Task<IActionResult> Put(UpdateUserFullNameCommand request)
+	{
+		await _mediator.Send(request);
 
-		[Route("displayname")]
-		[HttpPut]
-		public async Task<IActionResult> Put(UpdateUserDisplayNameCommand request)
-		{
-			await _userProfileApplicationService.Handle(request);
+		return Ok();
+	}
 
-			return Ok();
-		}
+	[HttpPut]
+	[Route("displayName")]
+	public async Task<IActionResult> Put(UpdateUserDisplayNameCommand request)
+	{
+		await _mediator.Send(request);
 
-		[Route("photo")]
-		[HttpPut]
-		public async Task<IActionResult> Put(UpdateUserProfilePhotoCommand request)
-		{
-			await _userProfileApplicationService.Handle(request);
+		return Ok();
+	}
 
-			return Ok();
-		}
+	[HttpPut]
+	[Route("photo")]
+	public async Task<IActionResult> Put(UpdateUserProfilePhotoCommand request)
+	{
+		await _mediator.Send(request);
+
+		return Ok();
 	}
 }

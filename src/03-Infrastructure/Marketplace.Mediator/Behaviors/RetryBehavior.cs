@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Marketplace.Mediator.Behaviors;
 
-public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TRequest, TResponse> where TRequest : ICommandWithValue<TResponse>
+public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TRequest, TResponse> where TRequest : ICommand<TResponse>
 {
 	private readonly System.Collections.Generic.IList<IRetriableCommandWithValue<TRequest, TResponse>> _retryHandlers;
 

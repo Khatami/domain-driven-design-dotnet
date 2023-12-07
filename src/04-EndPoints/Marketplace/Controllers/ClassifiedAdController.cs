@@ -1,68 +1,72 @@
-﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Application.Contracts.ClassifiedAds.IServices;
-using Marketplace.Application.Infrastructure;
+﻿using Marketplace.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 
-namespace Marketplace.Controllers
+namespace Marketplace.Controllers;
+
+[ApiController]
+[Route("api/V1/[controller]")]
+public class ClassifiedAdController : Controller
 {
-	[Route("api/V1/[controller]")]
-	[ApiController]
-	public class ClassifiedAdController : Controller
+	private readonly ICustomMediator _mediator;
+
+	//private readonly IClassifiedAdApplicationService _classifiedAdService;
+	//private readonly IHandleCommand<CreateClassifiedAdCommand> _createAdCommandHandler;
+
+	//public ClassifiedAdController
+	//	(IClassifiedAdApplicationService classifiedAdService,
+	//	IHandleCommand<CreateClassifiedAdCommand> createAdCommandHandler)
+	//{
+	//	_classifiedAdService = classifiedAdService;
+	//	_createAdCommandHandler = createAdCommandHandler;
+	//}
+
+	public ClassifiedAdController(ICustomMediator mediator)
 	{
-		private readonly IHandleCommand<CreateClassifiedAdCommand> _createAdCommandHandler;
-		private readonly IClassifiedAdApplicationService _classifiedAdService;
+		_mediator = mediator;
+	}
 
-		public ClassifiedAdController(IHandleCommand<CreateClassifiedAdCommand> createAdCommandHandler,
-			IClassifiedAdApplicationService classifiedAdService)
-		{
-			_createAdCommandHandler = createAdCommandHandler;
-			_classifiedAdService = classifiedAdService;
-		}
+	[HttpPost]
+	public async Task<IActionResult> Post(CreateClassifiedAdCommand request)
+	{
+		await _mediator.Send(request);
 
-		[HttpPost]
-		public async Task<IActionResult> Post(CreateClassifiedAdCommand request)
-		{
-			// await _createAdCommandHandler.Handle(request);
+		return Ok();
+	}
 
-			await _classifiedAdService.Handle(request);
+	[HttpPut]
+	[Route("name")]
+	public async Task<IActionResult> Put(SetClassifiedAdTitleCommand request)
+	{
+		await _mediator.Send(request);
 
-			return Ok();
-		}
+		return Ok();
+	}
 
-		[Route("name")]
-		[HttpPut]
-		public async Task<IActionResult> Put(SetClassifiedAdTitleCommand request)
-		{
-			await _classifiedAdService.Handle(request);
+	[HttpPut]
+	[Route("text")]
+	public async Task<IActionResult> Put(UpdateClassifiedAdTextCommand request)
+	{
+		await _mediator.Send(request);
 
-			return Ok();
-		}
+		return Ok();
+	}
 
-		[Route("text")]
-		[HttpPut]
-		public async Task<IActionResult> Put(UpdateClassifiedAdTextCommand request)
-		{
-			await _classifiedAdService.Handle(request);
+	[HttpPut]
+	[Route("price")]
+	public async Task<IActionResult> Put(UpdateClassifiedAdPriceCommand request)
+	{
+		await _mediator.Send(request);
 
-			return Ok();
-		}
+		return Ok();
+	}
 
-		[Route("price")]
-		[HttpPut]
-		public async Task<IActionResult> Put(UpdateClassifiedAdPriceCommand request)
-		{
-			await _classifiedAdService.Handle(request);
+	[HttpPut]
+	[Route("publish")]
+	public async Task<IActionResult> Put(RequestClassifiedAdToPublishCommand request)
+	{
+		await _mediator.Send(request);
 
-			return Ok();
-		}
-
-		[Route("publish")]
-		[HttpPut]
-		public async Task<IActionResult> Put(RequestClassifiedAdToPublishCommand request)
-		{
-			await _classifiedAdService.Handle(request);
-
-			return Ok();
-		}
+		return Ok();
 	}
 }
