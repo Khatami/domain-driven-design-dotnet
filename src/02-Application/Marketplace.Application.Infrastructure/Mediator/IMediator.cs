@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Application.Contracts.Infrastructure;
+﻿namespace Marketplace.Application.Infrastructure.Mediator;
 
 public interface IMediator
 {

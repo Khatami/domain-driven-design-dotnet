@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Marketplace.Application.Infrastructure.Mediator;
+using MediatR;
 using Polly;
 using System.Linq;
 using System.Threading;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Mediator.Behaviors;
 
-public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TRequest, TResponse> where TRequest : Application.Contracts.Infrastructure.IRequest
+public class RetryBehavior<TRequest, TResponse> : MediatR.IPipelineBehavior<TRequest, TResponse> where TRequest : ICommand
 {
 	private readonly System.Collections.Generic.IList<IRetriableCommandWithValue<TRequest, TResponse>> _retryHandlers;
 

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Application.Contracts.Infrastructure;
+﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
+using Marketplace.Application.Infrastructure.Mediator;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers;
 

@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Reflection;
-using Marketplace.Application.Contracts.Infrastructure;
+﻿using Marketplace.Application.Infrastructure.Mediator;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+using System.Reflection;
 
 namespace Marketplace.Mediator.Extensions;
 
@@ -10,14 +10,14 @@ public static class ServiceCollectionExtensions
 	public static void AddMediatorServices
 		(this IServiceCollection services, params System.Type[] handlerAssemblyMarkerTypes)
 	{
-		services.AddMediatR
-			(configuration => configuration.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!));
-
 		services.AddTransient<IMediator, CustomMediator>();
 
 		services.AddMediatR(options =>
 		{
-			options.RegisterServicesFromAssemblies(handlerAssemblyMarkerTypes.Select(current => current.Assembly).ToArray());
+			options.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!);
+
+			if (handlerAssemblyMarkerTypes.Any())
+				options.RegisterServicesFromAssemblies(handlerAssemblyMarkerTypes.Select(current => current.Assembly).ToArray());
 		});
 
 		services.AddBehaviors();

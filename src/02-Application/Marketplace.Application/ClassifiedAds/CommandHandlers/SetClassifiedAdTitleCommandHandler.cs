@@ -1,9 +1,9 @@
-﻿using Marketplace.Domain.ClassifiedAds;
+﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Infrastructure;
-using Marketplace.Domain.Shared.ValueObjects;
+using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Application.Contracts.Infrastructure;
+using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 

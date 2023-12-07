@@ -1,6 +1,6 @@
-﻿using Marketplace.Application.Contracts.Infrastructure;
-using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
+﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 using Marketplace.Application.Infrastructure;
+using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Domain.UserProfiles.Delegates;
@@ -17,6 +17,7 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 	public RegisterUserCommandHandler
 		(IUnitOfWork unitOfWork, CheckTextForProfanity checkText, IUserProfileRepository repository)
 	{
+		MediatR.Mediator a;
 		_checkText = checkText;
 		_repository = repository;
 		_unitOfWork = unitOfWork;

@@ -1,8 +1,8 @@
-﻿using Marketplace.Application.Contracts.Infrastructure;
+﻿using Marketplace.Application.Infrastructure.Mediator;
 
 namespace Marketplace.Mediator.Behaviors;
 
-public interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : IRequest
+public interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : ICommand
 {
 	int RetryAttempts => 1;
 
