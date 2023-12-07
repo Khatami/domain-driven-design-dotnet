@@ -22,8 +22,8 @@ namespace Marketplace.Extensions
 			};
 
 			store.Initialize();
-
 			services.AddScoped<IAsyncDocumentSession>(c => store.OpenAsyncSession());
+
 			services.AddScoped<ICurrencyLookup, FixedCurrencyLookup>();
 
 			var purgomalumClient = new PurgomalumClient();
@@ -32,7 +32,6 @@ namespace Marketplace.Extensions
 				return purgomalumClient.CheckForProfanity(text).Result;
 			});
 
-			services.AddBehaviors();
 			services.AddMediatorServices();
 
 			return services;

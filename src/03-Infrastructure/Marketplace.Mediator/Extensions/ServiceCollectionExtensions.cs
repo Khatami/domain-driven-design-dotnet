@@ -12,19 +12,12 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddTransient<IMediator, CustomMediator>();
 
-		services.AddMediatR(options =>
-		{
-			options.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!);
+		//services.AddMediatR(options =>
+		//{
+		//	options.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!);
 
-			if (handlerAssemblyMarkerTypes.Any())
-				options.RegisterServicesFromAssemblies(handlerAssemblyMarkerTypes.Select(current => current.Assembly).ToArray());
-		});
-
-		services.AddBehaviors();
-	}
-
-	public static void AddBehaviors(this Microsoft.Extensions.DependencyInjection.IServiceCollection services)
-	{
-		services.AddTransient(typeof(Behaviors.IRetriableCommandWithValue<,>), typeof(Behaviors.RetryBehavior<,>));
+		//	if (handlerAssemblyMarkerTypes.Any())
+		//		options.RegisterServicesFromAssemblies(handlerAssemblyMarkerTypes.Select(current => current.Assembly).ToArray());
+		//});
 	}
 }

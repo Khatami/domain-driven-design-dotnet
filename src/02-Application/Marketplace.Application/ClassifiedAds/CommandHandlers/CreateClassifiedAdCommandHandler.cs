@@ -13,7 +13,6 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 
 	public CreateClassifiedAdCommandHandler(IUnitOfWork unitOfWork, IClassifiedAdRepository classifiedAdRepository)
 	{
-		MediatR.Mediator a;
 		_unitOfWork = unitOfWork;
 		_classifiedAdRepository = classifiedAdRepository;
 	}

@@ -17,7 +17,6 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 	public RegisterUserCommandHandler
 		(IUnitOfWork unitOfWork, CheckTextForProfanity checkText, IUserProfileRepository repository)
 	{
-		MediatR.Mediator a;
 		_checkText = checkText;
 		_repository = repository;
 		_unitOfWork = unitOfWork;

@@ -1,6 +1,6 @@
 ﻿namespace Marketplace.Application.Infrastructure.Mediator
 {
-	public interface ICommand : MediatR.IRequest
+	public interface ICommand
 	{
 	}
 }

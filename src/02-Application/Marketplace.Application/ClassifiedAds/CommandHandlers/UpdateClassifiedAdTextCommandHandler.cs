@@ -14,7 +14,6 @@ internal class UpdateClassifiedAdTextCommandHandler : ICommandHandler<UpdateClas
 
 	public UpdateClassifiedAdTextCommandHandler(IUnitOfWork unitOfWork, IClassifiedAdRepository classifiedAdRepository)
 	{
-		MediatR.Mediator a;
 		_unitOfWork = unitOfWork;
 		_classifiedAdRepository = classifiedAdRepository;
 	}

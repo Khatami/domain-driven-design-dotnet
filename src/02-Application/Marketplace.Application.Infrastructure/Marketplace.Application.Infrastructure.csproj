@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.2.0">
-      <PrivateAssets></PrivateAssets>
-      <ExcludeAssets></ExcludeAssets>
-      <IncludeAssets></IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>
