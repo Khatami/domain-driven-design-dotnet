@@ -1,6 +1,7 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -22,24 +23,14 @@ public static class ServiceCollectionExtensions
 		});
 
 		services.AddTransient(typeof(IRequestHandler<,>), typeof(CommandHandlerAdapter<,>));
-		services.AddTransient(typeof(IRequestHandler<>), typeof(CommandUnitHandlerAdapter<>));
+		services.AddTransient(typeof(IRequestHandler<,>), typeof(CommandUnitHandlerAdapter<>));
 		//services.AddTransient(typeof(INotificationHandler<>), typeof(NotificationHandlerAdapter<>));
-
-		var commands = Assembly.GetAssembly(typeof(Application.Extensions.ServiceExtensions))!
-			.GetTypes()
-			.Where(mytype => mytype.GetInterface(typeof(ICommandHandler<>).Name) != null && !mytype.IsInterface)
-			.ToList();
-
-		foreach (var item in commands)
-		{
-			services.AddScoped(item);
-		}
 
 		services.AddBehaviors();
 	}
 
 	public static void AddBehaviors(this IServiceCollection services)
 	{
-		services.AddTransient(typeof(Behaviors.IRetriableCommandWithValue<,>), typeof(Behaviors.RetryBehavior<,>));
+		//services.AddTransient(typeof(Behaviors.IRetriableCommandWithValue<,>), typeof(Behaviors.RetryBehavior<,>));
 	}
 }

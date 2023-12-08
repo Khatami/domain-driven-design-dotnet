@@ -1,4 +1,5 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ public class MediatRAdapter : IApplicationMediator
 
 	public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
 	{
-		RequestUnitAdapter<TRequest> requestAdapter = new RequestUnitAdapter<TRequest>(request);
+		RequestAdapter<TRequest, Unit> requestAdapter = new RequestAdapter<TRequest, Unit>(request);
 
 		return _mediator.Send(requestAdapter, cancellationToken);
 	}
