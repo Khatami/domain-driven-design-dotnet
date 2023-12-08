@@ -8,9 +8,9 @@ namespace Marketplace.Controllers;
 [Route("api/[controller]")]
 public class UserProfileController : ControllerBase
 {
-	private readonly IMediator _mediator;
+	private readonly IApplicationMediator _mediator;
 
-	public UserProfileController(IMediator mediator)
+	public UserProfileController(IApplicationMediator mediator)
 	{
 		_mediator = mediator;
 	}

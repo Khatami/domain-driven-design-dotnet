@@ -1,4 +1,5 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Reflection;
@@ -10,14 +11,35 @@ public static class ServiceCollectionExtensions
 	public static void AddMediatorServices
 		(this IServiceCollection services, params System.Type[] handlerAssemblyMarkerTypes)
 	{
-		services.AddTransient<IMediator, CustomMediator>();
+		services.AddTransient<IApplicationMediator, MediatRAdapter>();
 
-		//services.AddMediatR(options =>
-		//{
-		//	options.RegisterServicesFromAssembly(Assembly.GetEntryAssembly()!);
+		services.AddMediatR(options =>
+		{
+			options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()!);
 
-		//	if (handlerAssemblyMarkerTypes.Any())
-		//		options.RegisterServicesFromAssemblies(handlerAssemblyMarkerTypes.Select(current => current.Assembly).ToArray());
-		//});
+			if (handlerAssemblyMarkerTypes.Any())
+				options.RegisterServicesFromAssemblies(handlerAssemblyMarkerTypes.Select(current => current.Assembly).ToArray());
+		});
+
+		services.AddTransient(typeof(IRequestHandler<,>), typeof(CommandHandlerAdapter<,>));
+		services.AddTransient(typeof(IRequestHandler<>), typeof(CommandUnitHandlerAdapter<>));
+		//services.AddTransient(typeof(INotificationHandler<>), typeof(NotificationHandlerAdapter<>));
+
+		var commands = Assembly.GetAssembly(typeof(Application.Extensions.ServiceExtensions))!
+			.GetTypes()
+			.Where(mytype => mytype.GetInterface(typeof(ICommandHandler<>).Name) != null && !mytype.IsInterface)
+			.ToList();
+
+		foreach (var item in commands)
+		{
+			services.AddScoped(item);
+		}
+
+		services.AddBehaviors();
+	}
+
+	public static void AddBehaviors(this IServiceCollection services)
+	{
+		services.AddTransient(typeof(Behaviors.IRetriableCommandWithValue<,>), typeof(Behaviors.RetryBehavior<,>));
 	}
 }
