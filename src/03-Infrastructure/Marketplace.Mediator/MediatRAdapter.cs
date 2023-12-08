@@ -1,7 +1,6 @@
-﻿using System.Threading;
+﻿using Marketplace.Application.Infrastructure.Mediator;
+using System.Threading;
 using System.Threading.Tasks;
-using Marketplace.Application.Infrastructure.Mediator;
-using MediatR;
 
 namespace Marketplace.Mediator;
 
