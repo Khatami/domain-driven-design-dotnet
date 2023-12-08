@@ -6,7 +6,7 @@ using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 
-internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifiedAdCommand>
+internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifiedAdCommand, Guid>
 {
 	private readonly IUnitOfWork _unitOfWork;
 	private readonly IClassifiedAdRepository _classifiedAdRepository;
@@ -18,7 +18,7 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 	}
 
 
-	public async Task Handle(CreateClassifiedAdCommand request, CancellationToken cancellationToken)
+	public async Task<Guid> Handle(CreateClassifiedAdCommand request, CancellationToken cancellationToken)
 	{
 		var exists = await _classifiedAdRepository.Exists(new ClassifiedAdId(request.Id));
 
@@ -32,5 +32,7 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 		await _classifiedAdRepository.Add(classifiedAd);
 
 		await _unitOfWork.Commit();
+
+		return request.Id;
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Infrastructure.Mediator;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers;
@@ -19,7 +18,9 @@ public class ClassifiedAdController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Post(CreateClassifiedAdCommand request)
 	{
-		await _mediator.Send(request);
+		await _mediator.Send<CreateClassifiedAdCommand, Guid>(request);
+
+		//await _mediator.Send(request);
 
 		return Ok();
 	}
