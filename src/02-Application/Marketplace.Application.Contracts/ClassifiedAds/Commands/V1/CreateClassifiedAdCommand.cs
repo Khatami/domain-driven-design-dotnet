@@ -2,7 +2,7 @@
 
 namespace Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 
-public class CreateClassifiedAdCommand : ICommand
+public class CreateClassifiedAdCommand : ICommandResponse<Guid>
 {
 	public Guid Id { get; set; }
 

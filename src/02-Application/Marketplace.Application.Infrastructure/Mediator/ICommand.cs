@@ -3,4 +3,8 @@
 	public interface ICommand
 	{
 	}
+
+	public interface ICommandResponse<TResponse>
+	{
+	}
 }

@@ -20,14 +20,14 @@ public class MediatRAdapter : IApplicationMediator
 		return _mediator.Publish(notificationAdapter, cancellationToken);
 	}
 
-	public Task Send<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default)
+	public Task Send<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : ICommandResponse<TResponse>
 	{
 		var requestAdapter = new RequestAdapter<TRequest, TResponse>(request);
 
 		return _mediator.Send(requestAdapter, cancellationToken);
 	}
 
-	public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default)
+	public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : ICommand
 	{
 		RequestAdapter<TRequest, Unit> requestAdapter = new RequestAdapter<TRequest, Unit>(request);
 

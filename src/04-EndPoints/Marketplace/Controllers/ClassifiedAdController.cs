@@ -20,6 +20,7 @@ public class ClassifiedAdController : Controller
 	{
 		await _mediator.Send<CreateClassifiedAdCommand, Guid>(request);
 
+		// This code is going to show compiled error, because it's a command with response
 		//await _mediator.Send(request);
 
 		return Ok();
