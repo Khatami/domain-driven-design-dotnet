@@ -8,7 +8,7 @@ using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-    public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
+	public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
 		// for impedence mismatch
 		private ClassifiedAd() { }
