@@ -5,7 +5,7 @@ using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Extensions;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
-using Marketplace.Query.Contracts.ClassifiedAds.QueryResults;
+using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,11 +49,11 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 	if (persistenceLayer == 0)
 	{
-		assemblies.Add(typeof(Marketplace.Query.RavenDB.AppInfo).Assembly);
+		assemblies.Add(typeof(Marketplace.Queries.RavenDB.AppInfo).Assembly);
 	}
 	else
 	{
-		assemblies.Add(typeof(Marketplace.Query.EF.AppInfo).Assembly);
+		assemblies.Add(typeof(Marketplace.Queries.EF.AppInfo).Assembly);
 	}
 
 	foreach (var openType in openTypes)

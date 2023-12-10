@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Query.Contracts.ClassifiedAds.QueryResults
+﻿namespace Marketplace.Queries.Contracts.ClassifiedAds.QueryResults
 {
 	public class ClassifiedAdDetails
 	{
