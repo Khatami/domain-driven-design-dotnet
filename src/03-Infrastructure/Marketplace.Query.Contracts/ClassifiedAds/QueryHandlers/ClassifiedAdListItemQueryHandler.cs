@@ -1,8 +1,8 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
-using Marketplace.Query.ClassifiedAd.Models;
-using Marketplace.Query.ClassifiedAd.QueryFilters;
+using Marketplace.Query.Contracts.ClassifiedAds.QueryFilters;
+using Marketplace.Query.Contracts.ClassifiedAds.QueryResults;
 
-namespace Marketplace.Query.ClassifiedAd.QueryHandlers
+namespace Marketplace.Query.Contracts.ClassifiedAds.QueryHandlers
 {
 	internal class ClassifiedAdListItemQueryHandler : IQueryHandler<GetPublishedAdsQueryFilter, List<ClassifiedAdItem>>
 	{

@@ -5,6 +5,8 @@ using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Extensions;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
+using Marketplace.Query.Contracts.ClassifiedAds.QueryResults;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -40,11 +42,24 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 		typeof(IQueryHandler<,>),
 	};
 
+	List<Assembly> assemblies = new List<Assembly>()
+	{
+		typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly
+	};
+
+	if (persistenceLayer == 0)
+	{
+		assemblies.Add(typeof(Marketplace.Query.RavenDB.AppInfo).Assembly);
+	}
+	else
+	{
+		assemblies.Add(typeof(Marketplace.Query.EF.AppInfo).Assembly);
+	}
+
 	foreach (var openType in openTypes)
 	{
 		builder
-			.RegisterAssemblyTypes(typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly, 
-				typeof(Marketplace.Query.ClassifiedAd.Models.ClassifiedAdDetails).Assembly)
+			.RegisterAssemblyTypes(assemblies.ToArray())
 			.AsClosedTypesOf(openType)
 			.AsImplementedInterfaces();
 	}

@@ -1,6 +1,6 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
-using Marketplace.Query.ClassifiedAd.Models;
-using Marketplace.Query.ClassifiedAd.QueryFilters;
+using Marketplace.Query.Contracts.ClassifiedAds.QueryFilters;
+using Marketplace.Query.Contracts.ClassifiedAds.QueryResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers;
