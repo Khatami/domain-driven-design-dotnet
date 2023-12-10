@@ -3,7 +3,7 @@ using Marketplace.Query.ClassifiedAd.Models;
 
 namespace Marketplace.Query.ClassifiedAd.QueryFilters
 {
-	public class GetPublishedAdsQueryFilter : IQuery<List<ClassifiedAdItem>?>
+	public class GetPublishedAdsQueryFilter : IQuery<List<ClassifiedAdItem>>
 	{
         public int Page { get; set; }
 

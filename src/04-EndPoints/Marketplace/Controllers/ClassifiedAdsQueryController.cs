@@ -18,9 +18,9 @@ public class ClassifiedAdsQueryController : ControllerBase
 
 	[HttpGet]
 	[Route("list")]
-	public async Task<List<ClassifiedAdItem>?> Get([FromQuery] GetPublishedAdsQueryFilter request)
+	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublishedAdsQueryFilter request)
 	{
-		List<ClassifiedAdItem>? result = await _mediator.Query<GetPublishedAdsQueryFilter, List<ClassifiedAdItem>?>(request);
+		List<ClassifiedAdItem> result = await _mediator.Query<GetPublishedAdsQueryFilter, List<ClassifiedAdItem>>(request);
 
 		return result;
 	}
