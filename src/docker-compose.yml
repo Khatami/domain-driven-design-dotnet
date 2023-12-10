@@ -9,3 +9,9 @@ services:
 
   ravendb:
     image: ravendb/ravendb:ubuntu-latest
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+volumes:
+  sqlserver_data:

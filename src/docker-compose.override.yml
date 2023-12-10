@@ -13,3 +13,14 @@ services:
     environment:
       - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
       - RAVEN_ARGS="--Setup.Mode=None"
+
+  mssql:
+    container_name: mssql
+    environment:
+      - SA_PASSWORD=QaAER#$12#!#!@#Fsfdf
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "11433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql/data
