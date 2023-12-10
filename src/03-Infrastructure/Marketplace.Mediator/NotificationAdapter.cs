@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Marketplace.Mediator
 {
-	public class NotificationAdapter<TNotification> : INotification
+	internal class NotificationAdapter<TNotification> : INotification
 	{
 		public NotificationAdapter(TNotification value)
 		{

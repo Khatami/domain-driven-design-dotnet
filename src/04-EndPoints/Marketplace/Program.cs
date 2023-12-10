@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Marketplace.Application.Extensions;
 using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Extensions;
+using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,16 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
 // TODO: check Persistence
-builder.Services.AddRavenDBServices();
-//builder.Services.AddEFServices(builder.Configuration);
+var persistenceLayer = builder.Configuration.GetValue<long>("Persistence");
+
+if (persistenceLayer == 0)
+{
+	builder.Services.AddRavenDBServices();
+}
+else
+{
+	builder.Services.AddEFServices(builder.Configuration);
+}
 
 builder.Services.AddEdgeServices(builder.Configuration);
 
@@ -27,13 +36,15 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 	var openTypes = new[]
 	{
 		typeof(ICommandHandler<,>),
-		typeof(ICommandHandler<>)
+		typeof(ICommandHandler<>),
+		typeof(IQueryHandler<,>),
 	};
 
 	foreach (var openType in openTypes)
 	{
 		builder
-			.RegisterAssemblyTypes(typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly)
+			.RegisterAssemblyTypes(typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly, 
+				typeof(Marketplace.Query.ClassifiedAd.Models.ClassifiedAdDetails).Assembly)
 			.AsClosedTypesOf(openType)
 			.AsImplementedInterfaces();
 	}
@@ -41,8 +52,10 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 var app = builder.Build();
 
-// TODO: check Persistence
-//app.EnsureDatabase();
+if (persistenceLayer == 1)
+{
+	app.EnsureDatabase();
+}
 
 app.UsePathBase("/marketplace");
 

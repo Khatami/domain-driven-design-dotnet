@@ -2,7 +2,7 @@
 
 namespace Marketplace.Mediator.Behaviors;
 
-public interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : ICommand
+internal interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : ICommand
 {
 	int RetryAttempts => 1;
 

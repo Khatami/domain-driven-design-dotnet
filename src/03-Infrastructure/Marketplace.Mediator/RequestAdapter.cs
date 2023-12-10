@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Marketplace.Mediator
 {
-	public class RequestAdapter<TRequest, TResponse> : IRequest<TResponse>
+	internal class RequestAdapter<TRequest, TResponse> : IRequest<TResponse>
 	{
 		public RequestAdapter(TRequest value)
 		{

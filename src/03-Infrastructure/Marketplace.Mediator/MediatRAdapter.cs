@@ -5,22 +5,24 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Mediator;
 
-public class MediatRAdapter : IApplicationMediator
+internal class MediatRAdapter : IApplicationMediator
 {
-	private readonly MediatR.IMediator _mediator;
-    public MediatRAdapter(MediatR.IMediator mediator)
+	private readonly IMediator _mediator;
+    public MediatRAdapter(IMediator mediator)
     {
 		_mediator = mediator;
     }
 
-    public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
+	public Task<TResponse> Query<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IQuery<TResponse>
 	{
-		var notificationAdapter = new NotificationAdapter<TNotification>(notification);
+		var requestAdapter = new RequestAdapter<TRequest, TResponse>(request);
 
-		return _mediator.Publish(notificationAdapter, cancellationToken);
+		var result = _mediator.Send(requestAdapter, cancellationToken);
+
+		return result;
 	}
 
-	public Task Send<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : ICommandResponse<TResponse>
+	public Task<TResponse> Send<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : ICommandResponse<TResponse>
 	{
 		var requestAdapter = new RequestAdapter<TRequest, TResponse>(request);
 

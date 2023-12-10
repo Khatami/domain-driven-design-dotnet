@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Marketplace.Mediator;
 
-public class CommandHandlerAdapter<TRequest, TResponse> : IRequestHandler<RequestAdapter<TRequest, TResponse>, TResponse> where TRequest : ICommandResponse<TResponse>
+internal class CommandHandlerAdapter<TRequest, TResponse> : IRequestHandler<RequestAdapter<TRequest, TResponse>, TResponse> where TRequest : ICommandResponse<TResponse>
 {
 	private readonly ICommandHandler<TRequest, TResponse> _commandHandler;
 	public CommandHandlerAdapter(ICommandHandler<TRequest, TResponse> commandHandler)
@@ -20,7 +20,7 @@ public class CommandHandlerAdapter<TRequest, TResponse> : IRequestHandler<Reques
 	}
 }
 
-public class CommandUnitHandlerAdapter<TRequest> : IRequestHandler<RequestAdapter<TRequest, Unit>, Unit> where TRequest : ICommand
+internal class CommandUnitHandlerAdapter<TRequest> : IRequestHandler<RequestAdapter<TRequest, Unit>, Unit> where TRequest : ICommand
 {
 	private readonly ICommandHandler<TRequest> _commandHandler;
 	public CommandUnitHandlerAdapter(ICommandHandler<TRequest> commandHandler)
