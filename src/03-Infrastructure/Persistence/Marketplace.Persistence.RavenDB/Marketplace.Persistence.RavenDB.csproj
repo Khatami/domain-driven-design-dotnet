@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\02-Application\Marketplace.Application\Marketplace.Application.csproj" />
+    <ProjectReference Include="..\..\..\02-Application\Marketplace.Application\Marketplace.Application.csproj" />
   </ItemGroup>
 
 </Project>
