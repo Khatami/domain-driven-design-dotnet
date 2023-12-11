@@ -13,7 +13,7 @@ namespace Marketplace.Domain.Tests.ClassifiedAds
 		private readonly ClassifiedAd _classifiedAd;
 		public ClassifiedAd_Publish_Spec()
 		{
-			_classifiedAd = new ClassifiedAd(new ClassifiedAdId(Guid.NewGuid()), new UserId(Guid.NewGuid()));
+			_classifiedAd = new ClassifiedAd(new ClassifiedAdId(Guid.NewGuid()), new UserProfileId(Guid.NewGuid()));
 		}
 
 		[Fact]

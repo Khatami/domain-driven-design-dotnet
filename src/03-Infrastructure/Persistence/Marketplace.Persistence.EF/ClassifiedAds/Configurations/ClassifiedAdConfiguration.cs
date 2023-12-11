@@ -1,11 +1,10 @@
 ﻿using Marketplace.Domain.ClassifiedAds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
 {
-	internal class ClassifiedAdEntityTypeConfiguration : IEntityTypeConfiguration<ClassifiedAd>
+	internal class ClassifiedAdConfiguration : IEntityTypeConfiguration<ClassifiedAd>
 	{
 		public void Configure(EntityTypeBuilder<ClassifiedAd> builder)
 		{

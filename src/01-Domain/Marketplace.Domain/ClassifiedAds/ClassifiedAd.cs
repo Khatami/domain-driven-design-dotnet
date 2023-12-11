@@ -13,7 +13,7 @@ namespace Marketplace.Domain.ClassifiedAds
 		// for impedence mismatch
 		private ClassifiedAd() { }
 
-		public ClassifiedAd(ClassifiedAdId id, UserId ownerId)
+		public ClassifiedAd(ClassifiedAdId id, UserProfileId ownerId)
 		{
 			Apply(new ClassifiedAdCreated(id, ownerId));
 		}
@@ -58,7 +58,7 @@ namespace Marketplace.Domain.ClassifiedAds
 
 		public Guid ClassifiedAdId { get; private set; }
 
-		public UserId OwnerId { get; private set; }
+		public UserProfileId OwnerId { get; private set; }
 
 		public ClassifiedAdTitle? Title { get; private set; }
 
@@ -68,7 +68,7 @@ namespace Marketplace.Domain.ClassifiedAds
 
 		public ClassifiedAdState State { get; private set; }
 
-		public UserId? ApprovedBy { get; private set; }
+		public UserProfileId? ApprovedBy { get; private set; }
 
 		private List<Picture> _pictures = new();
 		public IReadOnlyList<Picture> Pictures
@@ -104,7 +104,7 @@ namespace Marketplace.Domain.ClassifiedAds
 				case ClassifiedAdCreated e:
 					Id = new ClassifiedAdId(e.Id);
 					ClassifiedAdId = e.Id;
-					OwnerId = new UserId(e.OwnerId);
+					OwnerId = new UserProfileId(e.OwnerId);
 					State = ClassifiedAdState.Inactive;
 					break;
 
@@ -123,7 +123,7 @@ namespace Marketplace.Domain.ClassifiedAds
 
 				case ClassifiedAdSentForReview e:
 					State = ClassifiedAdState.PendingReview;
-					ApprovedBy = new UserId(e.ApprovedById);
+					ApprovedBy = new UserProfileId(e.ApprovedById);
 					break;
 
 				case PictureAddedToAClassifiedAd e:

@@ -5,7 +5,7 @@ using Raven.Client.Documents.Session;
 
 namespace Marketplace.Persistence.RavenDB.UserProfiles
 {
-	public class UserProfileRepository : RavenDbRepository<UserProfile, UserId>, IUserProfileRepository
+	public class UserProfileRepository : RavenDbRepository<UserProfile, UserProfileId>, IUserProfileRepository
 	{
 		public UserProfileRepository(IAsyncDocumentSession session) : base(session, id => $"UserProfile/{id}")
 		{

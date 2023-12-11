@@ -5,13 +5,13 @@ using Marketplace.Domain.UserProfiles.ValueObjects;
 
 namespace Marketplace.Domain.UserProfiles
 {
-    public class UserProfile : AggregateRoot<UserId>
+    public class UserProfile : AggregateRoot<UserProfileId>
 	{
 		// for impedence mismatch
 		private UserProfile() { }
 
 		public UserProfile(
-			UserId id,
+			UserProfileId id,
 			FullName fullName,
 			DisplayName displayName)
 		{
@@ -46,7 +46,7 @@ namespace Marketplace.Domain.UserProfiles
 			switch(@event)
 			{
 				case UserRegistered e:
-					Id = new UserId(e.UserId);
+					Id = new UserProfileId(e.UserId);
 					UserId = e.UserId;
 					FullName = new FullName(e.FullName);
 					DisplayName = new DisplayName(e.DisplayName);

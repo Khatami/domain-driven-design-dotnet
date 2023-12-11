@@ -21,7 +21,7 @@ internal class UpdateUserDisplayNameCommandHandler : ICommandHandler<UpdateUserD
 
 	public async Task Handle(UpdateUserDisplayNameCommand request, CancellationToken cancellationToken)
 	{
-		var userProfile = await _userProfileRepository.Load(new UserId(request.UserId));
+		var userProfile = await _userProfileRepository.Load(new UserProfileId(request.UserId));
 
 		if (userProfile == null)
 		{

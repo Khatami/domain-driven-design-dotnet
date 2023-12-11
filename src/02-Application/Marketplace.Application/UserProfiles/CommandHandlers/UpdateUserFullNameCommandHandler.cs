@@ -17,7 +17,7 @@ internal class UpdateUserFullNameCommandHandler : ICommandHandler<UpdateUserFull
 
 	public async Task Handle(UpdateUserFullNameCommand request, CancellationToken cancellationToken)
 	{
-		var userProfile = await _userProfileRepository.Load(new UserId(request.UserId));
+		var userProfile = await _userProfileRepository.Load(new UserProfileId(request.UserId));
 
 		if (userProfile == null)
 		{

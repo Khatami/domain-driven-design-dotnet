@@ -4,10 +4,10 @@ namespace Marketplace.Domain.UserProfiles
 {
 	public interface IUserProfileRepository
 	{
-		Task<UserProfile> Load(UserId id);
+		Task<UserProfile> Load(UserProfileId id);
 
 		Task Add(UserProfile entity);
 
-		Task<bool> Exists(UserId id);
+		Task<bool> Exists(UserProfileId id);
 	}
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
 {
-    internal class PictureEntityTypeConfiguration : IEntityTypeConfiguration<Picture>
+	internal class PictureConfiguration : IEntityTypeConfiguration<Picture>
     {
         public void Configure(EntityTypeBuilder<Picture> builder)
         {

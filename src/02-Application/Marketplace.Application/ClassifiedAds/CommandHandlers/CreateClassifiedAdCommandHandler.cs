@@ -27,7 +27,7 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 			throw new InvalidOperationException($"Entity with id {request.Id} already exists");
 		}
 
-		var classifiedAd = new ClassifiedAd(new ClassifiedAdId(request.Id), new UserId(request.OwnerId));
+		var classifiedAd = new ClassifiedAd(new ClassifiedAdId(request.Id), new UserProfileId(request.OwnerId));
 
 		await _classifiedAdRepository.Add(classifiedAd);
 
