@@ -25,7 +25,7 @@ internal class UpdateClassifiedAdPriceCommandHandler : ICommandHandler<UpdateCla
 
 	public async Task Handle(UpdateClassifiedAdPriceCommand request, CancellationToken cancellationToken)
 	{
-		var classifiedAd = await _classifiedAdRepository.Load(new ClassifiedAdId(request.Id));
+		var classifiedAd = await _classifiedAdRepository.GetAsync(new ClassifiedAdId(request.Id));
 
 		if (classifiedAd == null)
 		{

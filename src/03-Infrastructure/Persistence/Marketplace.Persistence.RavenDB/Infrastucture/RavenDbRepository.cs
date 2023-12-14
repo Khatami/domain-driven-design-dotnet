@@ -15,10 +15,10 @@ namespace Marketplace.Persistence.RavenDB.Infrastucture
 			_entityId = entityId;
 		}
 
-		public Task Add(T entity) => _session.StoreAsync(entity, _entityId(entity.Id));
+		public Task AddAsync(T entity) => _session.StoreAsync(entity, _entityId(entity.Id));
 
-		public Task<bool> Exists(TId id) => _session.Advanced.ExistsAsync(_entityId(id));
+		public Task<bool> ExistsAsync(TId id) => _session.Advanced.ExistsAsync(_entityId(id));
 		
-		public Task<T> Load(TId id) => _session.LoadAsync<T>(_entityId(id));
+		public Task<T> GetAsync(TId id) => _session.LoadAsync<T>(_entityId(id));
 	}
 }

@@ -24,7 +24,7 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 
 	public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
 	{
-		var isExists = await _repository.Exists(new UserProfileId(request.UserId));
+		var isExists = await _repository.ExistsAsync(new UserProfileId(request.UserId));
 
 		if (isExists)
 		{
@@ -36,7 +36,7 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 			FullName.FromString(request.FullName),
 			DisplayName.FromString(request.DisplayName, _checkText));
 
-		await _repository.Add(userProfile);
+		await _repository.AddAsync(userProfile);
 
 		await _unitOfWork.Commit();
 	}

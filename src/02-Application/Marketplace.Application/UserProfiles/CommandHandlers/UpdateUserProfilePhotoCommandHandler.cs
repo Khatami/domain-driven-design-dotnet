@@ -16,7 +16,7 @@ internal class UpdateUserProfilePhotoCommandHandler : ICommandHandler<UpdateUser
 
 	public async Task Handle(UpdateUserProfilePhotoCommand request, CancellationToken cancellationToken)
 	{
-		var userProfile = await _userProfileRepository.Load(new UserProfileId(request.UserId));
+		var userProfile = await _userProfileRepository.GetAsync(new UserProfileId(request.UserId));
 
 		if (userProfile == null)
 		{

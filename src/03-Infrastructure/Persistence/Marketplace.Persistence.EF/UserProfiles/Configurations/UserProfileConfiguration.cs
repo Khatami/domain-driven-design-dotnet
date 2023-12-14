@@ -8,9 +8,10 @@ namespace Marketplace.Persistence.EF.UserProfiles.Configurations
 	{
 		public void Configure(EntityTypeBuilder<UserProfile> builder)
 		{
-			builder.HasKey(x => x.UserId);
+			builder.HasKey(x => x.UserProfileId);
 
-			builder.OwnsOne(x => x.Id);
+			builder.Ignore(x => x.Id);
+
 			builder.OwnsOne(x => x.FullName);
 			builder.OwnsOne(x => x.DisplayName);
 		}

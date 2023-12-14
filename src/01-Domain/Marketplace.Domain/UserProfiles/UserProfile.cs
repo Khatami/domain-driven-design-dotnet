@@ -33,7 +33,7 @@ namespace Marketplace.Domain.UserProfiles
 			Apply(new ProfilePhotoUpdated(Id, photoUri.ToString()));
 		}
 
-		public Guid UserId { get; private set; }
+		public Guid UserProfileId { get; private set; }
 
 		public FullName FullName { get; private set; }
 
@@ -47,7 +47,7 @@ namespace Marketplace.Domain.UserProfiles
 			{
 				case UserRegistered e:
 					Id = new UserProfileId(e.UserId);
-					UserId = e.UserId;
+					UserProfileId = e.UserId;
 					FullName = new FullName(e.FullName);
 					DisplayName = new DisplayName(e.DisplayName);
 					break;

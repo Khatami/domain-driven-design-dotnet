@@ -4,10 +4,10 @@ namespace Marketplace.Domain.ClassifiedAds
 {
     public interface IClassifiedAdRepository
 	{
-		Task Add(ClassifiedAd entity);
+		Task AddAsync(ClassifiedAd entity);
 
-		Task<bool> Exists(ClassifiedAdId id);
+		Task<bool> ExistsAsync(ClassifiedAdId id);
 
-		Task<ClassifiedAd> Load(ClassifiedAdId id);
+		Task<ClassifiedAd> GetAsync(ClassifiedAdId id);
 	}
 }

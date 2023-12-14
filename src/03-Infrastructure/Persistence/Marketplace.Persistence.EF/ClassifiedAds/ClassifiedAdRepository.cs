@@ -13,17 +13,17 @@ namespace Marketplace.Persistence.EF.ClassifiedAds
 			_dbContext = dbContext;
 		}
 
-		public Task Add(ClassifiedAd entity)
+		public Task AddAsync(ClassifiedAd entity)
 		{
 			return _dbContext.ClassifiedAds.AddAsync(entity).AsTask();
 		}
 
-		public Task<bool> Exists(ClassifiedAdId id)
+		public Task<bool> ExistsAsync(ClassifiedAdId id)
 		{
 			return _dbContext.ClassifiedAds.AnyAsync(q => q.ClassifiedAdId == id.Value);
 		}
 
-		public Task<ClassifiedAd?> Load(ClassifiedAdId id)
+		public Task<ClassifiedAd?> GetAsync(ClassifiedAdId id)
 		{
 			return _dbContext.ClassifiedAds.FirstOrDefaultAsync(q => q.ClassifiedAdId == id.Value);
 		}

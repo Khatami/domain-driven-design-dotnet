@@ -10,7 +10,8 @@ namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
         {
             builder.HasKey(q => q.PictureId);
 
-            builder.OwnsOne(q => q.Id);
+            builder.Ignore(q => q.Id);
+
 			builder.OwnsOne(q => q.Size);
 		}
     }

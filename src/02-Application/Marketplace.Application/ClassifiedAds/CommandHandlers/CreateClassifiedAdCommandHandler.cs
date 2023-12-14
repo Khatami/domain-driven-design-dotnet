@@ -20,7 +20,7 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 
 	public async Task<Guid> Handle(CreateClassifiedAdCommand request, CancellationToken cancellationToken)
 	{
-		var exists = await _classifiedAdRepository.Exists(new ClassifiedAdId(request.Id));
+		var exists = await _classifiedAdRepository.ExistsAsync(new ClassifiedAdId(request.Id));
 
 		if (exists)
 		{
@@ -29,7 +29,7 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 
 		var classifiedAd = new ClassifiedAd(new ClassifiedAdId(request.Id), new UserProfileId(request.OwnerId));
 
-		await _classifiedAdRepository.Add(classifiedAd);
+		await _classifiedAdRepository.AddAsync(classifiedAd);
 
 		await _unitOfWork.Commit();
 
