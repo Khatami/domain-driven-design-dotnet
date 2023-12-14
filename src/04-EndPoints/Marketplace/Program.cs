@@ -60,7 +60,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 		builder
 			.RegisterAssemblyTypes(assemblies.ToArray())
 			.AsClosedTypesOf(openType)
-			.AsImplementedInterfaces();
+			.AsImplementedInterfaces()
+			.InstancePerLifetimeScope();
 	}
 });
 

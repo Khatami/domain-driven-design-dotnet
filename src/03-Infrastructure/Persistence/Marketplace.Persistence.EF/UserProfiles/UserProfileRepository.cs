@@ -1,5 +1,7 @@
-﻿using Marketplace.Domain.Shared.ValueObjects;
+﻿using Marketplace.Domain.ClassifiedAds;
+using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Persistence.EF.UserProfiles
 {
@@ -17,14 +19,14 @@ namespace Marketplace.Persistence.EF.UserProfiles
 			return _dbContext.UserProfiles.AddAsync(entity).AsTask();
 		}
 
-		public async Task<bool> Exists(UserProfileId id)
+		public Task<bool> Exists(UserProfileId id)
 		{
-			return await _dbContext.UserProfiles.FindAsync(id.Value).AsTask() != null;
+			return _dbContext.UserProfiles.AnyAsync(q => q.UserId == id.Value);
 		}
 
 		public Task<UserProfile?> Load(UserProfileId id)
 		{
-			return _dbContext.UserProfiles.FindAsync(id.Value).AsTask();
+			return _dbContext.UserProfiles.FirstOrDefaultAsync(q => q.UserId == id.Value);
 		}
 	}
 }

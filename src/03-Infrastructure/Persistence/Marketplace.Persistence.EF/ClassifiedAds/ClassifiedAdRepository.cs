@@ -1,5 +1,6 @@
 ﻿using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.Shared.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Persistence.EF.ClassifiedAds
 {
@@ -17,14 +18,14 @@ namespace Marketplace.Persistence.EF.ClassifiedAds
 			return _dbContext.ClassifiedAds.AddAsync(entity).AsTask();
 		}
 
-		public async Task<bool> Exists(ClassifiedAdId id)
+		public Task<bool> Exists(ClassifiedAdId id)
 		{
-			return await _dbContext.ClassifiedAds.FindAsync(id.Value).AsTask() != null;
+			return _dbContext.ClassifiedAds.AnyAsync(q => q.ClassifiedAdId == id.Value);
 		}
 
 		public Task<ClassifiedAd?> Load(ClassifiedAdId id)
 		{
-			return _dbContext.ClassifiedAds.FindAsync(id.Value).AsTask();
+			return _dbContext.ClassifiedAds.FirstOrDefaultAsync(q => q.ClassifiedAdId == id.Value);
 		}
 	}
 }

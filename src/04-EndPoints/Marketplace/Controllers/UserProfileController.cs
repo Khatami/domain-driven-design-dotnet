@@ -15,13 +15,6 @@ public class UserProfileController : ControllerBase
 		_mediator = mediator;
 	}
 
-	//private readonly IUserProfileApplicationService _userProfileApplicationService;
-
-	//public UserProfileController(IUserProfileApplicationService userProfileApplicationService)
-	//{
-	//	_userProfileApplicationService = userProfileApplicationService;
-	//}
-
 	[HttpPost]
 	public async Task<IActionResult> Post(RegisterUserCommand request)
 	{
