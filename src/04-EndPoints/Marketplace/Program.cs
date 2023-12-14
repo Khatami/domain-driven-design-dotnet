@@ -38,7 +38,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 	{
 		typeof(ICommandHandler<,>),
 		typeof(ICommandHandler<>),
-		typeof(ICommandResponse<>)
+		typeof(IQueryHandler<,>)
 	};
 
 	List<Assembly> assemblies = new List<Assembly>()

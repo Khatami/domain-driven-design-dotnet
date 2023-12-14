@@ -30,7 +30,7 @@ public class ClassifiedAdsQueryController : ControllerBase
 
 	[HttpGet]
 	[Route("myads")]
-	public async Task<List<ClassifiedAdItem>> Get(GetOwnerClassifiedAdQueryFilter request)
+	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetOwnerClassifiedAdQueryFilter request)
 	{
 		List<ClassifiedAdItem> result = await _mediator.Query(request);
 
@@ -40,7 +40,7 @@ public class ClassifiedAdsQueryController : ControllerBase
 	[HttpGet]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	[ProducesResponseType((int)HttpStatusCode.NotFound)]
-	public async Task<List<ClassifiedAdItem>> Get(GetPublicClassifiedAdQueryFilter request)
+	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublicClassifiedAdQueryFilter request)
 	{
 		List<ClassifiedAdItem> result = await _mediator.Query(request);
 

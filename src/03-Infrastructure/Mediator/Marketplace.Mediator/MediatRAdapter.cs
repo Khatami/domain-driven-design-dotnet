@@ -25,11 +25,17 @@ internal class MediatRAdapter : IApplicationMediator
 
 	public Task<TResponse> Query<TResponse>(IQuery<TResponse> request, CancellationToken cancellationToken = default)
 	{
-		var requestAdapter = new RequestAdapter<IQuery<TResponse>, TResponse>(request);
+		Type repositoryType = typeof(RequestAdapter<,>).MakeGenericType(request.GetType(), typeof(TResponse));
+		object? requestAdapter = Activator.CreateInstance(repositoryType, request)!;
 
-		var result = _mediator.Send(requestAdapter, cancellationToken);
+		if (requestAdapter == null)
+		{
+			throw new ArgumentNullException(nameof(requestAdapter));
+		}
 
-		return result;
+		var taskResult = _mediator.Send((IRequest<TResponse>)requestAdapter, cancellationToken);
+
+		return taskResult;
 	}
 
 	public Task<TResponse> Send<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : ICommandResponse<TResponse>
