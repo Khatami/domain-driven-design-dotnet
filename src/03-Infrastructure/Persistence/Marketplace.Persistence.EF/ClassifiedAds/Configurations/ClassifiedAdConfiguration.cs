@@ -10,7 +10,10 @@ namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
 		{
 			builder.HasKey(x => x.ClassifiedAdId);
 
-			builder.Ignore(x => x.Id);
+			builder.OwnsOne(type => type.Id, buildAction =>
+			{
+				buildAction.Property(property => property.Value).HasColumnName("PK_ImpedanceMismatch");
+			});
 
 			builder.OwnsOne(x => x.Price, p => p.OwnsOne(q => q.Currency));
 

@@ -1,5 +1,6 @@
 ﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Domain.UserProfiles.Delegates;
@@ -11,12 +12,14 @@ internal class UpdateUserDisplayNameCommandHandler : ICommandHandler<UpdateUserD
 {
 	private readonly CheckTextForProfanity _checkText;
 	private readonly IUserProfileRepository _userProfileRepository;
-
+	private readonly IUnitOfWork _unitOfWork;
 	public UpdateUserDisplayNameCommandHandler(CheckTextForProfanity checkText, 
-		IUserProfileRepository userProfileRepository)
+		IUserProfileRepository userProfileRepository,
+		IUnitOfWork unitOfWork)
 	{
 		_checkText = checkText;
 		_userProfileRepository = userProfileRepository;
+		_unitOfWork = unitOfWork;
 	}
 
 	public async Task Handle(UpdateUserDisplayNameCommand request, CancellationToken cancellationToken)
@@ -30,6 +33,6 @@ internal class UpdateUserDisplayNameCommandHandler : ICommandHandler<UpdateUserD
 
 		userProfile.UpdateDisplayName(DisplayName.FromString(request.DisplayName, _checkText));
 
-		//await _unitOfWork.Commit();
+		await _unitOfWork.Commit();
 	}
 }

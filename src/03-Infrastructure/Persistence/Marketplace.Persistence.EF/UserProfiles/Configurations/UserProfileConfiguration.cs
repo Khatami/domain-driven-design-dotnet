@@ -1,4 +1,5 @@
-﻿using Marketplace.Domain.UserProfiles;
+﻿using Marketplace.Domain.ClassifiedAds;
+using Marketplace.Domain.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,10 +11,20 @@ namespace Marketplace.Persistence.EF.UserProfiles.Configurations
 		{
 			builder.HasKey(x => x.UserProfileId);
 
-			builder.Ignore(x => x.Id);
+			builder.OwnsOne(type => type.Id, buildAction =>
+			{
+				buildAction.Property(property => property.Value).HasColumnName("PK_ImpedanceMismatch");
+			});
 
-			builder.OwnsOne(x => x.FullName);
-			builder.OwnsOne(x => x.DisplayName);
+			builder.OwnsOne(type => type.FullName, buildAction =>
+			{
+				buildAction.Property(property => property.Value).HasColumnName(nameof(UserProfile.FullName));
+			});
+
+			builder.OwnsOne(type => type.DisplayName, buildAction =>
+			{
+				buildAction.Property(property => property.Value).HasColumnName(nameof(UserProfile.DisplayName));
+			});
 		}
 	}
 }

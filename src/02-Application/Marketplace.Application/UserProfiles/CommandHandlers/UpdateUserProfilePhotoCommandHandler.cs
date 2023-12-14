@@ -1,5 +1,6 @@
 ﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 
@@ -8,10 +9,11 @@ namespace Marketplace.Application.UserProfiles.CommandHandlers;
 internal class UpdateUserProfilePhotoCommandHandler : ICommandHandler<UpdateUserProfilePhotoCommand>
 {
 	private readonly IUserProfileRepository _userProfileRepository;
-
-	public UpdateUserProfilePhotoCommandHandler(IUserProfileRepository userProfileRepository)
+	private readonly IUnitOfWork _unitOfWork;
+	public UpdateUserProfilePhotoCommandHandler(IUserProfileRepository userProfileRepository, IUnitOfWork unitOfWork)
 	{
 		_userProfileRepository = userProfileRepository;
+		_unitOfWork = unitOfWork;
 	}
 
 	public async Task Handle(UpdateUserProfilePhotoCommand request, CancellationToken cancellationToken)
@@ -25,6 +27,6 @@ internal class UpdateUserProfilePhotoCommandHandler : ICommandHandler<UpdateUser
 
 		userProfile.UpdateProfilePhoto(new Uri(request.PhotoUrl));
 
-		//await _unitOfWork.Commit();
+		await _unitOfWork.Commit();
 	}
 }

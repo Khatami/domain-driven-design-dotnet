@@ -35,12 +35,11 @@ namespace Marketplace.Domain.UserProfiles
 
 		public Guid UserProfileId { get; private set; }
 
-
 		public FullName FullName { get; private set; }
 
 		public DisplayName DisplayName { get; private set; }
 
-		public string PhotoUrl { get; private set; }
+		public string? PhotoUrl { get; private set; }
 
 		protected override void When(object @event)
 		{

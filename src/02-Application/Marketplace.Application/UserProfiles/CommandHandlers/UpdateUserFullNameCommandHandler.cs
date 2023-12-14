@@ -1,5 +1,6 @@
 ﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles;
 using Marketplace.Domain.UserProfiles.ValueObjects;
@@ -9,10 +10,11 @@ namespace Marketplace.Application.UserProfiles.CommandHandlers;
 internal class UpdateUserFullNameCommandHandler : ICommandHandler<UpdateUserFullNameCommand>
 {
 	private readonly IUserProfileRepository _userProfileRepository;
-
-	public UpdateUserFullNameCommandHandler(IUserProfileRepository userProfileRepository)
+	private readonly IUnitOfWork _unitOfWork;
+	public UpdateUserFullNameCommandHandler(IUserProfileRepository userProfileRepository, IUnitOfWork unitOfwork)
 	{
 		_userProfileRepository = userProfileRepository;
+		_unitOfWork = unitOfwork;
 	}
 
 	public async Task Handle(UpdateUserFullNameCommand request, CancellationToken cancellationToken)
@@ -26,6 +28,6 @@ internal class UpdateUserFullNameCommandHandler : ICommandHandler<UpdateUserFull
 
 		userProfile.UpdateFullName(FullName.FromString(request.FullName));
 
-		//await _unitOfWork.Commit();
+		await _unitOfWork.Commit();
 	}
 }

@@ -11,7 +11,9 @@ namespace Marketplace.Domain.ClassifiedAds
 	public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
 		// for impedence mismatch
-		private ClassifiedAd() { }
+		private ClassifiedAd()
+		{
+		}
 
 		public ClassifiedAd(ClassifiedAdId id, UserProfileId ownerId)
 		{
@@ -48,10 +50,10 @@ namespace Marketplace.Domain.ClassifiedAds
 			Apply(new PictureAddedToAClassifiedAd
 			(
 				Guid.NewGuid(),
-				Id, 
-				pictureUri.ToString(), 
-				pictureSize.Height, 
-				pictureSize.Width, 
+				Id,
+				pictureUri.ToString(),
+				pictureSize.Height,
+				pictureSize.Width,
 				order
 			));
 		}
