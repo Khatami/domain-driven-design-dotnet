@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
 		});
 
 		services.AddTransient(typeof(IRequestHandler<,>), typeof(CommandHandlerAdapter<,>));
-		services.AddTransient(typeof(IRequestHandler<,>), typeof(CommandUnitHandlerAdapter<>));
+		services.AddTransient(typeof(IRequestHandler<>), typeof(CommandUnitHandlerAdapter<>));
 		services.AddTransient(typeof(IRequestHandler<,>), typeof(QueryHandlerAdapter<,>));
 
 		services.AddBehaviors();

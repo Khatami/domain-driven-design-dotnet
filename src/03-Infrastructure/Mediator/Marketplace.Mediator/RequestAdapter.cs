@@ -11,4 +11,14 @@ namespace Marketplace.Mediator
 
 		public TRequest Value { get; }
 	}
+
+	internal class RequestUnitAdapter<TRequest> : IRequest
+	{
+		public RequestUnitAdapter(TRequest value)
+		{
+			Value = value;
+		}
+
+		public TRequest Value { get; }
+	}
 }

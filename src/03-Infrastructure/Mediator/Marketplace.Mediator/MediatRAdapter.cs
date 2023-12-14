@@ -62,7 +62,7 @@ internal class MediatRAdapter : IApplicationMediator
 
 	public Task Send<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : ICommand
 	{
-		RequestAdapter<TRequest, Unit> requestAdapter = new RequestAdapter<TRequest, Unit>(request);
+		RequestUnitAdapter<TRequest> requestAdapter = new RequestUnitAdapter<TRequest>(request);
 
 		return _mediator.Send(requestAdapter, cancellationToken);
 	}

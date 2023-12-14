@@ -19,7 +19,7 @@ internal class CommandHandlerAdapter<TRequest, TResponse> : IRequestHandler<Requ
 	}
 }
 
-internal class CommandUnitHandlerAdapter<TRequest> : IRequestHandler<RequestAdapter<TRequest, Unit>, Unit> where TRequest : ICommand
+internal class CommandUnitHandlerAdapter<TRequest> : IRequestHandler<RequestUnitAdapter<TRequest>> where TRequest : ICommand
 {
 	private readonly ICommandHandler<TRequest> _commandHandler;
 	public CommandUnitHandlerAdapter(ICommandHandler<TRequest> commandHandler)
@@ -27,10 +27,8 @@ internal class CommandUnitHandlerAdapter<TRequest> : IRequestHandler<RequestAdap
 		_commandHandler = commandHandler;
 	}
 
-	public Task<Unit> Handle(RequestAdapter<TRequest, Unit> request, CancellationToken cancellationToken)
+	public Task Handle(RequestUnitAdapter<TRequest> request, CancellationToken cancellationToken)
 	{
-		_commandHandler.Handle(request.Value, cancellationToken);
-
-		return Unit.Task;
+		return _commandHandler.Handle(request.Value, cancellationToken);
 	}
 }
