@@ -13,10 +13,26 @@ namespace Marketplace.Persistence.EF.ClassifiedAds.Configurations
 			builder.Ignore(x => x.Id);
 
 			builder.OwnsOne(x => x.Price, p => p.OwnsOne(q => q.Currency));
-			builder.OwnsOne(x => x.OwnerId);
-			builder.OwnsOne(x => x.Title);
-			builder.OwnsOne(x => x.Text);
-			builder.OwnsOne(x => x.ApprovedBy);
+
+			builder.OwnsOne(type => type.OwnerId, buildAction =>
+			{
+				buildAction.Property(property => property.Value).HasColumnName(nameof(ClassifiedAd.OwnerId));
+			});
+
+			builder.OwnsOne(type => type.Title, buildAction =>
+			{
+				buildAction.Property(property => property.Title).HasColumnName(nameof(ClassifiedAd.Title));
+			});
+
+			builder.OwnsOne(type => type.Text, buildAction =>
+			{
+				buildAction.Property(property => property.Text).HasColumnName(nameof(ClassifiedAd.Text));
+			});
+
+			builder.OwnsOne(type => type.ApprovedBy, buildAction =>
+			{
+				buildAction.Property(property => property.Value).HasColumnName(nameof(ClassifiedAd.ApprovedBy));
+			});
 		}
 	}
 }
