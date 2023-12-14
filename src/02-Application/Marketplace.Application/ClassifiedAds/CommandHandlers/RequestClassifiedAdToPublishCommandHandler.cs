@@ -17,7 +17,6 @@ internal class RequestClassifiedAdToPublishCommandHandler : ICommandHandler<Requ
 		_classifiedAdRepository = classifiedAdRepository;
 	}
 
-
 	public async Task Handle(RequestClassifiedAdToPublishCommand request, CancellationToken cancellationToken)
 	{
 		var classifiedAd = await _classifiedAdRepository.GetAsync(new ClassifiedAdId(request.Id));

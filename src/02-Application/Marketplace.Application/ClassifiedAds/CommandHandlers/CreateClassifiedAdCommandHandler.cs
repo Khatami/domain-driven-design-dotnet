@@ -17,7 +17,6 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 		_classifiedAdRepository = classifiedAdRepository;
 	}
 
-
 	public async Task<Guid> Handle(CreateClassifiedAdCommand request, CancellationToken cancellationToken)
 	{
 		var exists = await _classifiedAdRepository.ExistsAsync(new ClassifiedAdId(request.Id));
