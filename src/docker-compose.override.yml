@@ -13,6 +13,9 @@ services:
     environment:
       - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
       - RAVEN_ARGS="--Setup.Mode=None"
+    volumes:
+      - ravendb_data:/var/lib/ravendb/data
+      - ravendb_etc:/etc/ravendb
 
   mssql:
     container_name: mssql

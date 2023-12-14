@@ -5,7 +5,6 @@ using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Extensions;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
-using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
 // TODO: check Persistence
-var persistenceLayer = builder.Configuration.GetValue<long>("Persistence");
+var isRavenDbPerstistenceAndQuery = builder.Configuration.GetValue<long>("Persistence") == 0;
 
-if (persistenceLayer == 0)
+if (isRavenDbPerstistenceAndQuery)
 {
 	builder.Services.AddRavenDBServices();
 }
@@ -39,7 +38,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 	{
 		typeof(ICommandHandler<,>),
 		typeof(ICommandHandler<>),
-		typeof(IQueryHandler<,>),
+		typeof(ICommandResponse<>)
 	};
 
 	List<Assembly> assemblies = new List<Assembly>()
@@ -47,7 +46,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 		typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly
 	};
 
-	if (persistenceLayer == 0)
+	if (isRavenDbPerstistenceAndQuery)
 	{
 		assemblies.Add(typeof(Marketplace.Queries.RavenDB.AppInfo).Assembly);
 	}
@@ -67,7 +66,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 var app = builder.Build();
 
-if (persistenceLayer == 1)
+if (isRavenDbPerstistenceAndQuery == false)
 {
 	app.EnsureDatabase();
 }

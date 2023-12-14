@@ -1,6 +1,8 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.Infrastructure.Mediator.Behaviors;
 using MediatR;
 using Polly;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,9 +11,9 @@ namespace Marketplace.Mediator.Behaviors;
 
 internal class RetryBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICommand
 {
-	private readonly System.Collections.Generic.IList<IRetriableCommandWithValue<TRequest, TResponse>> _retryHandlers;
+	private readonly IList<IRetriableCommandWithValue<TRequest, TResponse>> _retryHandlers;
 
-	public RetryBehavior(System.Collections.Generic.IList<IRetriableCommandWithValue<TRequest, TResponse>> retryHandlers)
+	public RetryBehavior(IList<IRetriableCommandWithValue<TRequest, TResponse>> retryHandlers)
 	{
 		_retryHandlers = retryHandlers;
 	}
@@ -26,14 +28,11 @@ internal class RetryBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 			return await next();
 		}
 
-		var circuitBreaker = Polly.Policy
-			.Handle<System.Exception>()
+		var circuitBreaker = Policy.Handle<System.Exception>()
 			.CircuitBreakerAsync(retryHandler.ExceptionsAllowedBeforeCircuitTrip, System.TimeSpan.FromMilliseconds(5000),
 			(exception, things) => { }, () => { });
 
-		var retryPolicy =
-			Polly.Policy
-			.Handle<System.Exception>()
+		var retryPolicy = Policy.Handle<System.Exception>()
 			.WaitAndRetryAsync(retryHandler.RetryAttempts, retryAttempt =>
 			{
 				var retryDelay = retryHandler.RetryWithExponentialBackoff

@@ -2,6 +2,7 @@
 using Marketplace.Queries.Contracts.ClassifiedAds.QueryFilters;
 using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Marketplace.Controllers;
 
@@ -20,23 +21,29 @@ public class ClassifiedAdsQueryController : ControllerBase
 	[Route("list")]
 	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublishedAdsQueryFilter request)
 	{
-		List<ClassifiedAdItem> result = await _mediator.Query<GetPublishedAdsQueryFilter, List<ClassifiedAdItem>>(request);
+		//List<ClassifiedAdItem> result = await _mediator.Query<GetPublishedAdsQueryFilter, List<ClassifiedAdItem>>(request);
+
+		List<ClassifiedAdItem> result = await _mediator.Query(request);
 
 		return result;
 	}
 
-	//[HttpGet]
-	//[Route("myads")]
-	//public Task<IActionResult> Get(GetOwnersClassifiedAdQuery request)
-	//{
-	//	throw new System.NotImplementedException();
-	//}
+	[HttpGet]
+	[Route("myads")]
+	public async Task<List<ClassifiedAdItem>> Get(GetOwnerClassifiedAdQueryFilter request)
+	{
+		List<ClassifiedAdItem> result = await _mediator.Query(request);
 
-	//[HttpGet]
-	//[ProducesResponseType((int)HttpStatusCode.OK)]
-	//[ProducesResponseType((int)HttpStatusCode.NotFound)]
-	//public Task<IActionResult> Get(GetPublicClassifiedAdQuery request)
-	//{
-	//	throw new System.NotImplementedException();
-	//}
+		return result;
+	}
+
+	[HttpGet]
+	[ProducesResponseType((int)HttpStatusCode.OK)]
+	[ProducesResponseType((int)HttpStatusCode.NotFound)]
+	public async Task<List<ClassifiedAdItem>> Get(GetPublicClassifiedAdQueryFilter request)
+	{
+		List<ClassifiedAdItem> result = await _mediator.Query(request);
+
+		return result;
+	}
 }

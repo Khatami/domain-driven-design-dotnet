@@ -18,7 +18,9 @@ public class ClassifiedAdController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Post(CreateClassifiedAdCommand request)
 	{
-		var result = await _mediator.Send<CreateClassifiedAdCommand, Guid>(request);
+		//var result = await _mediator.Send<CreateClassifiedAdCommand, Guid>(request);
+
+		var result = await _mediator.Send(request);
 
 		// This code is going to show compiled error, because it's a command with response
 		//await _mediator.Send(request);

@@ -1,0 +1,18 @@
+﻿using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Queries.Contracts.ClassifiedAds.QueryFilters;
+using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
+
+namespace Marketplace.Queries.EF.ClassifiedAds.QueryHandlers
+{
+	internal class GetOwnerClassifiedAdQueryHandler : IQueryHandler<GetOwnerClassifiedAdQueryFilter, List<ClassifiedAdItem>>
+	{
+		public GetOwnerClassifiedAdQueryHandler()
+		{
+		}
+
+		public Task<List<ClassifiedAdItem>> Handle(GetOwnerClassifiedAdQueryFilter request, CancellationToken cancellationToken)
+		{
+			throw new NotImplementedException();
+		}
+	}
+}

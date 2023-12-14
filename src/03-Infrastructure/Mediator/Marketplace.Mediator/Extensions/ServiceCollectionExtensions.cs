@@ -1,7 +1,7 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Mediator.Behaviors;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using System.Reflection;
 
@@ -31,6 +31,6 @@ public static class ServiceCollectionExtensions
 
 	public static void AddBehaviors(this IServiceCollection services)
 	{
-		//services.AddTransient(typeof(Behaviors.IRetriableCommandWithValue<,>), typeof(Behaviors.RetryBehavior<,>));
+		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RetryBehavior<,>));
 	}
 }

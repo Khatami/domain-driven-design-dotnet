@@ -15,3 +15,5 @@ services:
 
 volumes:
   sqlserver_data:
+  ravendb_data:
+  ravendb_etc:
