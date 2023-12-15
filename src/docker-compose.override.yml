@@ -2,12 +2,14 @@ version: '3.4'
 
 services:
   marketplace:
+    container_name: marketplace
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "80"
 
   ravendb:
+    container_name: ravendb
     ports:
       - "8080:8080"
     environment:
@@ -27,3 +29,12 @@ services:
       - "11433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql/data
+
+  eventstore:
+    container_name: eventstore
+    ports:
+        - "12113:2113"
+        - "11113:1113"
+    volumes:
+      - eventstore_lib:/var/lib/eventstore
+      - eventstore_log:/var/log/eventstore 
