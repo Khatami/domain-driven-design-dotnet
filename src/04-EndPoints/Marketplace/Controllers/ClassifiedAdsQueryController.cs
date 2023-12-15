@@ -6,8 +6,8 @@ using System.Net;
 
 namespace Marketplace.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/v1/[controller]")]
 public class ClassifiedAdsQueryController : ControllerBase
 {
 	private readonly IApplicationMediator _mediator;

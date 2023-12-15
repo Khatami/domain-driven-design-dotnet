@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Marketplace.Controllers;
 
 [ApiController]
-[Route("api/V1/[controller]")]
+[Route("api/v1/[controller]")]
 public class ClassifiedAdController : Controller
 {
 	private readonly IApplicationMediator _mediator;

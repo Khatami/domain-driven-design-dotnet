@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Marketplace.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class UserProfileController : ControllerBase
 {
 	private readonly IApplicationMediator _mediator;
