@@ -35,6 +35,16 @@ services:
     ports:
         - "12113:2113"
         - "11113:1113"
+    environment:
+        - EVENTSTORE_CLUSTER_SIZE=1
+        - EVENTSTORE_RUN_PROJECTIONS=All
+        - EVENTSTORE_START_STANDARD_PROJECTIONS=True
+        - EVENTSTORE_DB=/var/lib/eventstore
+        - EVENTSTORE_INDEX=/var/lib/eventstore-index
+        - EVENTSTORE_LOG=/var/log/eventstore
+        - EVENTSTORE_EXT_TCP_PORT=11113
+        - EVENTSTORE_EXT_HTTP_PORT=12113
     volumes:
       - eventstore_lib:/var/lib/eventstore
-      - eventstore_log:/var/log/eventstore 
+      - eventstore_index:/var/lib/eventstore-index
+      - eventstore_log:/var/log/eventstore

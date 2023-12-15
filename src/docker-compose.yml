@@ -14,7 +14,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
   eventstore:
-    image: eventstore/eventstore:release-5.0.11
+    image: eventstore/eventstore:21.10.10-jammy
 
 volumes:
   sqlserver_data:
@@ -22,3 +22,4 @@ volumes:
   ravendb_etc:
   eventstore_lib:
   eventstore_log:
+  eventstore_index:  
