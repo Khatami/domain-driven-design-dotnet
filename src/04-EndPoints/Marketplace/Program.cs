@@ -14,7 +14,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
-// TODO: check Persistence
 var isRavenDbPerstistenceAndQuery = builder.Configuration.GetValue<long>("Persistence") == 0;
 
 if (isRavenDbPerstistenceAndQuery)
