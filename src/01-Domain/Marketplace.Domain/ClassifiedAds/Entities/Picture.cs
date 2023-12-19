@@ -1,10 +1,10 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Domain.Infrastructure;
+using Marketplace.Domain.SeedWork.Aggregation;
 
 namespace Marketplace.Domain.ClassifiedAds.Entities
 {
-    public class Picture : Entity<PictureId>
+	public class Picture : Entity<PictureId>
 	{
 		private Picture() { }
 

@@ -3,7 +3,7 @@ using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Events;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
-using Marketplace.Domain.Infrastructure;
+using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds

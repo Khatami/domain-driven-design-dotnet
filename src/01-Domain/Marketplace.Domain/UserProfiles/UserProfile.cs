@@ -1,11 +1,11 @@
-﻿using Marketplace.Domain.Infrastructure;
+﻿using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles.Events;
 using Marketplace.Domain.UserProfiles.ValueObjects;
 
 namespace Marketplace.Domain.UserProfiles
 {
-    public class UserProfile : AggregateRoot<UserProfileId>
+	public class UserProfile : AggregateRoot<UserProfileId>
 	{
 		// for impedence mismatch
 		private UserProfile() { }

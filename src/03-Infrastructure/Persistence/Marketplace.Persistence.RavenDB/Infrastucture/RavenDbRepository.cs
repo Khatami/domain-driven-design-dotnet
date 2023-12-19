@@ -1,4 +1,4 @@
-﻿using Marketplace.Domain.Infrastructure;
+﻿using Marketplace.Domain.SeedWork.Aggregation;
 using Raven.Client.Documents.Session;
 
 namespace Marketplace.Persistence.RavenDB.Infrastucture
