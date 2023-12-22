@@ -3,79 +3,151 @@ using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.SeedWork.Streaming;
 using Marketplace.Persistence.EventStore.Metadata;
 using Microsoft.Extensions.Configuration;
+using System.Data.Common;
 using System.Text;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Marketplace.Persistence.EventStore.Streaming
 {
-    internal class AggregateStore : IAggregateStore
-    {
-        private readonly EventStoreClient _client;
-        public AggregateStore(IConfiguration configuration)
-        {
-            var connectionString = configuration.GetConnectionString("EventStoreConnectionString");
+	internal class AggregateStore : IAggregateStore
+	{
+		private readonly EventStoreClient _client;
+		public AggregateStore(IConfiguration configuration)
+		{
+			var connectionString = configuration.GetConnectionString("EventStoreConnectionString");
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new ArgumentNullException(nameof(connectionString));
+			}
 
-            var settings = EventStoreClientSettings.Create(connectionString);
-            _client = new EventStoreClient(settings);
-        }
+			var settings = EventStoreClientSettings.Create(connectionString);
 
-        private static string GetStreamName<T, TId>(TId aggregateId)
-        {
-            return $"{typeof(T).Name}-{aggregateId!.ToString()}";
-        }
+			_client = new EventStoreClient(settings);
+		}
 
-        private static string GetStreamName<T, TId>(T aggregate) where T : AggregateRoot<TId>
-        {
-            return $"{typeof(T).Name}-{aggregate.Id!.ToString()}";
-        }
+		public async Task<bool> Exists<T, TId>(TId aggregateId)
+		{
+			var stream = GetStreamName<T, TId>(aggregateId);
 
-        private static byte[] Serialize(object data)
-        {
-            return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(data));
-        }
+			var events = _client.ReadStreamAsync(Direction.Backwards, stream, StreamPosition.End, maxCount: 1);
 
-        public Task<bool> Exists<T, TId>(TId aggregateId)
-        {
-            throw new NotImplementedException();
-        }
+			object[] history = await ReadEvents(events);
 
-        public Task<T> Load<T, TId>(TId aggregateId) where T : AggregateRoot<TId>
-        {
-            throw new NotImplementedException();
-        }
+			var latestEvent = history.FirstOrDefault();
 
-        public async Task Save<T, TId>(T aggregate) where T : AggregateRoot<TId>
-        {
-            if (aggregate == null)
-            {
-                throw new ArgumentNullException(nameof(aggregate));
-            }
+			// TODO: check it's the remove event
 
-            EventData[] changes = aggregate.GetChanges().Select(@event => new EventData(
-                eventId: Uuid.NewUuid(),
-                type: @event.GetType().Name,
-                contentType: "application/json",
-                data: Serialize(@event),
-                metadata: Serialize(new EventMetadata
-                {
-                    ClrType = @event.GetType().AssemblyQualifiedName!
-                }))).ToArray();
+			return latestEvent != null;
+		}
 
-            if (!changes.Any())
-            {
-                return;
-            }
+		public async Task<T> Load<T, TId>(TId aggregateId) where T : AggregateRoot<TId>
+		{
+			if (aggregateId == null)
+			{
+				throw new ArgumentNullException(nameof(aggregateId));
+			}
 
-            var streamName = GetStreamName<T, TId>(aggregate);
+			var stream = GetStreamName<T, TId>(aggregateId);
 
-            await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+			var aggregate = (T?)Activator.CreateInstance(typeof(T), true);
 
-            aggregate.ClearChanges();
-        }
-    }
+			if (aggregate == null)
+			{
+				throw new ArgumentNullException(nameof(aggregate));
+			}
+
+			var events = _client.ReadStreamAsync(Direction.Forwards, stream, StreamPosition.Start);
+
+			object[] history = await ReadEvents(events);
+
+			aggregate.Load(history);
+
+			return aggregate;
+		}
+
+		public async Task Save<T, TId>(T aggregate) where T : AggregateRoot<TId>
+		{
+			if (aggregate == null)
+			{
+				throw new ArgumentNullException(nameof(aggregate));
+			}
+
+			EventData[] changes = aggregate.GetChanges().Select(@event => new EventData(
+				eventId: Uuid.NewUuid(),
+				type: @event.GetType().Name,
+				contentType: "application/json",
+				data: Serialize(@event),
+				metadata: Serialize(new EventMetadata
+				{
+					ClrType = @event.GetType().AssemblyQualifiedName!
+				}))).ToArray();
+
+			if (!changes.Any())
+			{
+				return;
+			}
+
+			var streamName = GetStreamName<T, TId>(aggregate);
+
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+
+			aggregate.ClearChanges();
+		}
+
+		private async Task<object[]> ReadEvents(EventStoreClient.ReadStreamResult events)
+		{
+			return await events.Select(resolvedEvent =>
+			{
+				var metadata = Deserialize<EventMetadata>(resolvedEvent.Event.Metadata.ToArray());
+
+				var dataType = Type.GetType(metadata.ClrType);
+				if (dataType == null)
+				{
+					throw new ArgumentNullException(nameof(dataType));
+				}
+
+				var jsonData = Encoding.UTF8.GetString(resolvedEvent.Event.Data.ToArray());
+
+				var data = JsonSerializer.Deserialize(jsonData, dataType);
+
+				if (data == null)
+				{
+					throw new ArgumentNullException(nameof(data));
+				}
+
+				return data;
+			}).ToArrayAsync();
+		}
+
+		private string GetStreamName<T, TId>(TId aggregateId)
+		{
+			return $"{typeof(T).Name}-{aggregateId!.ToString()}";
+		}
+
+		private string GetStreamName<T, TId>(T aggregate) where T : AggregateRoot<TId>
+		{
+			return $"{typeof(T).Name}-{aggregate.Id!.ToString()}";
+		}
+
+		private byte[] Serialize(object data)
+		{
+			return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(data));
+		}
+
+		private T Deserialize<T>(byte[] data)
+		{
+			string decodedData = Encoding.UTF8.GetString(data);
+
+			var finalobject = JsonSerializer.Deserialize<T>(decodedData);
+
+			if (finalobject == null)
+			{
+				throw new ArgumentNullException(nameof(finalobject));
+			}
+
+			return finalobject;
+		}
+	}
 }
