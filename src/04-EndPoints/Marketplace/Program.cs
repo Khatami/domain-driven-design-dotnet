@@ -3,7 +3,9 @@ using Autofac.Extensions.DependencyInjection;
 using Marketplace.Application.Extensions;
 using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Extensions;
+using Marketplace.Infrastructure;
 using Marketplace.Persistence.EF.Extensions;
+using Marketplace.Persistence.EventStore.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using System.Reflection;
 
@@ -14,15 +16,21 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 
-var isRavenDbPerstistenceAndQuery = builder.Configuration.GetValue<long>("Persistence") == 0;
+var persistenceApproach = builder.Configuration.GetValue<PersistenceApproach>("PersistenceApproach");
 
-if (isRavenDbPerstistenceAndQuery)
+switch (persistenceApproach)
 {
-	builder.Services.AddRavenDBServices();
-}
-else
-{
-	builder.Services.AddEFServices(builder.Configuration);
+	case PersistenceApproach.RavenDB:
+		builder.Services.AddRavenDBServices(builder.Configuration);
+		break;
+	case PersistenceApproach.EntityFramework:
+		builder.Services.AddEFServices(builder.Configuration);
+		break;
+	case PersistenceApproach.EventStore:
+		builder.Services.AddEventStoreServices(builder.Configuration);
+		break;
+	default:
+		break;
 }
 
 builder.Services.AddEdgeServices(builder.Configuration);
@@ -45,13 +53,18 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 		typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly
 	};
 
-	if (isRavenDbPerstistenceAndQuery)
+	switch (persistenceApproach)
 	{
-		assemblies.Add(typeof(Marketplace.Queries.RavenDB.AppInfo).Assembly);
-	}
-	else
-	{
-		assemblies.Add(typeof(Marketplace.Queries.EF.AppInfo).Assembly);
+		case PersistenceApproach.RavenDB:
+			assemblies.Add(typeof(Marketplace.Queries.RavenDB.AppInfo).Assembly);
+			break;
+		case PersistenceApproach.EntityFramework:
+			assemblies.Add(typeof(Marketplace.Queries.EF.AppInfo).Assembly);
+			break;
+		case PersistenceApproach.EventStore:
+			break;
+		default:
+			break;
 	}
 
 	foreach (var openType in openTypes)
@@ -66,7 +79,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 
 var app = builder.Build();
 
-if (isRavenDbPerstistenceAndQuery == false)
+if (persistenceApproach == PersistenceApproach.EntityFramework)
 {
 	app.EnsureDatabase();
 }
