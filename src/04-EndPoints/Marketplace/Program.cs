@@ -81,7 +81,7 @@ var app = builder.Build();
 
 if (persistenceApproach == PersistenceApproach.EntityFramework)
 {
-	app.EnsureDatabase();
+	app.EnsureDatabaseCreated();
 }
 
 app.UsePathBase("/marketplace");

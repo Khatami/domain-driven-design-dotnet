@@ -5,7 +5,7 @@ namespace Marketplace.Extensions
 {
 	public static class DbContextExtensions
 	{
-		public static void EnsureDatabase(this IApplicationBuilder app)
+		public static void EnsureDatabaseCreated(this IApplicationBuilder app)
 		{
 			using (var scope = app.ApplicationServices.CreateScope())
 			{
