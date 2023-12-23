@@ -2,6 +2,7 @@
 using Marketplace.Persistence.EventStore.Streaming;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Marketplace.Persistence.EventStore.Extensions
 {
@@ -9,7 +10,9 @@ namespace Marketplace.Persistence.EventStore.Extensions
 	{
 		public static IServiceCollection AddEventStoreServices(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddScoped<IAggregateStore, AggregateStore>();
+			// The client instance can be used as a singleton across the whole application.
+			// It doesn't need to open or close the connection
+			services.AddSingleton<IAggregateStore, AggregateStore>();
 
 			return services;
 		}

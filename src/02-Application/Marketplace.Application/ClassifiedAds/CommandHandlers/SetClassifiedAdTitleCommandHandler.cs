@@ -7,6 +7,24 @@ using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 
+//public abstract class BaseCommandHandler<T> : ICommandHandler<T>
+//{
+//    public BaseCommandHandler(IBaseRepo baseRepo)
+//    {
+        
+//    }
+
+//	public void Update()
+//	{
+//		if ....
+//	}
+
+//	public void Delete()
+//	{
+
+//	}
+//}
+
 internal class SetClassifiedAdTitleCommandHandler : ICommandHandler<SetClassifiedAdTitleCommand>
 {
 	private readonly IUnitOfWork _unitOfWork;
