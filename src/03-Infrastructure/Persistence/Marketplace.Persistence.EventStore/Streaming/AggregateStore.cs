@@ -3,10 +3,8 @@ using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.SeedWork.Streaming;
 using Marketplace.Persistence.EventStore.Metadata;
 using Microsoft.Extensions.Configuration;
-using System.Data.Common;
 using System.Text;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Marketplace.Persistence.EventStore.Streaming
 {
