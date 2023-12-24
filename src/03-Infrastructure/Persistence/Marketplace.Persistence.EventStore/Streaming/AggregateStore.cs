@@ -27,17 +27,24 @@ namespace Marketplace.Persistence.EventStore.Streaming
 
 		public async Task<bool> Exists<T, TId>(TId aggregateId)
 		{
-			var stream = GetStreamName<T, TId>(aggregateId);
+			try
+			{
+				var stream = GetStreamName<T, TId>(aggregateId);
 
-			var events = _client.ReadStreamAsync(Direction.Backwards, stream, StreamPosition.End, maxCount: 1);
+				var events = _client.ReadStreamAsync(Direction.Backwards, stream, StreamPosition.End, maxCount: 1);
 
-			object[] history = await ReadEvents(events);
+				object[] history = await ReadEvents(events);
 
-			var latestEvent = history.FirstOrDefault();
+				var latestEvent = history.FirstOrDefault();
 
-			// TODO: check it's the remove event
+				// TODO: check it's the remove event
 
-			return latestEvent != null;
+				return latestEvent != null;
+			}
+			catch (StreamNotFoundException)
+			{
+				return false;
+			}
 		}
 
 		public async Task<T> Load<T, TId>(TId aggregateId) where T : AggregateRoot<TId>

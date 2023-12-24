@@ -25,7 +25,7 @@ public class ClassifiedAdController : Controller
 		return Ok();
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("name")]
 	public async Task<IActionResult> Put(SetClassifiedAdTitleCommand request)
 	{
@@ -34,7 +34,7 @@ public class ClassifiedAdController : Controller
 		return Ok();
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("text")]
 	public async Task<IActionResult> Put(UpdateClassifiedAdTextCommand request)
 	{
@@ -43,9 +43,17 @@ public class ClassifiedAdController : Controller
 		return Ok();
 	}
 
-	[HttpPut]
+	[HttpPatch]
 	[Route("price")]
-	public async Task<IActionResult> Put(UpdateClassifiedAdPriceCommand request)
+	public async Task<IActionResult> Put(UpdateClassifiedAdCommand request)
+	{
+		await _mediator.Send(request);
+
+		return Ok();
+	}
+
+	[HttpPut]
+	public async Task<IActionResult> Pub(UpdateClassifiedAdCommand request)
 	{
 		await _mediator.Send(request);
 
