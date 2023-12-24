@@ -4,8 +4,6 @@
 	{
 		RavenDB,
 
-		EntityFramework,
-
-		EventStore
+		EntityFramework
 	}
 }

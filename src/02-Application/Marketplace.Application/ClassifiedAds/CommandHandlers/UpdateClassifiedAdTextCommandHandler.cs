@@ -1,26 +1,23 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Application.Infrastructure.Mediator;
-using Marketplace.Application.Infrastructure.UnitOfWork;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.SeedWork.Streaming;
 using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers;
 
 internal class UpdateClassifiedAdTextCommandHandler : ICommandHandler<UpdateClassifiedAdTextCommand>
 {
-	private readonly IUnitOfWork _unitOfWork;
-	private readonly IClassifiedAdRepository _classifiedAdRepository;
-
-	public UpdateClassifiedAdTextCommandHandler(IUnitOfWork unitOfWork, IClassifiedAdRepository classifiedAdRepository)
+	private readonly IAggregateStore _aggregateStore;
+	public UpdateClassifiedAdTextCommandHandler(IAggregateStore aggregateStore)
 	{
-		_unitOfWork = unitOfWork;
-		_classifiedAdRepository = classifiedAdRepository;
+		_aggregateStore = aggregateStore;
 	}
 
 	public async Task Handle(UpdateClassifiedAdTextCommand request, CancellationToken cancellationToken)
 	{
-		var classifiedAd = await _classifiedAdRepository.GetAsync(new ClassifiedAdId(request.Id));
+		var classifiedAd = await _aggregateStore.Load<ClassifiedAd, ClassifiedAdId>(new ClassifiedAdId(request.Id));
 
 		if (classifiedAd == null)
 		{
@@ -29,6 +26,6 @@ internal class UpdateClassifiedAdTextCommandHandler : ICommandHandler<UpdateClas
 
 		classifiedAd.UpdateText(ClassifiedAdText.FromString(request.Text));
 
-		await _unitOfWork.Commit();
+		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
 	}
 }

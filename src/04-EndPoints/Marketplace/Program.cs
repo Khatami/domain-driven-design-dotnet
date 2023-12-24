@@ -15,6 +15,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
+builder.Services.AddEventStoreServices(builder.Configuration);
 
 var persistenceApproach = builder.Configuration.GetValue<PersistenceApproach>("PersistenceApproach");
 
@@ -25,9 +26,6 @@ switch (persistenceApproach)
 		break;
 	case PersistenceApproach.EntityFramework:
 		builder.Services.AddEFServices(builder.Configuration);
-		break;
-	case PersistenceApproach.EventStore:
-		builder.Services.AddEventStoreServices(builder.Configuration);
 		break;
 	default:
 		break;
@@ -60,8 +58,6 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 			break;
 		case PersistenceApproach.EntityFramework:
 			assemblies.Add(typeof(Marketplace.Queries.EF.AppInfo).Assembly);
-			break;
-		case PersistenceApproach.EventStore:
 			break;
 		default:
 			break;
