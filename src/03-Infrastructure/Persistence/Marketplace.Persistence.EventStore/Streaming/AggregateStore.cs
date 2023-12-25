@@ -74,60 +74,12 @@ namespace Marketplace.Persistence.EventStore.Streaming
 
 		public async Task Save<T, TId>(T aggregate) where T : AggregateRoot<TId>
 		{
-			if (aggregate == null)
-			{
-				throw new ArgumentNullException(nameof(aggregate));
-			}
-
-			EventData[] changes = aggregate.GetChanges().Select(@event => new EventData(
-				eventId: Uuid.NewUuid(),
-				type: @event.GetType().Name,
-				contentType: "application/json",
-				data: Serialize(@event),
-				metadata: Serialize(new EventMetadata
-				{
-					ClrType = @event.GetType().AssemblyQualifiedName!
-				}))).ToArray();
-
-			if (!changes.Any())
-			{
-				return;
-			}
-
-			var streamName = GetStreamName<T, TId>(aggregate);
-
-			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
-
-			aggregate.ClearChanges();
+			await Save(aggregate);
 		}
 
 		public async Task Save<TId>(AggregateRoot<TId> aggregate)
 		{
-			if (aggregate == null)
-			{
-				throw new ArgumentNullException(nameof(aggregate));
-			}
-
-			EventData[] changes = aggregate.GetChanges().Select(@event => new EventData(
-				eventId: Uuid.NewUuid(),
-				type: @event.GetType().Name,
-				contentType: "application/json",
-				data: Serialize(@event),
-				metadata: Serialize(new EventMetadata
-				{
-					ClrType = @event.GetType().AssemblyQualifiedName!
-				}))).ToArray();
-
-			if (!changes.Any())
-			{
-				return;
-			}
-
-			var streamName = GetStreamName(aggregate);
-
-			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
-
-			aggregate.ClearChanges();
+			await Save(aggregate);
 		}
 
 		public async Task Save(AggregateRoot<dynamic> aggregate)
