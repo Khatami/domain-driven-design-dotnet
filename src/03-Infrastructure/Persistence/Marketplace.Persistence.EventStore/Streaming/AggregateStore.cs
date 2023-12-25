@@ -101,6 +101,64 @@ namespace Marketplace.Persistence.EventStore.Streaming
 			aggregate.ClearChanges();
 		}
 
+		public async Task Save<TId>(AggregateRoot<TId> aggregate)
+		{
+			if (aggregate == null)
+			{
+				throw new ArgumentNullException(nameof(aggregate));
+			}
+
+			EventData[] changes = aggregate.GetChanges().Select(@event => new EventData(
+				eventId: Uuid.NewUuid(),
+				type: @event.GetType().Name,
+				contentType: "application/json",
+				data: Serialize(@event),
+				metadata: Serialize(new EventMetadata
+				{
+					ClrType = @event.GetType().AssemblyQualifiedName!
+				}))).ToArray();
+
+			if (!changes.Any())
+			{
+				return;
+			}
+
+			var streamName = GetStreamName(aggregate);
+
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+
+			aggregate.ClearChanges();
+		}
+
+		public async Task Save(AggregateRoot<dynamic> aggregate)
+		{
+			if (aggregate == null)
+			{
+				throw new ArgumentNullException(nameof(aggregate));
+			}
+
+			EventData[] changes = aggregate.GetChanges().Select(@event => new EventData(
+				eventId: Uuid.NewUuid(),
+				type: @event.GetType().Name,
+				contentType: "application/json",
+				data: Serialize(@event),
+				metadata: Serialize(new EventMetadata
+				{
+					ClrType = @event.GetType().AssemblyQualifiedName!
+				}))).ToArray();
+
+			if (!changes.Any())
+			{
+				return;
+			}
+
+			var streamName = GetStreamName(aggregate);
+
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+
+			aggregate.ClearChanges();
+		}
+
 		private async Task<object[]> ReadEvents(EventStoreClient.ReadStreamResult events)
 		{
 			return await events.Select(resolvedEvent =>
@@ -134,6 +192,11 @@ namespace Marketplace.Persistence.EventStore.Streaming
 		private string GetStreamName<T, TId>(T aggregate) where T : AggregateRoot<TId>
 		{
 			return $"{typeof(T).Name}-{aggregate.Id!.ToString()}";
+		}
+
+		private string GetStreamName<TId>(AggregateRoot<TId> aggregateRoot)
+		{
+			return $"{aggregateRoot.GetType().Name}-{aggregateRoot.Id!.ToString()}";
 		}
 
 		private byte[] Serialize(object data)

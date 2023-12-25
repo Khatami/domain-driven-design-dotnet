@@ -26,7 +26,7 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 
 		var classifiedAd = new ClassifiedAd(new ClassifiedAdId(request.Id), new UserProfileId(request.OwnerId));
 
-		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
+		await _aggregateStore.Save(classifiedAd);
 
 		return request.Id;
 	}
