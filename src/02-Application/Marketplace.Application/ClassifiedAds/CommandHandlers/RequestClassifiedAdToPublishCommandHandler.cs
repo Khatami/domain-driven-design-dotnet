@@ -25,6 +25,6 @@ internal class RequestClassifiedAdToPublishCommandHandler : ICommandHandler<Requ
 
 		classifiedAd.RequestToPublish(Guid.NewGuid());
 
-		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
+		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);
 	}
 }

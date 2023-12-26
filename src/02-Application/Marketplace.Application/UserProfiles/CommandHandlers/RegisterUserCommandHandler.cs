@@ -38,6 +38,6 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 
 		await _repository.AddAsync(userProfile);
 
-		await _unitOfWork.Commit();
+		await _unitOfWork.Commit(cancellationToken);
 	}
 }

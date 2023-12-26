@@ -10,11 +10,11 @@ namespace Marketplace.Persistence.RavenDB.Infrastucture
         public RavenDBUnitOfWork(IAsyncDocumentSession session)
         {
             _session = session;
-        }
+		}
 
-        public Task Commit()
+        public Task Commit(CancellationToken cancellationToken)
         {
-            return _session.SaveChangesAsync();
+            return _session.SaveChangesAsync(cancellationToken);
         }
     }
 }

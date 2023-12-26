@@ -19,20 +19,20 @@ public class ClassifiedAdsQueryController : ControllerBase
 
 	[HttpGet]
 	[Route("list")]
-	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublishedAdsQueryFilter request)
+	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublishedAdsQueryFilter request, CancellationToken cancellationToken)
 	{
 		//List<ClassifiedAdItem> result = await _mediator.Query<GetPublishedAdsQueryFilter, List<ClassifiedAdItem>>(request);
 
-		List<ClassifiedAdItem> result = await _mediator.Query(request);
+		List<ClassifiedAdItem> result = await _mediator.Query(request, cancellationToken);
 
 		return result;
 	}
 
 	[HttpGet]
 	[Route("myads")]
-	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetOwnerClassifiedAdQueryFilter request)
+	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetOwnerClassifiedAdQueryFilter request, CancellationToken cancellationToken)
 	{
-		List<ClassifiedAdItem> result = await _mediator.Query(request);
+		List<ClassifiedAdItem> result = await _mediator.Query(request, cancellationToken);
 
 		return result;
 	}
@@ -40,9 +40,9 @@ public class ClassifiedAdsQueryController : ControllerBase
 	[HttpGet]
 	[ProducesResponseType((int)HttpStatusCode.OK)]
 	[ProducesResponseType((int)HttpStatusCode.NotFound)]
-	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublicClassifiedAdQueryFilter request)
+	public async Task<List<ClassifiedAdItem>> Get([FromQuery] GetPublicClassifiedAdQueryFilter request, CancellationToken cancellationToken)
 	{
-		List<ClassifiedAdItem> result = await _mediator.Query(request);
+		List<ClassifiedAdItem> result = await _mediator.Query(request, cancellationToken);
 
 		return result;
 	}

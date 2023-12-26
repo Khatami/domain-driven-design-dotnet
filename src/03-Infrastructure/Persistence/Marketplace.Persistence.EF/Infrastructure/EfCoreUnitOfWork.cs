@@ -15,7 +15,7 @@ namespace Marketplace.Persistence.EF.Infrastructure
 			_aggregateStore = aggregateStore;
 		}
 
-		public async Task Commit()
+		public async Task Commit(CancellationToken cancellationToken)
 		{
 			var entries =
 				_dbContext.ChangeTracker.Entries<AggregateRootBase>()
@@ -26,12 +26,12 @@ namespace Marketplace.Persistence.EF.Infrastructure
 			foreach (var entry in entries)
 			{
 				var version = entry.Entity.GetLatestVersion();
-				await _aggregateStore.Save(entry.Entity);
+				await _aggregateStore.Save(entry.Entity, cancellationToken);
 
 				entry.Property(q => q.Version).CurrentValue = version;
 			}
 
-			await _dbContext.SaveChangesAsync();
+			await _dbContext.SaveChangesAsync(cancellationToken);
 		}
 	}
 }

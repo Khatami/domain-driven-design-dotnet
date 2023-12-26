@@ -72,7 +72,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 			return aggregate;
 		}
 
-		public async Task Save<T, TId>(T aggregate) where T : AggregateRoot<TId>
+		public async Task Save<T, TId>(T aggregate, CancellationToken cancellationToken) where T : AggregateRoot<TId>
 		{
 			if (aggregate == null)
 			{
@@ -96,12 +96,12 @@ namespace Marketplace.Streaming.EventStore.Streaming
 				return;
 			}
 
-			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes, cancellationToken: cancellationToken);
 
 			aggregate.ClearChanges();
 		}
 
-		public async Task Save<TId>(AggregateRoot<TId> aggregate)
+		public async Task Save<TId>(AggregateRoot<TId> aggregate, CancellationToken cancellationToken)
 		{
 			if (aggregate == null)
 			{
@@ -125,12 +125,12 @@ namespace Marketplace.Streaming.EventStore.Streaming
 				return;
 			}
 
-			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes, cancellationToken: cancellationToken);
 
 			aggregate.ClearChanges();
 		}
 
-		public async Task Save(AggregateRootBase aggregate)
+		public async Task Save(AggregateRootBase aggregate, CancellationToken cancellationToken)
 		{
 			if (aggregate == null)
 			{
@@ -154,7 +154,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 				return;
 			}
 
-			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes);
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(aggregate.Version), changes, cancellationToken: cancellationToken);
 
 			aggregate.ClearChanges();
 		}

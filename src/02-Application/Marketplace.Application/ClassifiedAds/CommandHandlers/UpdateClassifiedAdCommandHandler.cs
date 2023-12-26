@@ -32,7 +32,7 @@ namespace Marketplace.Application.ClassifiedAds.CommandHandlers
 			classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(request.Price, request.Currency, _currencyLookup)));
 			classifiedAd.UpdateText(ClassifiedAdText.FromString(request.Text));
 
-			await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
+			await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);
 		}
 	}
 }

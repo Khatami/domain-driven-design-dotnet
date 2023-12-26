@@ -16,36 +16,36 @@ public class UserProfileController : ControllerBase
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> Post(RegisterUserCommand request)
+	public async Task<IActionResult> Post(RegisterUserCommand request, CancellationToken cancellationToken)
 	{
-		await _mediator.Send(request);
+		await _mediator.Send(request, cancellationToken);
 
 		return Ok();
 	}
 
 	[HttpPut]
 	[Route("fullName")]
-	public async Task<IActionResult> Put(UpdateUserFullNameCommand request)
+	public async Task<IActionResult> Put(UpdateUserFullNameCommand request, CancellationToken cancellationToken)
 	{
-		await _mediator.Send(request);
+		await _mediator.Send(request, cancellationToken);
 
 		return Ok();
 	}
 
 	[HttpPut]
 	[Route("displayName")]
-	public async Task<IActionResult> Put(UpdateUserDisplayNameCommand request)
+	public async Task<IActionResult> Put(UpdateUserDisplayNameCommand request, CancellationToken cancellationToken)
 	{
-		await _mediator.Send(request);
+		await _mediator.Send(request, cancellationToken);
 
 		return Ok();
 	}
 
 	[HttpPut]
 	[Route("photo")]
-	public async Task<IActionResult> Put(UpdateUserProfilePhotoCommand request)
+	public async Task<IActionResult> Put(UpdateUserProfilePhotoCommand request, CancellationToken cancellationToken)
 	{
-		await _mediator.Send(request);
+		await _mediator.Send(request, cancellationToken);
 
 		return Ok();
 	}

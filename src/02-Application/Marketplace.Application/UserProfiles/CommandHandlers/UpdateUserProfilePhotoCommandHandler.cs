@@ -27,6 +27,6 @@ internal class UpdateUserProfilePhotoCommandHandler : ICommandHandler<UpdateUser
 
 		userProfile.UpdateProfilePhoto(new Uri(request.PhotoUrl));
 
-		await _unitOfWork.Commit();
+		await _unitOfWork.Commit(cancellationToken);
 	}
 }

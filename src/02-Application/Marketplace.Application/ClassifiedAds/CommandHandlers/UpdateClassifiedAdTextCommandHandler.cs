@@ -26,6 +26,6 @@ internal class UpdateClassifiedAdTextCommandHandler : ICommandHandler<UpdateClas
 
 		classifiedAd.UpdateText(ClassifiedAdText.FromString(request.Text));
 
-		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
+		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);
 	}
 }

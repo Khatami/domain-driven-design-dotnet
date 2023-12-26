@@ -28,6 +28,6 @@ internal class UpdateUserFullNameCommandHandler : ICommandHandler<UpdateUserFull
 
 		userProfile.UpdateFullName(FullName.FromString(request.FullName));
 
-		await _unitOfWork.Commit();
+		await _unitOfWork.Commit(cancellationToken);
 	}
 }

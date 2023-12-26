@@ -33,6 +33,6 @@ internal class UpdateUserDisplayNameCommandHandler : ICommandHandler<UpdateUserD
 
 		userProfile.UpdateDisplayName(DisplayName.FromString(request.DisplayName, _checkText));
 
-		await _unitOfWork.Commit();
+		await _unitOfWork.Commit(cancellationToken);
 	}
 }

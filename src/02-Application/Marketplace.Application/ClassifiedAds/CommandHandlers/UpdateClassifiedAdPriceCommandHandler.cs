@@ -31,6 +31,6 @@ internal class UpdateClassifiedAdPriceCommandHandler : ICommandHandler<UpdateCla
 
 		classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(request.Price, request.Currency, _currencyLookup)));
 
-		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
+		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);
 	}
 }

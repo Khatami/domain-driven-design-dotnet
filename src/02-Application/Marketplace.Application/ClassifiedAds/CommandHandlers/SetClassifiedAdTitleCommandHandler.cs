@@ -26,6 +26,6 @@ internal class SetClassifiedAdTitleCommandHandler : ICommandHandler<SetClassifie
 
 		classifiedAd.SetTitle(ClassifiedAdTitle.FromString(request.Title));
 
-		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd);
+		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);
 	}
 }
