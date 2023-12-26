@@ -1,7 +1,7 @@
 ﻿using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.UserProfiles.Delegates;
 using Marketplace.Infrastructure;
-using Marketplace.Mediator.Extensions;
+using Marketplace.Mediator.MediatR.Extensions;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 

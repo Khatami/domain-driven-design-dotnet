@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Marketplace.Mediator
+namespace Marketplace.Mediator.MediatR
 {
 	internal class NotificationAdapter<TNotification> : INotification
 	{

@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Marketplace.Mediator;
+namespace Marketplace.Mediator.MediatR;
 
 internal class MediatRAdapter : IApplicationMediator
 {

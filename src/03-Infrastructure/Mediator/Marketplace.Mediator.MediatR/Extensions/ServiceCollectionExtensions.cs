@@ -1,11 +1,12 @@
 ﻿using Marketplace.Application.Infrastructure.Mediator;
-using Marketplace.Mediator.Behaviors;
+using Marketplace.Mediator.MediatR;
+using Marketplace.Mediator.MediatR.Behaviors;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Reflection;
 
-namespace Marketplace.Mediator.Extensions;
+namespace Marketplace.Mediator.MediatR.Extensions;
 
 public static class ServiceCollectionExtensions
 {

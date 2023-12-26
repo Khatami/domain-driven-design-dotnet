@@ -3,7 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Marketplace.Mediator;
+namespace Marketplace.Mediator.MediatR;
 
 internal class CommandHandlerAdapter<TRequest, TResponse> : IRequestHandler<RequestAdapter<TRequest, TResponse>, TResponse> where TRequest : ICommandResponse<TResponse>
 {

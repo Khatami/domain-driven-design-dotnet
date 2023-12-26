@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Marketplace.Mediator.Behaviors;
+namespace Marketplace.Mediator.MediatR.Behaviors;
 
 internal class RetryBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : ICommand
 {
