@@ -1,5 +1,4 @@
-﻿using Marketplace.Domain.ClassifiedAds;
-using Marketplace.Domain.UserProfiles;
+﻿using Marketplace.Domain.UserProfiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,6 +9,8 @@ namespace Marketplace.Persistence.EF.UserProfiles.Configurations
 		public void Configure(EntityTypeBuilder<UserProfile> builder)
 		{
 			builder.HasKey(x => x.UserProfileId);
+
+			builder.Property(a => a.Version).IsConcurrencyToken();
 
 			builder.OwnsOne(type => type.Id, buildAction =>
 			{
