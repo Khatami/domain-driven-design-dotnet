@@ -1,7 +1,4 @@
-﻿using Marketplace.Domain.ClassifiedAds;
-using Marketplace.Domain.UserProfiles;
-using Marketplace.Persistence.EF.ClassifiedAds;
-using Marketplace.Persistence.EF.ClassifiedAds.Configurations;
+﻿using Marketplace.Domain.UserProfiles;
 using Marketplace.Persistence.EF.UserProfiles.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -18,8 +15,6 @@ namespace Marketplace.Persistence.EF
 			_loggerFactory = loggerFactory;
 		}
 
-		public DbSet<ClassifiedAd> ClassifiedAds { get; set; }
-
 		public DbSet<UserProfile> UserProfiles { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,10 +27,6 @@ namespace Marketplace.Persistence.EF
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			// ClassifiedAds
-			modelBuilder.ApplyConfiguration(new ClassifiedAdConfiguration());
-			modelBuilder.ApplyConfiguration(new PictureConfiguration());
-
 			// UserProfiles
 			modelBuilder.ApplyConfiguration(new UserProfileConfiguration());
 

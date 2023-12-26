@@ -6,8 +6,8 @@ namespace Marketplace.Domain.SeedWork.Streaming
 	{
 		Task<bool> Exists<T, TId>(TId aggregateId);
 		Task Save<T, TId>(T aggregate) where T : AggregateRoot<TId>;
-		Task Save(AggregateRoot<dynamic> aggregate);
 		Task Save<TId>(AggregateRoot<TId> aggregate);
+		Task Save(AggregateRootBase aggregate);
 		Task<T> Load<T, TId>(TId aggregateId) where T : AggregateRoot<TId>;
 	}
 }

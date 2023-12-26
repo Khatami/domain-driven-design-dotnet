@@ -1,7 +1,5 @@
 ﻿using Marketplace.Application.SeedWork.UnitOfWork;
-using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.UserProfiles;
-using Marketplace.Persistence.EF.ClassifiedAds;
 using Marketplace.Persistence.EF.Infrastructure;
 using Marketplace.Persistence.EF.UserProfiles;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +15,6 @@ namespace Marketplace.Persistence.EF.Extensions
 			string? connectionString = configuration.GetConnectionString("SqlServerConnectionString");
 
 			services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
-			services.AddScoped<IClassifiedAdRepository, ClassifiedAdRepository>();
 			services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
 			services.AddDbContext<ClassifiedAdDbContext>(options => options.UseSqlServer(connectionString));

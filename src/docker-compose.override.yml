@@ -4,7 +4,7 @@ services:
   marketplace:
     container_name: marketplace
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=UAT
     ports:
       - "80"
 
@@ -33,8 +33,8 @@ services:
   eventstore:
     container_name: eventstore
     ports:
-      - "12113:2113"
-      - "11113:1113"
+      - "21131:2113"
+      - "11131:1113"
     environment:
        - EVENTSTORE_CLUSTER_SIZE=1
        - EVENTSTORE_RUN_PROJECTIONS=All

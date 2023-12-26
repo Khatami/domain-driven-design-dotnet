@@ -1,17 +1,22 @@
 ﻿namespace Marketplace.Domain.SeedWork.Aggregation
 {
-	public abstract class AggregateRoot<TId>
+	public abstract class AggregateRootBase
 	{
 		private readonly List<object> _changes;
-
-		protected AggregateRoot()
-		{
+		
+		internal AggregateRootBase()
+        {            
 			_changes = new List<object>();
-		}
+        }
 
-		public TId Id { get; protected set; }
+		public abstract string? GetId();
 
 		public int Version { get; private set; } = -1;
+
+		public int GetLatestVersion()
+		{
+			return Version + GetChanges().Count();
+		}
 
 		protected void Apply(object @event)
 		{
@@ -44,6 +49,27 @@
 		protected void ApplyToEntity(IInternalEventHandler entity, object @event)
 		{
 			entity?.Handle(@event);
+		}
+	}
+
+	public abstract class AggregateRoot<TId> : AggregateRootBase
+	{
+		protected AggregateRoot(): base()
+		{
+		}
+
+		public TId Id { get; protected set; }
+
+		public override string? GetId()
+		{
+			var id = Id?.ToString();
+
+			if (string.IsNullOrWhiteSpace(id))
+			{
+				throw new ArgumentNullException(nameof(id));
+			}
+
+			return id;
 		}
 	}
 }
