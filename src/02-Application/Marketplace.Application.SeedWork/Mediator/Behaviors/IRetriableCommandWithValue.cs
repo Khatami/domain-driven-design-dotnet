@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Application.Infrastructure.Mediator.Behaviors;
+﻿namespace Marketplace.Application.SeedWork.Mediator.Behaviors;
 
 public interface IRetriableCommandWithValue<TRequest, TResponse> where TRequest : ICommand
 {

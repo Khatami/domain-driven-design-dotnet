@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Marketplace.Application.Contracts\Marketplace.Application.Contracts.csproj" />
-    <ProjectReference Include="..\Marketplace.Application.Infrastructure\Marketplace.Application.Infrastructure.csproj" />
+    <ProjectReference Include="..\Marketplace.Application.SeedWork\Marketplace.Application.SeedWork.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Infrastructure.Mediator;
+﻿using Marketplace.Application.SeedWork.Mediator;
 using Marketplace.Mediator.MediatR;
 using Marketplace.Mediator.MediatR.Behaviors;
 using MediatR;

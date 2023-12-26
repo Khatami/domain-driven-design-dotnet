@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Infrastructure.Mediator;
+﻿using Marketplace.Application.SeedWork.Mediator;
 
 namespace Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 

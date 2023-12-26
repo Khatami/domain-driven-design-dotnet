@@ -1,5 +1,5 @@
 ﻿using Marketplace.Application.Contracts.UserProfiles.Commands.V1;
-using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.SeedWork.Mediator;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Controllers;

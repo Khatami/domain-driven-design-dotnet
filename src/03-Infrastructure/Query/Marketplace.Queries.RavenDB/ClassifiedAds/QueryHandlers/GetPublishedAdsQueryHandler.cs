@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Infrastructure.Mediator;
+﻿using Marketplace.Application.SeedWork.Mediator;
 using Marketplace.Queries.Contracts.ClassifiedAds.QueryFilters;
 using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
 using Raven.Client.Documents.Session;

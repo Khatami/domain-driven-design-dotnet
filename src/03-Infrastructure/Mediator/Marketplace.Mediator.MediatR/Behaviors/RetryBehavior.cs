@@ -1,5 +1,5 @@
-﻿using Marketplace.Application.Infrastructure.Mediator;
-using Marketplace.Application.Infrastructure.Mediator.Behaviors;
+﻿using Marketplace.Application.SeedWork.Mediator;
+using Marketplace.Application.SeedWork.Mediator.Behaviors;
 using MediatR;
 using Polly;
 using System.Collections.Generic;

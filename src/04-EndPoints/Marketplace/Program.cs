@@ -1,7 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Marketplace.Application.Extensions;
-using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.SeedWork.Mediator;
 using Marketplace.Extensions;
 using Marketplace.Infrastructure;
 using Marketplace.Persistence.EF.Extensions;

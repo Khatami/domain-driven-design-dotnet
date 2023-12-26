@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Application.Infrastructure.Mediator
+﻿namespace Marketplace.Application.SeedWork.Mediator
 {
 	public interface ICommandHandler<in TCommand> where TCommand : ICommand
 	{

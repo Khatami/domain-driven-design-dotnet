@@ -1,4 +1,4 @@
-using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.SeedWork.Mediator;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

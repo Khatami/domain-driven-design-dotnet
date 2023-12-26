@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Application.Infrastructure.Mediator;
+﻿namespace Marketplace.Application.SeedWork.Mediator;
 
 public interface IQueryHandler<in TQuery, TResponse> where TQuery : IQuery<TResponse>
 {

@@ -1,4 +1,4 @@
-﻿using Marketplace.Application.Infrastructure.UnitOfWork;
+﻿using Marketplace.Application.SeedWork.UnitOfWork;
 
 namespace Marketplace.Persistence.EF.Infrastructure
 {

@@ -1,5 +1,5 @@
 ﻿using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
-using Marketplace.Application.Infrastructure.Mediator;
+using Marketplace.Application.SeedWork.Mediator;
 using Marketplace.Domain.ClassifiedAds;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Domain.SeedWork.Streaming;
