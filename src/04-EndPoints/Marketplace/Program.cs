@@ -17,8 +17,13 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddEventStoreServices(builder.Configuration);
 
-var persistenceApproach = builder.Configuration.GetValue<PersistenceApproach>("PersistenceApproach");
-var QueryApproach = builder.Configuration.GetValue<PersistenceApproach>("QueryApproach");
+var persistenceApproach = builder.Configuration
+	.GetSection("ServiceSettings")
+	.GetValue<PersistenceApproach>("PersistenceApproach");
+
+var QueryApproach = builder.Configuration
+	.GetSection("ServiceSettings")
+	.GetValue<PersistenceApproach>("QueryApproach");
 
 switch (persistenceApproach)
 {
