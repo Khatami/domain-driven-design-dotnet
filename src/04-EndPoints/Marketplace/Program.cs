@@ -18,6 +18,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddEventStoreServices(builder.Configuration);
 
 var persistenceApproach = builder.Configuration.GetValue<PersistenceApproach>("PersistenceApproach");
+var QueryApproach = builder.Configuration.GetValue<PersistenceApproach>("QueryApproach");
 
 switch (persistenceApproach)
 {
@@ -28,7 +29,7 @@ switch (persistenceApproach)
 		builder.Services.AddEFServices(builder.Configuration);
 		break;
 	default:
-		break;
+		throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
 }
 
 builder.Services.AddEdgeServices(builder.Configuration);
@@ -51,7 +52,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 		typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly
 	};
 
-	switch (persistenceApproach)
+	switch (QueryApproach)
 	{
 		case PersistenceApproach.RavenDB:
 			assemblies.Add(typeof(Marketplace.Queries.RavenDB.AppInfo).Assembly);
@@ -60,7 +61,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 			assemblies.Add(typeof(Marketplace.Queries.EF.AppInfo).Assembly);
 			break;
 		default:
-			break;
+			throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
 	}
 
 	foreach (var openType in openTypes)
