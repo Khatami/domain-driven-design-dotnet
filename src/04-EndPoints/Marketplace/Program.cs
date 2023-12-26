@@ -5,8 +5,8 @@ using Marketplace.Application.Infrastructure.Mediator;
 using Marketplace.Extensions;
 using Marketplace.Infrastructure;
 using Marketplace.Persistence.EF.Extensions;
-using Marketplace.Persistence.EventStore.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
+using Marketplace.Streaming.EventStore.Extensions;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

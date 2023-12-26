@@ -1,12 +1,12 @@
 ﻿using EventStore.Client;
 using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.SeedWork.Streaming;
-using Marketplace.Persistence.EventStore.Metadata;
+using Marketplace.Streaming.EventStore.Metadata;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
 
-namespace Marketplace.Persistence.EventStore.Streaming
+namespace Marketplace.Streaming.EventStore.Streaming
 {
 	internal class AggregateStore : IAggregateStore
 	{

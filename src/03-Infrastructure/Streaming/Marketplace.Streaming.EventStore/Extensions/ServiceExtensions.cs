@@ -1,12 +1,12 @@
 ﻿using Marketplace.Domain.SeedWork.Streaming;
-using Marketplace.Persistence.EventStore.Streaming;
+using Marketplace.Streaming.EventStore.Streaming;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Marketplace.Persistence.EventStore.Extensions
+namespace Marketplace.Streaming.EventStore.Extensions
 {
-    public static class ServiceExtensions
+	public static class ServiceExtensions
 	{
 		public static IServiceCollection AddEventStoreServices(this IServiceCollection services, IConfiguration configuration)
 		{
