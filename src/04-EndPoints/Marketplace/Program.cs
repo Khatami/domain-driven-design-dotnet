@@ -8,6 +8,7 @@ using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.Streaming.EventStore.Extensions;
 using System.Reflection;
+using Marketplace.BackgroundJob.Hangfire.Redis.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -16,6 +17,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddEventStoreServices(builder.Configuration);
+builder.Services.AddHangfireServices(builder.Configuration);
 
 var persistenceApproach = builder.Configuration
 	.GetSection("ServiceSettings")
@@ -97,5 +99,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseHangfireMiddlewares();
 
 app.Run();

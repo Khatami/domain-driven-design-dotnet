@@ -16,9 +16,13 @@ services:
   eventstore:
     image: eventstore/eventstore:21.10.0-buster-slim
 
+  redis:
+    image: redis:alpine
+
 volumes:
   sqlserver_data:
   ravendb_data:
   ravendb_etc:
   eventstore_lib:
   eventstore_log:
+  redis_data:  

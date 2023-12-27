@@ -72,7 +72,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 			return aggregate;
 		}
 
-		public async Task Save<T, TId>(T aggregate, CancellationToken cancellationToken) where T : AggregateRoot<TId>
+		public async Task Save<T, TId>(T aggregate, CancellationToken cancellationToken = default) where T : AggregateRoot<TId>
 		{
 			if (aggregate == null)
 			{
@@ -101,7 +101,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 			aggregate.ClearChanges();
 		}
 
-		public async Task Save<TId>(AggregateRoot<TId> aggregate, CancellationToken cancellationToken)
+		public async Task Save<TId>(AggregateRoot<TId> aggregate, CancellationToken cancellationToken = default)
 		{
 			if (aggregate == null)
 			{

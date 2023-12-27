@@ -1,4 +1,5 @@
-﻿using Marketplace.Application.SeedWork.UnitOfWork;
+﻿using Marketplace.Application.SeedWork.BackgroundJob;
+using Marketplace.Application.SeedWork.UnitOfWork;
 using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.SeedWork.Streaming;
 
@@ -8,11 +9,12 @@ namespace Marketplace.Persistence.EF.Infrastructure
 	{
 		private readonly ClassifiedAdDbContext _dbContext;
 		private readonly IAggregateStore _aggregateStore;
-
-		public EfCoreUnitOfWork(ClassifiedAdDbContext dbContext, IAggregateStore aggregateStore)
+		private readonly IBackgroundJobService _backgroundJobService;
+		public EfCoreUnitOfWork(ClassifiedAdDbContext dbContext, IAggregateStore aggregateStore, IBackgroundJobService backgroundJobService)
 		{
 			_dbContext = dbContext;
 			_aggregateStore = aggregateStore;
+			_backgroundJobService = backgroundJobService;
 		}
 
 		public async Task Commit(CancellationToken cancellationToken)
@@ -26,12 +28,17 @@ namespace Marketplace.Persistence.EF.Infrastructure
 			foreach (var entry in entries)
 			{
 				var version = entry.Entity.GetLatestVersion();
-				await _aggregateStore.Save(entry.Entity, cancellationToken);
+				_backgroundJobService.Enqueue(() => SaveAggregate(entry.Entity));
 
 				entry.Property(q => q.Version).CurrentValue = version;
 			}
 
 			await _dbContext.SaveChangesAsync(cancellationToken);
+		}
+
+		public async Task SaveAggregate(AggregateRootBase aggregateRootBase)
+		{
+			await _aggregateStore.Save(aggregateRootBase);
 		}
 	}
 }

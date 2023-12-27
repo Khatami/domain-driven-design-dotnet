@@ -47,3 +47,11 @@ services:
     volumes:
       - eventstore_lib:/var/lib/eventstore
       - eventstore_log:/var/log/eventstore
+
+  redis:
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
