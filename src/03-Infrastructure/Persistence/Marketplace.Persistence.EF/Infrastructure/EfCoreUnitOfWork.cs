@@ -28,17 +28,12 @@ namespace Marketplace.Persistence.EF.Infrastructure
 			foreach (var entry in entries)
 			{
 				var version = entry.Entity.GetLatestVersion();
-				_backgroundJobService.Enqueue(() => SaveAggregate(entry.Entity));
+				_backgroundJobService.Enqueue(() => _aggregateStore.Save(entry.Entity, cancellationToken));
 
 				entry.Property(q => q.Version).CurrentValue = version;
 			}
 
 			await _dbContext.SaveChangesAsync(cancellationToken);
-		}
-
-		public async Task SaveAggregate(AggregateRootBase aggregateRootBase)
-		{
-			await _aggregateStore.Save(aggregateRootBase);
 		}
 	}
 }
