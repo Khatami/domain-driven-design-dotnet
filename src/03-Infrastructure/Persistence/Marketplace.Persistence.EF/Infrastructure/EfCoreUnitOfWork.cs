@@ -2,6 +2,7 @@
 using Marketplace.Application.SeedWork.UnitOfWork;
 using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.SeedWork.Streaming;
+using System.Transactions;
 
 namespace Marketplace.Persistence.EF.Infrastructure
 {
@@ -24,16 +25,26 @@ namespace Marketplace.Persistence.EF.Infrastructure
 				.Where(current => current.Entity.GetType().IsSubclassOf(typeof(AggregateRootBase)))
 				.ToList();
 
-			// TODO: Outbox Pattern is required
-			foreach (var entry in entries)
+			using TransactionScope transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
+			try
 			{
-				var version = entry.Entity.GetLatestVersion();
-				_backgroundJobService.Enqueue(() => _aggregateStore.Save(entry.Entity, cancellationToken));
+				foreach (var entry in entries)
+				{
+					var version = entry.Entity.GetLatestVersion();
+					_backgroundJobService.Enqueue(() => _aggregateStore.Save(entry.Entity, cancellationToken));
 
-				entry.Property(q => q.Version).CurrentValue = version;
+					entry.Property(q => q.Version).CurrentValue = version;
+				}
+
+				await _dbContext.SaveChangesAsync(cancellationToken);
+
+				transaction.Complete();
 			}
-
-			await _dbContext.SaveChangesAsync(cancellationToken);
+			catch (Exception)
+			{
+				transaction.Dispose();
+			}
 		}
 	}
 }
