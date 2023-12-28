@@ -47,9 +47,15 @@ namespace Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions
 			return services;
 		}
 
-		public static void UseHangfireMiddlewares(this IApplicationBuilder app)
+		public static void UseHangfireMiddlewares(this IApplicationBuilder app, string pathMatch = "/scheduling")
 		{
-			app.UseHangfireDashboard();
+			app.UseHangfireDashboard(pathMatch: pathMatch, options: new DashboardOptions
+			{
+				Authorization = new[]
+				{
+					new HangfireAuthorizationFilter("marketplace", "marketplace")
+				}
+			});
 		}
 	}
 }

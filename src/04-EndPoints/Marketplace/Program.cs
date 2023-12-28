@@ -56,7 +56,7 @@ if (persistenceApproach == PersistenceApproach.EntityFramework)
 app.UsePathBase("/marketplace");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsUAT())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();

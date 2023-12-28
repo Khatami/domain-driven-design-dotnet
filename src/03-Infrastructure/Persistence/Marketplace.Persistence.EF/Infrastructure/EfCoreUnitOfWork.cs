@@ -34,8 +34,10 @@ namespace Marketplace.Persistence.EF.Infrastructure
 				{
 					var version = entry.Entity.GetLatestVersion();
 
-					_backgroundJobService.Enqueue(BackgroundJobConsts.Outbox, 
-						() => _aggregateStore.Save(entry.Entity, cancellationToken));
+					_backgroundJobService.Enqueue(BackgroundJobConsts.Outbox,
+						() => _aggregateStore.Save(_aggregateStore.GetStreamName(entry.Entity), entry.Entity.Version, entry.Entity.GetChanges()));
+
+					entry.Entity.ClearChanges();
 
 					entry.Property(q => q.Version).CurrentValue = version;
 				}

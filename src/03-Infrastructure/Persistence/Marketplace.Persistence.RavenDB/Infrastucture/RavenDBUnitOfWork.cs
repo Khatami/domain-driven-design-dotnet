@@ -15,8 +15,8 @@ namespace Marketplace.Persistence.RavenDB.Infrastucture
         public Task Commit(CancellationToken cancellationToken)
         {
             /* 
-             * TODO: If you choose RavenDB or and other database types for persisting data you should 
-             * implement outbox pattern here
+             * TODO: If you choose RavenDB or any other database types for persisting data
+             * you should implement outbox pattern here
              * so raven db persistence is not ready for event streaming yet
             */
 

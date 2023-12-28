@@ -11,6 +11,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 	internal class AggregateStore : IAggregateStore
 	{
 		private readonly EventStoreClient _client;
+
 		public AggregateStore(IConfiguration configuration)
 		{
 			var connectionString = configuration.GetConnectionString("EventStoreConnectionString");
@@ -159,6 +160,46 @@ namespace Marketplace.Streaming.EventStore.Streaming
 			aggregate.ClearChanges();
 		}
 
+		public async Task Save(string streamName, long version, IEnumerable<object> events)
+		{
+			EventData[] changes = events.Select(@event => new EventData(
+				eventId: Uuid.NewUuid(),
+				type: @event.GetType().Name,
+				contentType: "application/json",
+				data: Serialize(@event),
+				metadata: Serialize(new EventMetadata
+				{
+					ClrType = @event.GetType().AssemblyQualifiedName!
+				}))).ToArray();
+
+			if (!changes.Any())
+			{
+				return;
+			}
+
+			await _client.AppendToStreamAsync(streamName, StreamRevision.FromInt64(version), changes);
+		}
+
+		public string GetStreamName<T, TId>(TId aggregateId)
+		{
+			return $"{typeof(T).Name}-{aggregateId!.ToString()}";
+		}
+
+		public string GetStreamName<T, TId>(T aggregate) where T : AggregateRoot<TId>
+		{
+			return $"{typeof(T).Name}-{aggregate.Id!.ToString()}";
+		}
+
+		public string GetStreamName<TId>(AggregateRoot<TId> aggregateRoot)
+		{
+			return $"{aggregateRoot.GetType().Name}-{aggregateRoot.Id!.ToString()}";
+		}
+
+		public string GetStreamName(AggregateRootBase aggregateRoot)
+		{
+			return $"{aggregateRoot.GetType().Name}-{aggregateRoot.GetId()}";
+		}
+
 		private async Task<object[]> ReadEvents(EventStoreClient.ReadStreamResult events)
 		{
 			return await events.Select(resolvedEvent =>
@@ -182,26 +223,6 @@ namespace Marketplace.Streaming.EventStore.Streaming
 
 				return data;
 			}).ToArrayAsync();
-		}
-
-		private string GetStreamName<T, TId>(TId aggregateId)
-		{
-			return $"{typeof(T).Name}-{aggregateId!.ToString()}";
-		}
-
-		private string GetStreamName<T, TId>(T aggregate) where T : AggregateRoot<TId>
-		{
-			return $"{typeof(T).Name}-{aggregate.Id!.ToString()}";
-		}
-
-		private string GetStreamName<TId>(AggregateRoot<TId> aggregateRoot)
-		{
-			return $"{aggregateRoot.GetType().Name}-{aggregateRoot.Id!.ToString()}";
-		}
-
-		private string GetStreamName(AggregateRootBase aggregateRoot)
-		{
-			return $"{aggregateRoot.GetType().Name}-{aggregateRoot.GetId()}";
 		}
 
 		private byte[] Serialize(object data)
