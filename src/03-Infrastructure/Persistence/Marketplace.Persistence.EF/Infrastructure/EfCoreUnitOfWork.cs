@@ -11,7 +11,9 @@ namespace Marketplace.Persistence.EF.Infrastructure
 		private readonly ClassifiedAdDbContext _dbContext;
 		private readonly IAggregateStore _aggregateStore;
 		private readonly IBackgroundJobService _backgroundJobService;
-		public EfCoreUnitOfWork(ClassifiedAdDbContext dbContext, IAggregateStore aggregateStore, IBackgroundJobService backgroundJobService)
+
+		public EfCoreUnitOfWork(ClassifiedAdDbContext dbContext, IAggregateStore aggregateStore,
+			IBackgroundJobService backgroundJobService)
 		{
 			_dbContext = dbContext;
 			_aggregateStore = aggregateStore;
@@ -20,8 +22,7 @@ namespace Marketplace.Persistence.EF.Infrastructure
 
 		public async Task Commit(CancellationToken cancellationToken)
 		{
-			var entries =
-				_dbContext.ChangeTracker.Entries<AggregateRootBase>()
+			var entries = _dbContext.ChangeTracker.Entries<AggregateRootBase>()
 				.Where(current => current.Entity.GetType().IsSubclassOf(typeof(AggregateRootBase)))
 				.ToList();
 
@@ -32,7 +33,9 @@ namespace Marketplace.Persistence.EF.Infrastructure
 				foreach (var entry in entries)
 				{
 					var version = entry.Entity.GetLatestVersion();
-					_backgroundJobService.Enqueue(() => _aggregateStore.Save(entry.Entity, cancellationToken));
+
+					_backgroundJobService.Enqueue(BackgroundJobConsts.Outbox, 
+						() => _aggregateStore.Save(entry.Entity, cancellationToken));
 
 					entry.Property(q => q.Version).CurrentValue = version;
 				}
@@ -44,6 +47,8 @@ namespace Marketplace.Persistence.EF.Infrastructure
 			catch (Exception)
 			{
 				transaction.Dispose();
+
+				throw;
 			}
 		}
 	}

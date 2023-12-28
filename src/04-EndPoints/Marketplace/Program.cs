@@ -1,14 +1,11 @@
-using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Marketplace.Application.Extensions;
-using Marketplace.Application.SeedWork.Mediator;
+using Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Marketplace.Extensions;
 using Marketplace.Infrastructure;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.Streaming.EventStore.Extensions;
-using System.Reflection;
-using Marketplace.BackgroundJob.Hangfire.Redis.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -17,7 +14,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddEventStoreServices(builder.Configuration);
-builder.Services.AddHangfireServices(builder.Configuration);
 
 var persistenceApproach = builder.Configuration
 	.GetSection("ServiceSettings")
@@ -33,7 +29,10 @@ switch (persistenceApproach)
 		builder.Services.AddRavenDBServices(builder.Configuration);
 		break;
 	case PersistenceApproach.EntityFramework:
-		builder.Services.AddEFServices(builder.Configuration);
+		string? connectionString = builder.Configuration.GetConnectionString("SqlServerConnectionString");
+
+		builder.Services.AddEFServices(builder.Configuration, connectionString);
+		builder.Services.AddMSSQLHangfireServices(builder.Configuration, connectionString);
 		break;
 	default:
 		throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
@@ -45,41 +44,7 @@ builder.Services.AddEdgeServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
-{
-	var openTypes = new[]
-	{
-		typeof(ICommandHandler<,>),
-		typeof(ICommandHandler<>),
-		typeof(IQueryHandler<,>)
-	};
-
-	List<Assembly> assemblies = new List<Assembly>()
-	{
-		typeof(Marketplace.Application.Extensions.ServiceExtensions).Assembly
-	};
-
-	switch (QueryApproach)
-	{
-		case PersistenceApproach.RavenDB:
-			assemblies.Add(typeof(Marketplace.Queries.RavenDB.AppInfo).Assembly);
-			break;
-		case PersistenceApproach.EntityFramework:
-			assemblies.Add(typeof(Marketplace.Queries.EF.AppInfo).Assembly);
-			break;
-		default:
-			throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
-	}
-
-	foreach (var openType in openTypes)
-	{
-		builder
-			.RegisterAssemblyTypes(assemblies.ToArray())
-			.AsClosedTypesOf(openType)
-			.AsImplementedInterfaces()
-			.InstancePerLifetimeScope();
-	}
-});
+builder.Host.AddAutofacServices(persistenceApproach);
 
 var app = builder.Build();
 

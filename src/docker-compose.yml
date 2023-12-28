@@ -8,7 +8,7 @@ services:
       dockerfile: 04-EndPoints/Marketplace/Dockerfile
 
   ravendb:
-    image: ravendb/ravendb:ubuntu-latest
+    image: ravendb/ravendb:6.0.2-ubuntu.22.04-x64
 
   mssql:
     image: mcr.microsoft.com/mssql/server:2017-latest
@@ -17,7 +17,7 @@ services:
     image: eventstore/eventstore:21.10.0-buster-slim
 
   redis:
-    image: redis:alpine
+    image: redis:alpine3.19
 
 volumes:
   sqlserver_data:

@@ -10,11 +10,16 @@ namespace Marketplace.Persistence.EF.Extensions
 {
 	public static class ServiceExtensions
 	{
-		public static IServiceCollection AddEFServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddEFServices(this IServiceCollection services,
+			IConfiguration configuration,
+			string? connectionString)
 		{
-			string? connectionString = configuration.GetConnectionString("SqlServerConnectionString");
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+				throw new ArgumentNullException(nameof(connectionString));    
+            }
 
-			services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
+            services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
 			services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
 			services.AddDbContext<ClassifiedAdDbContext>(options => options.UseSqlServer(connectionString));

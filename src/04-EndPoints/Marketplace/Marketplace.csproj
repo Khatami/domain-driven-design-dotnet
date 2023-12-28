@@ -18,7 +18,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\02-Application\Marketplace.Application\Marketplace.Application.csproj" />
-		<ProjectReference Include="..\..\03-Infrastructure\BackgroundJob\Marketplace.BackgroundJob.Hangfire.Redis\Marketplace.BackgroundJob.Hangfire.Redis.csproj" />
+		<ProjectReference Include="..\..\03-Infrastructure\BackgroundJob\Marketplace.BackgroundJob.Hangfire.MSSQL\Marketplace.BackgroundJob.Hangfire.MSSQL.csproj" />
 		<ProjectReference Include="..\..\03-Infrastructure\Mediator\Marketplace.Mediator.MediatR\Marketplace.Mediator.MediatR.csproj" />
 		<ProjectReference Include="..\..\03-Infrastructure\Persistence\Marketplace.Persistence.EF\Marketplace.Persistence.EF.csproj" />
 		<ProjectReference Include="..\..\03-Infrastructure\Persistence\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj" />

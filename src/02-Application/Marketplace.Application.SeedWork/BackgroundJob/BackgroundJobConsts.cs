@@ -2,6 +2,8 @@
 {
 	public class BackgroundJobConsts
 	{
-		public const string Outbox = "Outbox";
-    }
+		public const string Outbox = "outbox";
+
+		public const string Inbox = "inbox";
+	}
 }
