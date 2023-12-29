@@ -3,6 +3,8 @@ using Marketplace.Application.SeedWork.BackgroundJob;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using System.Reflection.PortableExecutable;
 
 namespace Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions
 {
@@ -23,6 +25,10 @@ namespace Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions
 			services.AddHangfire(configuration =>
 			{
 				configuration.UseSqlServerStorage(connectionString);
+				configuration.UseSerializerSettings(new JsonSerializerSettings
+				{
+					TypeNameHandling = TypeNameHandling.All
+				});
 			});
 
 			services.AddHangfireServer(q =>
