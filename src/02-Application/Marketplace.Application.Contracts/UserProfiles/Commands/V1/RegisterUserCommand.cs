@@ -4,7 +4,7 @@ namespace Marketplace.Application.Contracts.UserProfiles.Commands.V1;
 
 public class RegisterUserCommand : ICommand
 {
-	public Guid UserId { get; set; }
+	public Guid UserId { get; set; } = Guid.NewGuid();
 
 	public string FullName { get; set; }
 

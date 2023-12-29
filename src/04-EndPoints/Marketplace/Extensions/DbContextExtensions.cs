@@ -1,5 +1,4 @@
 ﻿using Marketplace.Persistence.EF;
-using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Extensions
 {
