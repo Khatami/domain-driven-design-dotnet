@@ -6,7 +6,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=UAT
     ports:
-      - "80"
+      - "5886:80"
 
   ravendb:
     container_name: ravendb

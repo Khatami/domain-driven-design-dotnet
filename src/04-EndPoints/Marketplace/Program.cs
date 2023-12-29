@@ -62,8 +62,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsUAT())
 	app.UseSwaggerUI();
 }
 
+app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
 app.MapControllers();
+
 app.UseHangfireMiddlewares();
 
 app.Run();

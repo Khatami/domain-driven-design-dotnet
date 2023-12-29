@@ -13,9 +13,9 @@ namespace Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions
 		public static IServiceCollection AddMSSQLHangfireServices(this IServiceCollection services,
 			IConfiguration configuration,
 			string connectionString,
-			int defaultQueueWorkCount = 50,
-			int outboxQueueWorkCount = 50,
-			int inboxQueueWorkCount = 50)
+			int defaultQueueWorkCountPerProcess = 50,
+			int outboxQueueWorkCountPerProcess = 50,
+			int inboxQueueWorkCountPerProcess = 50)
 		{
 			if (string.IsNullOrWhiteSpace(connectionString))
 			{
@@ -25,6 +25,7 @@ namespace Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions
 			services.AddHangfire(configuration =>
 			{
 				configuration.UseSqlServerStorage(connectionString);
+
 				configuration.UseSerializerSettings(new JsonSerializerSettings
 				{
 					TypeNameHandling = TypeNameHandling.All
@@ -33,19 +34,19 @@ namespace Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions
 
 			services.AddHangfireServer(q =>
 			{
-				q.WorkerCount = defaultQueueWorkCount;
+				q.WorkerCount = Environment.ProcessorCount * defaultQueueWorkCountPerProcess;
 			});
 
 			services.AddHangfireServer(q =>
 			{
 				q.Queues = new string[] { BackgroundJobConsts.Outbox };
-				q.WorkerCount = outboxQueueWorkCount;
+				q.WorkerCount = Environment.ProcessorCount * outboxQueueWorkCountPerProcess;
 			});
 
 			services.AddHangfireServer(q =>
 			{
 				q.Queues = new string[] { BackgroundJobConsts.Inbox };
-				q.WorkerCount = inboxQueueWorkCount;
+				q.WorkerCount = Environment.ProcessorCount * inboxQueueWorkCountPerProcess;
 			});
 
 			services.AddScoped<IBackgroundJobService, BackgroundJobService>();
