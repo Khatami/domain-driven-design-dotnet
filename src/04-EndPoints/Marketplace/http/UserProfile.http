@@ -1,0 +1,41 @@
+@Marketplace_HostAddress = http://localhost:5086
+
+POST {{Marketplace_HostAddress}}/api/v1/userprofile
+Content-Type: application/json
+
+{
+  "userId": "31c66d29-76f2-451a-ac80-1050cedaf2d1",
+  "fullName": "HamedKhatami",
+  "displayName": "Hamed"
+}
+###
+
+PUT {{Marketplace_HostAddress}}/api/v1/userprofile/fullName
+Content-Type: application/json
+
+{  
+  "userId": "31c66d29-76f2-451a-ac80-1050cedaf2d1",
+  "fullName": "Hamed Khatami"
+}
+
+###
+
+PUT {{Marketplace_HostAddress}}/api/v1/userprofile/displayName
+Content-Type: application/json
+
+{
+  "userId": "31c66d29-76f2-451a-ac80-1050cedaf2d1",
+  "displayName": "Hamed Kh"
+}
+
+###
+
+PUT {{Marketplace_HostAddress}}/api/v1/userprofile/photo
+Content-Type: application/json
+
+{
+  "userId": "31c66d29-76f2-451a-ac80-1050cedaf2d1",
+  "photoUrl": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
+}
+
+###
