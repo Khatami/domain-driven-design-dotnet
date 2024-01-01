@@ -1,13 +1,15 @@
-﻿namespace Marketplace.Domain.SeedWork.Aggregation
+﻿using System.Text.Json;
+
+namespace Marketplace.Domain.SeedWork.Aggregation
 {
 	public abstract class AggregateRootBase
 	{
 		private readonly List<object> _changes;
-		
+
 		internal AggregateRootBase()
-        {            
+		{
 			_changes = new List<object>();
-        }
+		}
 
 		public abstract string? GetId();
 
@@ -51,10 +53,20 @@
 			entity?.Handle(@event);
 		}
 
-		public void Snapshot()
+		public dynamic Snapshot()
 		{
+			var a = JsonSerializer.Serialize(this, new JsonSerializerOptions() { });
+
 			var snapshotevent = GetSnapshotEvent();
+
+			var newInstance = Activator.CreateInstance(this.GetType());
+			(newInstance as AggregateRootBase)!.Load(new object[] { snapshotevent });
+
+			var b = JsonSerializer.Serialize(newInstance);
+
 			_changes.Add(snapshotevent);
+
+			return snapshotevent;
 		}
 
 		public abstract object GetSnapshotEvent();
@@ -62,7 +74,7 @@
 
 	public abstract class AggregateRoot<TId> : AggregateRootBase
 	{
-		protected AggregateRoot(): base()
+		protected AggregateRoot() : base()
 		{
 		}
 
