@@ -50,6 +50,14 @@
 		{
 			entity?.Handle(@event);
 		}
+
+		public void Snapshot()
+		{
+			var snapshotevent = GetSnapshotEvent();
+			_changes.Add(snapshotevent);
+		}
+
+		public abstract object GetSnapshotEvent();
 	}
 
 	public abstract class AggregateRoot<TId> : AggregateRootBase

@@ -68,4 +68,13 @@ public class ClassifiedAdController : Controller
 
 		return Ok();
 	}
+
+	[HttpPost]
+	[Route("snapshot")]
+	public async Task<IActionResult> Put(SnapshotClassifiedAdCommand request, CancellationToken cancellationToken)
+	{
+		await _mediator.Send(request, cancellationToken);
+
+		return Ok();
+	}
 }

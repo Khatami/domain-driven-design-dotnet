@@ -1,6 +1,7 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Entities;
 using Marketplace.Domain.ClassifiedAds.Enums;
 using Marketplace.Domain.ClassifiedAds.Events;
+using Marketplace.Domain.ClassifiedAds.Events.Snapshot;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Domain.SeedWork.Aggregation;
@@ -8,7 +9,7 @@ using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-	public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
+    public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
 		// for impedence mismatch
 		private ClassifiedAd()
@@ -133,6 +134,26 @@ namespace Marketplace.Domain.ClassifiedAds
 					ApplyToEntity(newPicture, e);
 					_pictures.Add(newPicture);
 					break;
+
+				case ClassifiedAdSnapshotted_V1 e:
+					Id = new ClassifiedAdId(e.ClassifiedAdId);
+					ClassifiedAdId = e.ClassifiedAdId;
+					OwnerId = new UserProfileId(e.OwnerId);
+
+					Title = e.Title != null ? ClassifiedAdTitle.FromString(e.Title) : null;
+					Text = e.Text != null ? ClassifiedAdText.FromString(e.Text) : null;
+					Price = e.Price != null ? new Price(e.Price.Value, e.CurrencyCode!) : null;
+					ApprovedBy = e.ApprovedById != null ? new UserProfileId(e.ApprovedById.Value) : null;
+
+					State = (ClassifiedAdState)e.State;
+
+					_pictures.Clear();
+					foreach (var picture in e.Pictures)
+					{
+						_pictures.Add(Picture.FromSnapshot(picture.PictureId,
+							new PictureSize(picture.Width, picture.Height), picture.Url, picture.Order));
+					}
+					break;
 			}
 		}
 
@@ -181,6 +202,25 @@ namespace Marketplace.Domain.ClassifiedAds
 						throw new InvalidEntityStateException(this, "FirstPicture cannot be null");
 					break;
 			}
+		}
+
+		public override object GetSnapshotEvent()
+		{
+			var pictures = Pictures.Select(picture => new ClassifiedAdPictureSnapshot_V1(picture.PictureId,
+				picture.Location.ToString(),
+				picture.Size.Height, picture.
+				Size.Width,
+				picture.Order)).ToList();
+
+			return new ClassifiedAdSnapshotted_V1(ClassifiedAdId: ClassifiedAdId,
+				OwnerId: OwnerId,
+				Title: Title?.Title,
+				Text: Text?.Text,
+				Price: Price?.Amount,
+				CurrencyCode: Price?.Currency.CurrencyCode,
+				State: (int)State,
+				ApprovedById: ApprovedBy?.Value,
+				Pictures: pictures);
 		}
 	}
 }
