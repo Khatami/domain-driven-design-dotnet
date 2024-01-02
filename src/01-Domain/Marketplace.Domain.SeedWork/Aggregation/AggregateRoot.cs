@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Marketplace.Domain.SeedWork.Aggregation.Exceptions;
+using Marketplace.Domain.SeedWork.Comparison;
 
 namespace Marketplace.Domain.SeedWork.Aggregation
 {
@@ -53,20 +54,21 @@ namespace Marketplace.Domain.SeedWork.Aggregation
 			entity?.Handle(@event);
 		}
 
-		public dynamic Snapshot()
+		public void Snapshot(IComparisonService comparisonService)
 		{
-			var a = JsonSerializer.Serialize(this, new JsonSerializerOptions() { });
-
 			var snapshotevent = GetSnapshotEvent();
 
-			var newInstance = Activator.CreateInstance(this.GetType());
-			(newInstance as AggregateRootBase)!.Load(new object[] { snapshotevent });
+			var newInstance = Activator.CreateInstance(this.GetType(), true);
 
-			var b = JsonSerializer.Serialize(newInstance);
+			(newInstance as AggregateRootBase)!.Load(new object[] { snapshotevent });
+			(newInstance as AggregateRootBase)!.Version = this.Version;
+
+			if (comparisonService.Compare(this, newInstance) == false)
+			{
+				throw new SnapshotComparisonException();
+			}
 
 			_changes.Add(snapshotevent);
-
-			return snapshotevent;
 		}
 
 		public abstract object GetSnapshotEvent();

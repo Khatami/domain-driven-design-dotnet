@@ -6,6 +6,7 @@ using Marketplace.Infrastructure;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.Streaming.EventStore.Extensions;
+using Marketplace.Comparison.CompareNetObjects.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -14,6 +15,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddEventStoreServices(builder.Configuration);
+builder.Services.AddComparisonServices();
 
 var persistenceApproach = builder.Configuration
 	.GetSection("ServiceSettings")
@@ -30,6 +32,11 @@ switch (persistenceApproach)
 		break;
 	case PersistenceApproach.EntityFramework:
 		string? connectionString = builder.Configuration.GetConnectionString("SqlServerConnectionString");
+
+		if (string.IsNullOrWhiteSpace(connectionString))
+		{
+			throw new ArgumentNullException(nameof(connectionString));
+		}
 
 		builder.Services.AddEFServices(builder.Configuration, connectionString);
 		builder.Services.AddMSSQLHangfireServices(builder.Configuration, connectionString);
