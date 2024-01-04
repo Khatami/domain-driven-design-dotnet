@@ -3,6 +3,7 @@ using Marketplace.Application.Extensions;
 using Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Marketplace.Extensions;
 using Marketplace.Infrastructure;
+using Marketplace.Infrastructure.Subscriptions;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.Streaming.EventStore.Extensions;
@@ -14,6 +15,13 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddEventStoreServices(builder.Configuration);
+
+//********************************************
+// Temperoray
+//********************************************
+builder.Services.AddSingleton<EsSubscription>();
+//********************************************
+//********************************************
 
 var persistenceApproach = builder.Configuration
 	.GetSection("ServiceSettings")
@@ -47,6 +55,14 @@ builder.Services.AddSwaggerGen();
 builder.Host.AddAutofacServices(persistenceApproach);
 
 var app = builder.Build();
+
+//********************************************
+// Temperoray
+//********************************************
+var esSubscribtion = app.Services.GetRequiredService<EsSubscription>();
+esSubscribtion.Start();
+//********************************************
+//********************************************
 
 if (persistenceApproach == PersistenceApproach.EntityFramework)
 {

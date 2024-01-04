@@ -34,7 +34,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 
 				var events = _client.ReadStreamAsync(Direction.Backwards, stream, StreamPosition.End, maxCount: 1);
 
-				object[] history = await ReadEvents(events);
+				object[] history = await ReadEventsAsync(events);
 
 				var latestEvent = history.FirstOrDefault();
 
@@ -66,7 +66,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 
 			var events = _client.ReadStreamAsync(Direction.Forwards, stream, StreamPosition.Start);
 
-			object[] history = await ReadEvents(events);
+			object[] history = await ReadEventsAsync(events);
 
 			aggregate.Load(history);
 
@@ -200,7 +200,7 @@ namespace Marketplace.Streaming.EventStore.Streaming
 			return $"{aggregateRoot.GetType().Name}-{aggregateRoot.GetId()}";
 		}
 
-		private async Task<object[]> ReadEvents(EventStoreClient.ReadStreamResult events)
+		private async Task<object[]> ReadEventsAsync(EventStoreClient.ReadStreamResult events)
 		{
 			return await events.Select(resolvedEvent =>
 			{
