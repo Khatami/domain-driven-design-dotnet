@@ -1,5 +1,5 @@
 ﻿using EventStore.Client;
-using Marketplace.Domain.ClassifiedAds.Events;
+using Marketplace.Domain.Events.ClassifiedAds;
 using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
 using Marketplace.Streaming.EventStore.Metadata;
 using System.Text;

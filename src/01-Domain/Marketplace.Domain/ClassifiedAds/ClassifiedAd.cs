@@ -1,15 +1,15 @@
 ﻿using Marketplace.Domain.ClassifiedAds.Entities;
 using Marketplace.Domain.ClassifiedAds.Enums;
-using Marketplace.Domain.ClassifiedAds.Events;
-using Marketplace.Domain.ClassifiedAds.Events.Snapshot;
 using Marketplace.Domain.ClassifiedAds.Exceptions;
 using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Events.ClassifiedAds;
+using Marketplace.Domain.Events.ClassifiedAds.Snapshot;
 using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Domain.ClassifiedAds
 {
-    public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
+	public class ClassifiedAd : AggregateRoot<ClassifiedAdId>
 	{
 		// for impedence mismatch
 		private ClassifiedAd()

@@ -1,5 +1,5 @@
-﻿using Marketplace.Domain.ClassifiedAds.Events;
-using Marketplace.Domain.ClassifiedAds.ValueObjects;
+﻿using Marketplace.Domain.ClassifiedAds.ValueObjects;
+using Marketplace.Domain.Events.ClassifiedAds;
 using Marketplace.Domain.SeedWork.Aggregation;
 
 namespace Marketplace.Domain.ClassifiedAds.Entities

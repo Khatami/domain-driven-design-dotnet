@@ -1,4 +1,4 @@
-﻿namespace Marketplace.Domain.UserProfiles.Events
+﻿namespace Marketplace.Domain.Events.UserProfiles
 {
 	public record UserDisplayNameUpdated(Guid UserId, string DisplayName);
 }

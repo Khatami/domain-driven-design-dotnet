@@ -59,6 +59,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comparison", "Comparison", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Comparison.CompareNetObjects", "03-Infrastructure\Comparison\Marketplace.Comparison.CompareNetObjects\Marketplace.Comparison.CompareNetObjects.csproj", "{F745E897-E888-433E-9477-24CA15D11D31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marketplace.Domain.Events", "01-Domain\Marketplace.Domain.Events\Marketplace.Domain.Events.csproj", "{97331183-2CDE-41D1-9FFA-9F19C28400F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{F745E897-E888-433E-9477-24CA15D11D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F745E897-E888-433E-9477-24CA15D11D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F745E897-E888-433E-9477-24CA15D11D31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97331183-2CDE-41D1-9FFA-9F19C28400F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97331183-2CDE-41D1-9FFA-9F19C28400F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97331183-2CDE-41D1-9FFA-9F19C28400F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97331183-2CDE-41D1-9FFA-9F19C28400F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +171,7 @@ Global
 		{D6BB34DD-3E2B-471A-B9F0-C5CD0E0AC76E} = {88879636-1683-486D-9D42-525EE6BD5D2C}
 		{FE639B6F-090C-4742-B25F-629CD4E337A5} = {2E908D7F-B838-4119-8587-E4DC276625DD}
 		{F745E897-E888-433E-9477-24CA15D11D31} = {FE639B6F-090C-4742-B25F-629CD4E337A5}
+		{97331183-2CDE-41D1-9FFA-9F19C28400F6} = {125F0354-5210-45BD-8C6F-9CBEC4BA126C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AB58BEE-655E-4F39-A64F-1BE735BFB935}

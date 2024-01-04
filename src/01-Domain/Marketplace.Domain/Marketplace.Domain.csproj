@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Marketplace.Domain.Events\Marketplace.Domain.Events.csproj" />
     <ProjectReference Include="..\Marketplace.Domain.SeedWork\Marketplace.Domain.SeedWork.csproj" />
   </ItemGroup>
 
