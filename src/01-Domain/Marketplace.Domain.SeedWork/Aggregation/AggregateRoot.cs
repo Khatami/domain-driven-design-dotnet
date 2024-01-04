@@ -1,13 +1,16 @@
-﻿namespace Marketplace.Domain.SeedWork.Aggregation
+﻿using Marketplace.Domain.SeedWork.Aggregation.Exceptions;
+using Marketplace.Domain.SeedWork.Comparison;
+
+namespace Marketplace.Domain.SeedWork.Aggregation
 {
 	public abstract class AggregateRootBase
 	{
 		private readonly List<object> _changes;
-		
+
 		internal AggregateRootBase()
-        {            
+		{
 			_changes = new List<object>();
-        }
+		}
 
 		public abstract string? GetId();
 
@@ -50,11 +53,30 @@
 		{
 			entity?.Handle(@event);
 		}
+
+		public void Snapshot(IComparisonService comparisonService)
+		{
+			var snapshotevent = GetSnapshotEvent();
+
+			var newInstance = Activator.CreateInstance(this.GetType(), true);
+
+			(newInstance as AggregateRootBase)!.Load(new object[] { snapshotevent });
+			(newInstance as AggregateRootBase)!.Version = this.Version;
+
+			if (comparisonService.Compare(this, newInstance) == false)
+			{
+				throw new SnapshotComparisonException();
+			}
+
+			_changes.Add(snapshotevent);
+		}
+
+		public abstract object GetSnapshotEvent();
 	}
 
 	public abstract class AggregateRoot<TId> : AggregateRootBase
 	{
-		protected AggregateRoot(): base()
+		protected AggregateRoot() : base()
 		{
 		}
 

@@ -45,7 +45,7 @@ public class ClassifiedAdController : Controller
 
 	[HttpPatch]
 	[Route("price")]
-	public async Task<IActionResult> Put(UpdateClassifiedAdCommand request, CancellationToken cancellationToken)
+	public async Task<IActionResult> Put(UpdateClassifiedAdPriceCommand request, CancellationToken cancellationToken)
 	{
 		await _mediator.Send(request, cancellationToken);
 
@@ -63,6 +63,15 @@ public class ClassifiedAdController : Controller
 	[HttpPut]
 	[Route("publish")]
 	public async Task<IActionResult> Put(RequestClassifiedAdToPublishCommand request, CancellationToken cancellationToken)
+	{
+		await _mediator.Send(request, cancellationToken);
+
+		return Ok();
+	}
+
+	[HttpPost]
+	[Route("snapshot")]
+	public async Task<IActionResult> Put(SnapshotClassifiedAdCommand request, CancellationToken cancellationToken)
 	{
 		await _mediator.Send(request, cancellationToken);
 

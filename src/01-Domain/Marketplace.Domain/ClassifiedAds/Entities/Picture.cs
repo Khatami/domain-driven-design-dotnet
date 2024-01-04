@@ -12,6 +12,18 @@ namespace Marketplace.Domain.ClassifiedAds.Entities
 		{
 		}
 
+		// Snapshot usage
+	    internal static Picture FromSnapshot(Guid pictureId, PictureSize size, string url, int order)
+		{
+			return new Picture()
+			{
+				PictureId = pictureId,
+				Size = size,
+				Location = new Uri(url),
+				Order = order
+			};
+		}
+
 		public Guid PictureId { get; private set; }
 
 		public PictureSize Size { get; private set; }

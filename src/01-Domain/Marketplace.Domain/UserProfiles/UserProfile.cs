@@ -1,11 +1,12 @@
 ﻿using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.Shared.ValueObjects;
 using Marketplace.Domain.UserProfiles.Events;
+using Marketplace.Domain.UserProfiles.Events.Snapshot;
 using Marketplace.Domain.UserProfiles.ValueObjects;
 
 namespace Marketplace.Domain.UserProfiles
 {
-	public class UserProfile : AggregateRoot<UserProfileId>
+    public class UserProfile : AggregateRoot<UserProfileId>
 	{
 		// for impedence mismatch
 		private UserProfile() { }
@@ -43,11 +44,11 @@ namespace Marketplace.Domain.UserProfiles
 
 		protected override void When(object @event)
 		{
-			switch(@event)
+			switch (@event)
 			{
 				case UserRegistered e:
-					Id = new UserProfileId(e.UserId);
-					UserProfileId = e.UserId;
+					Id = new UserProfileId(e.UserProfileId);
+					UserProfileId = e.UserProfileId;
 					FullName = new FullName(e.FullName);
 					DisplayName = new DisplayName(e.DisplayName);
 					break;
@@ -63,12 +64,26 @@ namespace Marketplace.Domain.UserProfiles
 				case ProfilePhotoUpdated e:
 					PhotoUrl = e.PhotoUrl;
 					break;
+
+				case UserProfileSnapshotted_V1 e:
+					Id = new UserProfileId(e.UserProfileId);
+					UserProfileId = e.UserProfileId;
+					FullName = new FullName(e.FullName);
+					DisplayName = new DisplayName(e.DisplayName);
+
+					PhotoUrl = e.PhotoUrl;
+					break;
 			}
 		}
 
 		// To Check Entity Invariant
 		protected override void EnsureValidState()
 		{
+		}
+
+		public override object GetSnapshotEvent()
+		{
+			return new UserProfileSnapshotted_V1(UserProfileId, FullName, DisplayName, PhotoUrl);
 		}
 	}
 }
