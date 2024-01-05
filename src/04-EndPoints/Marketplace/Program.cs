@@ -3,11 +3,11 @@ using Marketplace.Application.Extensions;
 using Marketplace.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Marketplace.Extensions;
 using Marketplace.Infrastructure;
-using Marketplace.Infrastructure.Subscriptions;
 using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.Streaming.EventStore.Extensions;
 using Marketplace.Comparison.CompareNetObjects.Extensions;
+using Marketplace.Infrastructure.Projections;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -21,7 +21,7 @@ builder.Services.AddComparisonServices();
 //********************************************
 // Temperoray
 //********************************************
-builder.Services.AddSingleton<EsSubscription>();
+builder.Services.AddSingleton<ProjectionsManager>();
 //********************************************
 //********************************************
 
@@ -66,7 +66,7 @@ var app = builder.Build();
 //********************************************
 // Temperoray
 //********************************************
-var esSubscribtion = app.Services.GetRequiredService<EsSubscription>();
+var esSubscribtion = app.Services.GetRequiredService<ProjectionsManager>();
 esSubscribtion.Start();
 //********************************************
 //********************************************

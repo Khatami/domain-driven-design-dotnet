@@ -2,7 +2,6 @@
 using Marketplace.Domain.SeedWork.Aggregation;
 using Marketplace.Domain.SeedWork.Streaming;
 using Marketplace.Streaming.EventStore.Metadata;
-using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
 
@@ -12,18 +11,9 @@ namespace Marketplace.Streaming.EventStore.Streaming
 	{
 		private readonly EventStoreClient _client;
 
-		public AggregateStore(IConfiguration configuration)
+		public AggregateStore(EventStoreClient client)
 		{
-			var connectionString = configuration.GetConnectionString("EventStoreConnectionString");
-
-			if (string.IsNullOrWhiteSpace(connectionString))
-			{
-				throw new ArgumentNullException(nameof(connectionString));
-			}
-
-			var settings = EventStoreClientSettings.Create(connectionString);
-
-			_client = new EventStoreClient(settings);
+			_client = client;
 		}
 
 		public async Task<bool> Exists<T, TId>(TId aggregateId)
