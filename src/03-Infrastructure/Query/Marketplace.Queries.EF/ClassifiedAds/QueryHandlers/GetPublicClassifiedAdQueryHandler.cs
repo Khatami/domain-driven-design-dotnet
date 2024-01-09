@@ -1,10 +1,10 @@
 ﻿using Marketplace.Application.SeedWork.Mediator;
-using Marketplace.Queries.Contracts.ClassifiedAds.QueryFilters;
-using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
+using Marketplace.Queries.Contracts.Queries.ClassifiedAds;
+using Marketplace.Queries.Contracts.ReadModels.ClassifiedAds;
 
 namespace Marketplace.Queries.EF.ClassifiedAds.QueryHandlers
 {
-	internal class GetPublicClassifiedAdQueryHandler : IQueryHandler<GetPublicClassifiedAdQueryFilter, List<ClassifiedAdItem>>
+    internal class GetPublicClassifiedAdQueryHandler : IQueryHandler<GetPublicClassifiedAdQueryFilter, List<ClassifiedAdItem>>
 	{
 		public GetPublicClassifiedAdQueryHandler()
 		{

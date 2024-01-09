@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\..\02-Application\Marketplace.Application.SeedWork\Marketplace.Application.SeedWork.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\UserProfiles\" />
+  </ItemGroup>
+
 </Project>

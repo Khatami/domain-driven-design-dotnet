@@ -1,6 +1,6 @@
 ﻿using Marketplace.Application.SeedWork.Mediator;
-using Marketplace.Queries.Contracts.ClassifiedAds.QueryFilters;
-using Marketplace.Queries.Contracts.ClassifiedAds.QueryResults;
+using Marketplace.Queries.Contracts.Queries.ClassifiedAds;
+using Marketplace.Queries.Contracts.ReadModels.ClassifiedAds;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

@@ -7,7 +7,10 @@ using Marketplace.Persistence.EF.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.Streaming.EventStore.Extensions;
 using Marketplace.Comparison.CompareNetObjects.Extensions;
-using Marketplace.Infrastructure.Projections;
+using Marketplace.Infrastructure.Subscribtions.Infrastructure;
+using Marketplace.Infrastructure.Subscribtions.Projections;
+using Marketplace.Queries.Contracts.ReadModels.ClassifiedAds;
+using Marketplace.Queries.Contracts.ReadModels.UserProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -21,7 +24,7 @@ builder.Services.AddComparisonServices();
 //********************************************
 // Temperoray
 //********************************************
-builder.Services.AddSingleton<ProjectionsManager>();
+builder.Services.AddSingleton<ProjectionManager>();
 //********************************************
 //********************************************
 
@@ -66,8 +69,9 @@ var app = builder.Build();
 //********************************************
 // Temperoray
 //********************************************
-var esSubscribtion = app.Services.GetRequiredService<ProjectionsManager>();
-esSubscribtion.Start();
+var esSubscribtion = app.Services.GetRequiredService<ProjectionManager>();
+
+esSubscribtion.Start(new ClassifiedAdDetailsProjection(), new UserDetailsProjection());
 //********************************************
 //********************************************
 
