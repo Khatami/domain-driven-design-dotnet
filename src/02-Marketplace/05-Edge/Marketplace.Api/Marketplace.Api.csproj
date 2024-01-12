@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\01-Framework\03-Infrastructure\BackgroundJob\Framework.BackgroundJob.Hangfire.MSSQL\Framework.BackgroundJob.Hangfire.MSSQL.csproj" />
+		<ProjectReference Include="..\..\..\01-Framework\03-Infrastructure\Comparison\Framework.Comparison.CompareNetObjects\Framework.Comparison.CompareNetObjects.csproj" />
+		<ProjectReference Include="..\..\..\01-Framework\05-Mediator\Framework.Mediator.MediatR\Framework.Mediator.MediatR.csproj" />
+		<ProjectReference Include="..\..\..\01-Framework\06-Streaming\Framework.Streaming.EventStore\Framework.Streaming.EventStore.csproj" />
+		<ProjectReference Include="..\..\02-Application\Marketplace.Application\Marketplace.Application.csproj" />
+		<ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.MSSQL\Marketplace.Persistence.MSSQL.csproj" />
+		<ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj" />
+		<ProjectReference Include="..\..\04-Query\Marketplace.Queries\Marketplace.Queries.csproj" />
+	</ItemGroup>
+
+</Project>

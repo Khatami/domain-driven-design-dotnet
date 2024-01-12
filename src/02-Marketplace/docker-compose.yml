@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  marketplace.api:
+    image: ${DOCKER_REGISTRY-}marketplace
+    build:
+      context: .
+      dockerfile: 05-Edge/Marketplace.Api/Dockerfile
+
+  ravendb:
+    image: ravendb/ravendb:6.0.2-ubuntu.22.04-x64
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  eventstore:
+    image: eventstore/eventstore:21.10.0-buster-slim
+
+  redis:
+    image: redis:alpine3.19
+
+volumes:
+  sqlserver_data:
+  ravendb_data:
+  ravendb_etc:
+  eventstore_lib:
+  eventstore_log:
+  redis_data:  

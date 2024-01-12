@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.2.0">
+		  <PrivateAssets></PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Polly" Version="8.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\02-Application\Framework.Application\Framework.Application.csproj" />
+	  <ProjectReference Include="..\..\04-Query\Framework.Query\Framework.Query.csproj" />
+	</ItemGroup>
+
+</Project>
