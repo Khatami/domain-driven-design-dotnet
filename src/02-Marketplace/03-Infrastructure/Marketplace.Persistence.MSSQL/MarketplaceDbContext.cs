@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Marketplace.Persistence.MSSQL
 {
-	public class ClassifiedAdDbContext : DbContext
+	public class MarketplaceDbContext : DbContext
 	{
 		private readonly ILoggerFactory _loggerFactory;
 
-		public ClassifiedAdDbContext(DbContextOptions<ClassifiedAdDbContext> options, ILoggerFactory loggerFactory)
+		public MarketplaceDbContext(DbContextOptions<MarketplaceDbContext> options, ILoggerFactory loggerFactory)
 			: base(options)
 		{
 			_loggerFactory = loggerFactory;

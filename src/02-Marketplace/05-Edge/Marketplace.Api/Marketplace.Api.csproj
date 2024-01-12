@@ -27,4 +27,8 @@
 		<ProjectReference Include="..\..\04-Query\Marketplace.Queries\Marketplace.Queries.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Controllers\Https\" />
+	</ItemGroup>
+
 </Project>

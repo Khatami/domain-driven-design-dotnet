@@ -3,10 +3,7 @@ using Framework.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Framework.Comparison.CompareNetObjects.Extensions;
 using Framework.Streaming.EventStore.Extensions;
 using Marketplace.Api.Extensions;
-using Marketplace.Api.Infrastructure;
 using Marketplace.Application.Extensions;
-using Marketplace.Persistence.MSSQL.Extensions;
-using Marketplace.Persistence.RavenDB.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -16,45 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddStreamingServices(builder.Configuration);
 builder.Services.AddComparisonServices();
-
-var persistenceApproach = builder.Configuration
-	.GetSection("ServiceSettings")
-	.GetValue<PersistenceApproach>("PersistenceApproach");
-
-switch (persistenceApproach)
-{
-	case PersistenceApproach.RavenDB:
-		builder.Services.AddRavenDBServices(builder.Configuration);
-		break;
-	case PersistenceApproach.EntityFramework:
-		string? connectionString = builder.Configuration.GetConnectionString("SqlServerConnectionString");
-
-		if (string.IsNullOrWhiteSpace(connectionString))
-		{
-			throw new ArgumentNullException(nameof(connectionString));
-		}
-
-		builder.Services.AddEFServices(builder.Configuration, connectionString);
-		builder.Services.AddMSSQLHangfireServices(builder.Configuration, connectionString);
-		break;
-	default:
-		throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
-}
-
+builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddEdgeServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Host.AddAutofacServices();
+builder.Host.AddCQRSServices();
 
 var app = builder.Build();
-
-if (persistenceApproach == PersistenceApproach.EntityFramework)
-{
-	app.EnsureDatabaseCreated();
-}
 
 app.UsePathBase("/marketplace");
 
@@ -64,6 +32,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsUAT())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.EnsureDatabaseCreated(builder.Configuration);
 
 app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();

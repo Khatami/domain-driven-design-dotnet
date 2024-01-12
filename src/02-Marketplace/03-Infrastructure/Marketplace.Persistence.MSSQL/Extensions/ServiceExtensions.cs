@@ -22,7 +22,10 @@ namespace Marketplace.Persistence.MSSQL.Extensions
 			services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>();
 			services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
-			services.AddDbContext<ClassifiedAdDbContext>(options => options.UseSqlServer(connectionString));
+			services.AddDbContext<MarketplaceDbContext>(options =>
+			{
+				options.UseSqlServer(connectionString);
+			});
 
 			return services;
 		}

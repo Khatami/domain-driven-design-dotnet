@@ -7,9 +7,9 @@ namespace Marketplace.Persistence.MSSQL.UserProfiles
 {
 	public class UserProfileRepository : IUserProfileRepository
 	{
-		private readonly ClassifiedAdDbContext _dbContext;
+		private readonly MarketplaceDbContext _dbContext;
 
-		public UserProfileRepository(ClassifiedAdDbContext dbContext)
+		public UserProfileRepository(MarketplaceDbContext dbContext)
 		{
 			_dbContext = dbContext;
 		}

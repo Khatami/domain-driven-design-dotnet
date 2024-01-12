@@ -8,11 +8,11 @@ namespace Marketplace.Persistence.MSSQL.Infrastructure
 {
 	public class EfCoreUnitOfWork : IUnitOfWork
 	{
-		private readonly ClassifiedAdDbContext _dbContext;
+		private readonly MarketplaceDbContext _dbContext;
 		private readonly IAggregateStore _aggregateStore;
 		private readonly IBackgroundJobService _backgroundJobService;
 
-		public EfCoreUnitOfWork(ClassifiedAdDbContext dbContext, IAggregateStore aggregateStore,
+		public EfCoreUnitOfWork(MarketplaceDbContext dbContext, IAggregateStore aggregateStore,
 			IBackgroundJobService backgroundJobService)
 		{
 			_dbContext = dbContext;

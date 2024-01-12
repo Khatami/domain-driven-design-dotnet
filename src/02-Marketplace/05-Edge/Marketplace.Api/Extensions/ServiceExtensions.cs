@@ -1,10 +1,14 @@
 ﻿using Autofac;
 using Framework.Application.Mediator;
+using Framework.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Framework.Mediator.MediatR.Extensions;
 using Framework.Query.Mediator;
 using Marketplace.Api.Infrastructure;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.UserProfiles.Delegates;
+using Marketplace.Persistence.MSSQL;
+using Marketplace.Persistence.MSSQL.Extensions;
+using Marketplace.Persistence.RavenDB.Extensions;
 using Raven.Client.Documents;
 using System.Reflection;
 
@@ -40,7 +44,7 @@ namespace Marketplace.Api.Extensions
 			return services;
 		}
 
-		public static void AddAutofacServices(this ConfigureHostBuilder builder)
+		public static void AddCQRSServices(this ConfigureHostBuilder builder)
 		{
 			builder.ConfigureContainer<ContainerBuilder>(builder =>
 			{
@@ -67,6 +71,54 @@ namespace Marketplace.Api.Extensions
 						.InstancePerLifetimeScope();
 				}
 			});
+		}
+
+		public static PersistenceApproach AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+		{
+			var persistenceApproach = configuration
+				.GetSection("ServiceSettings")
+				.GetValue<PersistenceApproach>("PersistenceApproach");
+
+			switch (persistenceApproach)
+			{
+				case PersistenceApproach.RavenDB:
+					services.AddRavenDBServices(configuration);
+					break;
+
+				case PersistenceApproach.EntityFramework:
+					string? connectionString = configuration.GetConnectionString("SqlServerConnectionString");
+
+					if (string.IsNullOrWhiteSpace(connectionString))
+					{
+						throw new ArgumentNullException(nameof(connectionString));
+					}
+
+					services.AddEFServices(configuration, connectionString);
+					services.AddMSSQLHangfireServices(configuration, connectionString);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
+			}
+
+			return persistenceApproach;
+		}
+
+		public static bool IsUAT(this IHostEnvironment hostEnvironment)
+		{
+			return hostEnvironment.IsEnvironment("UAT");
+		}
+
+		public static void EnsureDatabaseCreated(this IApplicationBuilder app, IConfiguration configuration)
+		{
+			var persistenceApproach = configuration
+				.GetSection("ServiceSettings")
+				.GetValue<PersistenceApproach>("PersistenceApproach");
+
+			if (persistenceApproach == PersistenceApproach.EntityFramework)
+			{
+				var marketplaceDbContext = app.ApplicationServices.GetRequiredService<MarketplaceDbContext>();
+				marketplaceDbContext.Database.EnsureCreated();
+			}
 		}
 	}
 }
