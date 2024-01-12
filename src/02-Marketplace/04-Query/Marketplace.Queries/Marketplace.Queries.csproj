@@ -8,5 +8,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Marketplace.Queries.Contracts\Marketplace.Queries.Contracts.csproj" />
+	  <ProjectReference Include="..\Marketplace.ReadModel.PostgreSQL\Marketplace.ReadModel.PostgreSQL.csproj" />
 	</ItemGroup>
 </Project>

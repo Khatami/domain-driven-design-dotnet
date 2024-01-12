@@ -21,6 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Host.AddCQRSServices();
+builder.Host.AddProjectionServices();
 
 var app = builder.Build();
 
@@ -40,5 +41,7 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.UseHangfireMiddlewares();
+
+app.StartProjections();
 
 app.Run();

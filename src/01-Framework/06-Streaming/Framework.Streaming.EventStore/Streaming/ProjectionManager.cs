@@ -12,9 +12,15 @@ namespace Framework.Streaming.EventStore.Streaming
 
 		private IProjection[] _projections;
 
-		public ProjectionManager(EventStoreClient client)
+		public ProjectionManager(EventStoreClient client, IProjection[] projections)
 		{
 			_client = client;
+
+			_projections = projections;
+		}
+
+		public void Start()
+		{
 			_client.SubscribeToAllAsync(FromAll.Start, EventAppeared);
 		}
 

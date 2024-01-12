@@ -3,6 +3,8 @@ using Framework.Application.Mediator;
 using Framework.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Framework.Mediator.MediatR.Extensions;
 using Framework.Query.Mediator;
+using Framework.Query.Streaming;
+using Framework.Streaming.EventStore.Streaming;
 using Marketplace.Api.Infrastructure;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.UserProfiles.Delegates;
@@ -73,7 +75,7 @@ namespace Marketplace.Api.Extensions
 			});
 		}
 
-		public static PersistenceApproach AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+		public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			var persistenceApproach = configuration
 				.GetSection("ServiceSettings")
@@ -99,13 +101,33 @@ namespace Marketplace.Api.Extensions
 				default:
 					throw new ArgumentOutOfRangeException(nameof(persistenceApproach));
 			}
-
-			return persistenceApproach;
 		}
 
-		public static bool IsUAT(this IHostEnvironment hostEnvironment)
+		public static void AddProjectionServices(this ConfigureHostBuilder builder)
 		{
-			return hostEnvironment.IsEnvironment("UAT");
+			builder.ConfigureContainer<ContainerBuilder>(builder =>
+			{
+				var types = new[]
+				{
+					typeof(IProjection),
+				};
+
+				List<Assembly> assemblies = new List<Assembly>()
+				{
+					typeof(Application.AppInfo).Assembly
+				};
+
+				assemblies.Add(typeof(ReadModel.PostgreSQL.AppInfo).Assembly);
+
+				foreach (var type in types)
+				{
+					builder
+						.RegisterAssemblyTypes(assemblies.ToArray())
+						.Where(current => current.GetType() == type)
+						.AsImplementedInterfaces()
+						.InstancePerLifetimeScope();
+				}
+			});
 		}
 
 		public static void EnsureDatabaseCreated(this IApplicationBuilder app, IConfiguration configuration)
@@ -119,6 +141,16 @@ namespace Marketplace.Api.Extensions
 				var marketplaceDbContext = app.ApplicationServices.GetRequiredService<MarketplaceDbContext>();
 				marketplaceDbContext.Database.EnsureCreated();
 			}
+		}
+
+		public static void StartProjections(this IApplicationBuilder app)
+		{
+			app.ApplicationServices.GetRequiredService<ProjectionManager>().Start();
+		}
+
+		public static bool IsUAT(this IHostEnvironment hostEnvironment)
+		{
+			return hostEnvironment.IsEnvironment("UAT");
 		}
 	}
 }
