@@ -10,6 +10,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Controllers\Https\**" />
+	  <Content Remove="Controllers\Https\**" />
+	  <EmbeddedResource Remove="Controllers\Https\**" />
+	  <None Remove="Controllers\Https\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
@@ -25,10 +32,6 @@
 		<ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.MSSQL\Marketplace.Persistence.MSSQL.csproj" />
 		<ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj" />
 		<ProjectReference Include="..\..\04-Query\Marketplace.Queries\Marketplace.Queries.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Controllers\Https\" />
 	</ItemGroup>
 
 </Project>
