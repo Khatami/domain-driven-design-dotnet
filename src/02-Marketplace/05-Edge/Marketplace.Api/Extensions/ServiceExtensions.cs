@@ -112,10 +112,7 @@ namespace Marketplace.Api.Extensions
 					typeof(IProjection),
 				};
 
-				List<Assembly> assemblies = new List<Assembly>()
-				{
-					typeof(Application.AppInfo).Assembly
-				};
+				List<Assembly> assemblies = new List<Assembly>();
 
 				assemblies.Add(typeof(ReadModel.PostgreSQL.AppInfo).Assembly);
 
@@ -123,7 +120,7 @@ namespace Marketplace.Api.Extensions
 				{
 					builder
 						.RegisterAssemblyTypes(assemblies.ToArray())
-						.Where(current => current.GetType() == type)
+						.Where(current => current.IsAssignableTo(type))
 						.AsImplementedInterfaces()
 						.InstancePerLifetimeScope();
 				}
