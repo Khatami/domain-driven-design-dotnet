@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  marketplace.api:
+    container_name: marketplace.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=UAT
+    ports:
+      - "5886:8080"
+
+  ravendb:
+    container_name: ravendb
+    ports:
+      - "8080:8080"
+    environment:
+      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
+      - RAVEN_ARGS="--Setup.Mode=None"
+    volumes:
+      - ravendb_data:/var/lib/ravendb/data
+      - ravendb_etc:/etc/ravendb
+
+  mssql:
+    container_name: mssql
+    environment:
+      - SA_PASSWORD=QaAER#$12#!#!@#Fsfdf
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "11433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql/data
+
+  redis:
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data

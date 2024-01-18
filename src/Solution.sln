@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Queries", "02-M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Queries.Contracts", "02-Marketplace\04-Query\Marketplace.Queries.Contracts\Marketplace.Queries.Contracts.csproj", "{7186A52E-C27D-48D3-8DAB-196BC84D449E}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "02-Marketplace\docker-compose.dcproj", "{5939F889-2A4A-403A-BD2E-44D24762A1A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Persistence.MSSQL", "02-Marketplace\03-Infrastructure\Marketplace.Persistence.MSSQL\Marketplace.Persistence.MSSQL.csproj", "{AEC78DE5-10E5-4715-B0F6-F181FCFC3BE3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Persistence.RavenDB", "02-Marketplace\03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj", "{6E1ABC47-EB7E-405D-ABA0-7F4D98128551}"
@@ -72,6 +70,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Streaming.EventStore", "01-Framework\06-Streaming\Framework.Streaming.EventStore\Framework.Streaming.EventStore.csproj", "{5FA66812-076F-4044-895E-A3D5079CEC34}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marketplace.Api", "02-Marketplace\05-Edge\Marketplace.Api\Marketplace.Api.csproj", "{6A2E3BC3-6A2D-49C4-B4FE-C6F39B1D0896}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose-eventstore", "docker-compose\eventstore\docker-compose-eventstore.dcproj", "{5939F889-2A4A-403A-BD2E-44D24762A1A5}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose-kafka", "docker-compose\kafka\docker-compose-kafka.dcproj", "{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,10 +113,6 @@ Global
 		{7186A52E-C27D-48D3-8DAB-196BC84D449E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7186A52E-C27D-48D3-8DAB-196BC84D449E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7186A52E-C27D-48D3-8DAB-196BC84D449E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEC78DE5-10E5-4715-B0F6-F181FCFC3BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AEC78DE5-10E5-4715-B0F6-F181FCFC3BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEC78DE5-10E5-4715-B0F6-F181FCFC3BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,6 +157,14 @@ Global
 		{6A2E3BC3-6A2D-49C4-B4FE-C6F39B1D0896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A2E3BC3-6A2D-49C4-B4FE-C6F39B1D0896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A2E3BC3-6A2D-49C4-B4FE-C6F39B1D0896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5939F889-2A4A-403A-BD2E-44D24762A1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,7 +183,6 @@ Global
 		{DBC2AAF1-BBBB-4B02-8C3C-355D3840ABB6} = {6B8EACC5-F718-4C4F-BC18-C95E2A85229B}
 		{B39872A2-AFFC-416D-8E6E-E4DC5589F76D} = {4AC11E27-BA64-4BD8-8C83-824D2142DDF3}
 		{7186A52E-C27D-48D3-8DAB-196BC84D449E} = {4AC11E27-BA64-4BD8-8C83-824D2142DDF3}
-		{5939F889-2A4A-403A-BD2E-44D24762A1A5} = {CF92E5E3-BEC5-41A9-8309-A91A9C77198D}
 		{AEC78DE5-10E5-4715-B0F6-F181FCFC3BE3} = {2E908D7F-B838-4119-8587-E4DC276625DD}
 		{6E1ABC47-EB7E-405D-ABA0-7F4D98128551} = {2E908D7F-B838-4119-8587-E4DC276625DD}
 		{DE2CBC74-1876-4C7D-B5BE-8CB6810E6CF5} = {83D1EC44-9383-4BF7-A8FC-41940B53B1C8}
