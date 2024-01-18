@@ -63,6 +63,9 @@ services:
       # Replace CLUSTER_ID with a unique base64 UUID using "bin/kafka-storage.sh random-uuid" 
       # See https://docs.confluent.io/kafka/operations-tools/kafka-tools.html#kafka-storage-sh
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    volumes:
+      - kafka_broker_secrets:/etc/kafka/secrets
+      - kafka_broker_data:/var/lib/kafka/data
 
   schema-registry:
     hostname: schema-registry
@@ -75,6 +78,8 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    volumes:
+      - kafka_schema_registry_secrets:/etc/schema-registry/secrets
       
   connect:
     hostname: connect
@@ -104,6 +109,11 @@ services:
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+    volumes:
+      - kafka_connect_jars:/etc/kafka-connect/jars
+      - kafka_connect_secrets:/etc/kafka-connect/secrets
+      - kafka_connect_kafkasecrets:/etc/kafka/secrets
+      - kafka_connect_data:/var/lib/kafka/data
       
   control-center:
     hostname: control-center

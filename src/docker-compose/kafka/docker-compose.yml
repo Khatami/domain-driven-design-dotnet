@@ -46,4 +46,11 @@ volumes:
   ravendb_etc:
   eventstore_lib:
   eventstore_log:
-  redis_data:  
+  redis_data:
+  kafka_broker_secrets:
+  kafka_broker_data:
+  kafka_schema_registry_secrets:
+  kafka_connect_jars:
+  kafka_connect_secrets:
+  kafka_connect_kafkasecrets:
+  kafka_connect_data:
