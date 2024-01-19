@@ -75,6 +75,10 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose-eventstore",
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose-kafka", "docker-compose\kafka\docker-compose-kafka.dcproj", "{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{FCDE4BE7-1388-4E9A-B18A-80F2CF9938F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Persistence.EFCore", "01-Framework\03-Infrastructure\Persistence\Framework.Persistence.EFCore\Framework.Persistence.EFCore.csproj", "{C30E10A2-367D-4EFB-86E0-9F96C221DD94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +169,10 @@ Global
 		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E7894EA-60AD-456B-AA4E-D31ECD71BDCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30E10A2-367D-4EFB-86E0-9F96C221DD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30E10A2-367D-4EFB-86E0-9F96C221DD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30E10A2-367D-4EFB-86E0-9F96C221DD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30E10A2-367D-4EFB-86E0-9F96C221DD94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,6 +210,8 @@ Global
 		{B8C85111-04DE-4C1B-9D0C-2D45C022B4E4} = {4AC11E27-BA64-4BD8-8C83-824D2142DDF3}
 		{5FA66812-076F-4044-895E-A3D5079CEC34} = {74FEB7CA-8B4B-4B64-B070-B3ABA82BE79F}
 		{6A2E3BC3-6A2D-49C4-B4FE-C6F39B1D0896} = {9A4D9497-5B8A-4120-A0E6-48A4CC295610}
+		{FCDE4BE7-1388-4E9A-B18A-80F2CF9938F4} = {178840E5-8266-41CB-AB90-40EA9B0F3EAF}
+		{C30E10A2-367D-4EFB-86E0-9F96C221DD94} = {FCDE4BE7-1388-4E9A-B18A-80F2CF9938F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AB58BEE-655E-4F39-A64F-1BE735BFB935}

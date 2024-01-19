@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\01-Framework\03-Infrastructure\Persistence\Framework.Persistence.EFCore\Framework.Persistence.EFCore.csproj" />
     <ProjectReference Include="..\..\02-Application\Marketplace.Application.Contracts\Marketplace.Application.Contracts.csproj" />
   </ItemGroup>
 
