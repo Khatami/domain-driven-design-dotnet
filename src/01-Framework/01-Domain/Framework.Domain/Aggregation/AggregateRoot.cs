@@ -12,7 +12,7 @@ namespace Framework.Domain.Aggregation
 			_changes = new List<object>();
 		}
 
-		public abstract string? GetId();
+		public abstract object GetId();
 
 		public int Version { get; private set; } = -1;
 
@@ -72,6 +72,19 @@ namespace Framework.Domain.Aggregation
 		}
 
 		public abstract object GetSnapshotEvent();
+
+		public bool CheckEventStreaming(AggregateRootBase latestPersistInstance, IComparisonService comparisonService)
+		{
+			latestPersistInstance.Load(this.GetChanges());
+			latestPersistInstance.Version = Version;
+
+			if (comparisonService.Compare(this, latestPersistInstance) == false)
+			{
+				return false;
+			}
+
+			return true;
+		}
 	}
 
 	public abstract class AggregateRoot<TId> : AggregateRootBase
@@ -81,17 +94,5 @@ namespace Framework.Domain.Aggregation
 		}
 
 		public TId Id { get; protected set; }
-
-		public override string? GetId()
-		{
-			var id = Id?.ToString();
-
-			if (string.IsNullOrWhiteSpace(id))
-			{
-				throw new ArgumentNullException(nameof(id));
-			}
-
-			return id;
-		}
 	}
 }

@@ -16,6 +16,11 @@ namespace Marketplace.Domain.ClassifiedAds
 		{
 		}
 
+		public override object GetId()
+		{
+			return ClassifiedAdId;
+		}
+
 		public ClassifiedAd(ClassifiedAdId id, UserProfileId ownerId)
 		{
 			Apply(new ClassifiedAdCreated(id, ownerId));

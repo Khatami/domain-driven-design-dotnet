@@ -11,6 +11,11 @@ namespace Marketplace.Domain.UserProfiles
 		// for impedence mismatch
 		private UserProfile() { }
 
+		public override object GetId()
+		{
+			return UserProfileId;
+		}
+
 		public UserProfile(
 			UserProfileId id,
 			FullName fullName,
