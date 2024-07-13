@@ -17,10 +17,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -28,6 +28,7 @@
 		<ProjectReference Include="..\..\..\01-Framework\03-Infrastructure\Comparison\Framework.Comparison.CompareNetObjects\Framework.Comparison.CompareNetObjects.csproj" />
 		<ProjectReference Include="..\..\..\01-Framework\05-Mediator\Framework.Mediator.MediatR\Framework.Mediator.MediatR.csproj" />
 		<ProjectReference Include="..\..\..\01-Framework\06-Streaming\Framework.Streaming.EventStore\Framework.Streaming.EventStore.csproj" />
+		<ProjectReference Include="..\..\..\01-Framework\06-Streaming\Framework.Streaming.Kafka\Framework.Streaming.Kafka.csproj" />
 		<ProjectReference Include="..\..\02-Application\Marketplace.Application\Marketplace.Application.csproj" />
 		<ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.MSSQL\Marketplace.Persistence.MSSQL.csproj" />
 		<ProjectReference Include="..\..\03-Infrastructure\Marketplace.Persistence.RavenDB\Marketplace.Persistence.RavenDB.csproj" />

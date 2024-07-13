@@ -8,6 +8,14 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 	{
 		internal static List<UserDetail> UserDetails = new();
 
+		public IEnumerable<string> Streams
+		{
+			get
+			{
+				yield return "UserProfile";
+			}
+		}
+
 		public Task Project(object @event)
 		{
 			switch (@event)

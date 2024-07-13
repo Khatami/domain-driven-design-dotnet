@@ -14,7 +14,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
   eventstore:
-    image: eventstore/eventstore:21.10.0-buster-slim
+    image: eventstore/eventstore:24.6.0
 
   redis:
     image: redis:alpine3.19

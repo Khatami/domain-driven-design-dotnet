@@ -1,7 +1,6 @@
 using Autofac.Extensions.DependencyInjection;
 using Framework.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Framework.Comparison.CompareNetObjects.Extensions;
-using Framework.Streaming.EventStore.Extensions;
 using Marketplace.Api.Extensions;
 using Marketplace.Application.Extensions;
 
@@ -11,7 +10,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
-builder.Services.AddStreamingServices(builder.Configuration);
+
+builder.Services.AddStreamingServices(builder.Configuration, builder.Host);
+
 builder.Services.AddComparisonServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddEdgeServices(builder.Configuration);
@@ -21,7 +22,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Host.AddCQRSServices();
-builder.Host.AddProjectionServices();
 
 var app = builder.Build();
 
@@ -42,6 +42,6 @@ app.MapControllers();
 
 app.UseHangfireMiddlewares();
 
-app.StartProjections();
+app.StartProjections(builder.Configuration);
 
 app.Run();

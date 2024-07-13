@@ -9,6 +9,14 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 	{
 		internal static List<ClassifiedAdDetail> ClassifiedAdDetails = new();
 
+		public IEnumerable<string> Streams
+		{
+			get
+			{
+				yield return "ClassifiedAd";
+			}
+		}
+
 		public Task Project(object @event)
 		{
 			switch (@event)

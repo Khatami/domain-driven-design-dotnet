@@ -8,7 +8,7 @@ namespace Framework.Streaming.EventStore.Extensions
 {
 	public static class ServiceExtensions
 	{
-		public static IServiceCollection AddStreamingServices(this IServiceCollection services, IConfiguration configuration)
+		public static IServiceCollection AddEventStoreStreamingServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			// The client instance can be used as a singleton across the whole application.
 			// It doesn't need to open or close the connection
@@ -23,7 +23,7 @@ namespace Framework.Streaming.EventStore.Extensions
 			services.AddSingleton(client);
 
 			services.AddSingleton<IAggregateStore, AggregateStore>();
-			services.AddSingleton<ProjectionManager>();
+			services.AddSingleton<EventStoreProjectionManager>();
 
 			return services;
 		}

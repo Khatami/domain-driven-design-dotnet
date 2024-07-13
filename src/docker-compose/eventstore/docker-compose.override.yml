@@ -5,6 +5,13 @@ services:
     container_name: marketplace.api
     environment:
       - ASPNETCORE_ENVIRONMENT=UAT
+      - ConnectionStrings__SqlServerConnectionString=Server=mssql;Database=Marketplace;Persist Security Info=True;UID=sa;Password=QaAER#$12#!#!@#Fsfdf;MultipleActiveResultSets=True;TrustServerCertificate=True
+      - ConnectionStrings__EventStoreConnectionString=esdb://eventstore:2113?tls=false&tlsVerifyCert=false
+      - ConnectionStrings__RedisConnectionString=redis:6379
+      - RavenDB__Url=http://ravendb:8080
+      - RavenDB__Database=Marketplace
+      - ServiceSettings__PersistenceApproach=EntityFramework
+      - ServiceSettings__StreamingApproach=EventStore
     ports:
       - "5886:8080"
 
@@ -39,10 +46,8 @@ services:
        - EVENTSTORE_CLUSTER_SIZE=1
        - EVENTSTORE_RUN_PROJECTIONS=All
        - EVENTSTORE_START_STANDARD_PROJECTIONS=true
-       - EVENTSTORE_EXT_TCP_PORT=1113
        - EVENTSTORE_HTTP_PORT=2113
        - EVENTSTORE_INSECURE=true
-       - EVENTSTORE_ENABLE_EXTERNAL_TCP=true
        - EVENTSTORE_ENABLE_ATOM_PUB_OVER_HTTP=true
     volumes:
       - eventstore_lib:/var/lib/eventstore

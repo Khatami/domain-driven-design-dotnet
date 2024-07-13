@@ -4,7 +4,9 @@ using Framework.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Framework.Mediator.MediatR.Extensions;
 using Framework.Query.Mediator;
 using Framework.Query.Streaming;
+using Framework.Streaming.EventStore.Extensions;
 using Framework.Streaming.EventStore.Streaming;
+using Framework.Streaming.Kafka.Extensions;
 using Marketplace.Api.Infrastructure;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.UserProfiles.Delegates;
@@ -103,28 +105,44 @@ namespace Marketplace.Api.Extensions
 			}
 		}
 
-		public static void AddProjectionServices(this ConfigureHostBuilder builder)
+		public static void AddStreamingServices(this IServiceCollection services,
+			IConfiguration configuration,
+			ConfigureHostBuilder builder)
 		{
-			builder.ConfigureContainer<ContainerBuilder>(builder =>
+			var streamingApproach = configuration
+				.GetSection("ServiceSettings")
+				.GetValue<StreamingApproach>("StreamingApproach");
+
+			switch (streamingApproach)
 			{
-				var types = new[]
-				{
-					typeof(IProjection),
-				};
+				case StreamingApproach.EventStore:
+					services.AddEventStoreStreamingServices(configuration);
 
-				List<Assembly> assemblies = new List<Assembly>();
+					builder.ConfigureContainer<ContainerBuilder>(builder =>
+					{
+						var types = new[]
+						{
+							typeof(IProjection),
+						};
 
-				assemblies.Add(typeof(ReadModel.PostgreSQL.AppInfo).Assembly);
+						List<Assembly> assemblies = new List<Assembly>();
 
-				foreach (var type in types)
-				{
-					builder
-						.RegisterAssemblyTypes(assemblies.ToArray())
-						.Where(current => current.IsAssignableTo(type))
-						.AsImplementedInterfaces()
-						.InstancePerLifetimeScope();
-				}
-			});
+						assemblies.Add(typeof(ReadModel.PostgreSQL.AppInfo).Assembly);
+
+						foreach (var type in types)
+						{
+							builder
+								.RegisterAssemblyTypes(assemblies.ToArray())
+								.Where(current => current.IsAssignableTo(type))
+								.AsImplementedInterfaces()
+								.InstancePerLifetimeScope();
+						}
+					});
+					break;
+				case StreamingApproach.Kafka:
+					services.AddKafkaStreamingServices(configuration);
+					break;
+			}
 		}
 
 		public static void EnsureDatabaseCreated(this IApplicationBuilder app, IConfiguration configuration)
@@ -140,9 +158,16 @@ namespace Marketplace.Api.Extensions
 			}
 		}
 
-		public static void StartProjections(this IApplicationBuilder app)
+		public static void StartProjections(this IApplicationBuilder app, IConfiguration configuration)
 		{
-			app.ApplicationServices.GetRequiredService<ProjectionManager>().Start();
+			var streamingApproach = configuration
+				.GetSection("ServiceSettings")
+				.GetValue<StreamingApproach>("StreamingApproach");
+
+			if (streamingApproach == StreamingApproach.EventStore)
+			{
+				app.ApplicationServices.GetRequiredService<EventStoreProjectionManager>().Start();
+			}
 		}
 
 		public static bool IsUAT(this IHostEnvironment hostEnvironment)

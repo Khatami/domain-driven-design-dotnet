@@ -6,13 +6,13 @@ using System.Text.Json;
 
 namespace Framework.Streaming.EventStore.Streaming
 {
-	public class ProjectionManager
+	public class EventStoreProjectionManager
 	{
 		private readonly EventStoreClient _client;
 
 		private IProjection[] _projections;
 
-		public ProjectionManager(EventStoreClient client, IProjection[] projections)
+		public EventStoreProjectionManager(EventStoreClient client, IProjection[] projections)
 		{
 			_client = client;
 
