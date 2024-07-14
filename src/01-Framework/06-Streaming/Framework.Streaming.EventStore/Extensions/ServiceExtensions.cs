@@ -21,11 +21,12 @@ namespace Framework.Streaming.EventStore.Extensions
 			}
 
 			var settings = EventStoreClientSettings.Create(connectionString);
-			EventStoreClient client = new EventStoreClient(settings);
-			services.AddSingleton(client);
-			services.AddSingleton<EventStoreProjectionManager>();
 
-			var eventStorePersistentSubscriptionsClient = new EventStorePersistentSubscriptionsClient(settings);
+			EventStoreClient eventStoreClient = new EventStoreClient(settings);
+			services.AddSingleton(eventStoreClient);
+
+			EventStorePersistentSubscriptionsClient eventStorePersistentSubscriptionsClient 
+				= new EventStorePersistentSubscriptionsClient(settings);      
 			services.AddSingleton(eventStorePersistentSubscriptionsClient);
 			services.AddSingleton<EventStorePersistenceSubscription>();
 

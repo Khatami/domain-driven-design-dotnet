@@ -166,7 +166,6 @@ namespace Marketplace.Api.Extensions
 
 			if (streamingApproach == StreamingApproach.EventStore)
 			{
-				//app.ApplicationServices.GetRequiredService<EventStoreProjectionManager>().Start();
 				await app.ApplicationServices.GetRequiredService<EventStorePersistenceSubscription>().StartAsync();
 			}
 		}

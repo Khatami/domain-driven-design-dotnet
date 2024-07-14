@@ -2,6 +2,6 @@
 {
 	public interface IProjection
 	{
-		Task Project(object @event);
+		Task Project(object @event, string stream, long eventNumberInStream, long version);
 	}
 }

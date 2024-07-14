@@ -13,6 +13,7 @@ namespace Framework.Streaming.EventStore.Streaming
 		private IProjection[] _projections;
 		private readonly EventStorePersistentSubscriptionsClient _client;
 
+		private readonly string _groupName = "Marketplace";
 		public EventStorePersistenceSubscription(EventStorePersistentSubscriptionsClient client,
 			IProjection[] projections)
 		{
@@ -40,22 +41,21 @@ namespace Framework.Streaming.EventStore.Streaming
 			foreach (var stream in streams)
 			{
 				var streamName = "$ce-" + stream;
-				string groupName = "Marketplace";
 
 				if (subscriptions
 					.Where(subscription => subscription.EventSource == streamName)
-					.Any(subscription => subscription.GroupName == groupName) == false)
+					.Any(subscription => subscription.GroupName == _groupName) == false)
 				{
 					await _client.CreateToStreamAsync(
 						streamName: streamName,
-						groupName: groupName,
+						groupName: _groupName,
 						settings: subscriptionSettings
 					);
 				}
 
 				await _client.SubscribeToStreamAsync(
 					streamName: streamName,
-					groupName: groupName,
+					groupName: _groupName,
 					eventAppeared: EventAppeared,
 					subscriptionDropped: SubscriptionDropped
 				);
@@ -67,26 +67,34 @@ namespace Framework.Streaming.EventStore.Streaming
 			int? retryCount,
 			CancellationToken cancellationToken)
 		{
-			var stream = resolvedEvent.Event.EventStreamId.Split("-").First();
-
 			var @event = ReadEvents(resolvedEvent);
+			var stream = resolvedEvent.Event.EventStreamId.Split("-").First();
+			var eventNumber = resolvedEvent.OriginalEventNumber.ToInt64();
+			var version = resolvedEvent.Event.EventNumber.ToInt64();
 
 			var projection = _projections
 				.Where(current => current.GetType().GetCustomAttribute<StreamingAttribute>(true)!.Streams.Contains(stream))
 				.ToList();
 
-			await Task.WhenAll(_projections.Select(x => x.Project(@event)));
+			await Task.WhenAll(projection.Select(x => x.Project(@event, stream, eventNumber, version)));
 
 			await subscription.Ack(resolvedEvent);
 		}
 
-		private void SubscriptionDropped(PersistentSubscription subscription, SubscriptionDroppedReason reason, Exception? exception)
+		private async void SubscriptionDropped(PersistentSubscription subscription, SubscriptionDroppedReason reason, Exception? exception)
 		{
 			Console.WriteLine($"Subscription dropped: {reason}");
 			if (exception != null)
 			{
 				Console.WriteLine($"Exception: {exception.Message}");
 			}
+
+			await _client.SubscribeToStreamAsync(
+				streamName: subscription.SubscriptionId.Split("::").First(),
+				groupName: _groupName,
+				eventAppeared: EventAppeared,
+				subscriptionDropped: SubscriptionDropped
+			);
 		}
 
 		private object ReadEvents(ResolvedEvent resolvedEvent)

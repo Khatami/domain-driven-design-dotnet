@@ -10,7 +10,7 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 	{
 		internal static List<UserDetail> UserDetails = new();
 
-		public Task Project(object @event)
+		public Task Project(object @event, string stream, long eventNumberInStream, long version)
 		{
 			switch (@event)
 			{
