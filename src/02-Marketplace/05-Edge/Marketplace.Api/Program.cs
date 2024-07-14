@@ -3,6 +3,7 @@ using Framework.BackgroundJob.Hangfire.MSSQL.Extensions;
 using Framework.Comparison.CompareNetObjects.Extensions;
 using Marketplace.Api.Extensions;
 using Marketplace.Application.Extensions;
+using Marketplace.ReadModel.PostgreSQL.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -15,6 +16,7 @@ builder.Services.AddStreamingServices(builder.Configuration, builder.Host);
 
 builder.Services.AddComparisonServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddReadModelServices(builder.Configuration);
 builder.Services.AddEdgeServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

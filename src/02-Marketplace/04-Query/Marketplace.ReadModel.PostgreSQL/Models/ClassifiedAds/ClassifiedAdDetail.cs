@@ -1,7 +1,10 @@
-﻿namespace Marketplace.ReadModel.PostgreSQL.Models.ClassifiedAds
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Marketplace.ReadModel.PostgreSQL.Models.ClassifiedAds
 {
-	internal class ClassifiedAdDetail
+	public class ClassifiedAdDetail
 	{
+		[Key]
 		public Guid ClassifiedAdId { get; set; }
 		public Guid SellerId { get; set; }
 		public string Title { get; set; }

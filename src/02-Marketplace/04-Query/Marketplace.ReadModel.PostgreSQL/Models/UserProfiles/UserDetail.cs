@@ -1,7 +1,10 @@
-﻿namespace Marketplace.ReadModel.PostgreSQL.Models.UserProfiles
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Marketplace.ReadModel.PostgreSQL.Models.UserProfiles
 {
-	internal class UserDetail
+	public class UserDetail
 	{
+		[Key]
 		public Guid UserProfileId { get; set; }
 		public string DisplayName { get; set; }
 	}

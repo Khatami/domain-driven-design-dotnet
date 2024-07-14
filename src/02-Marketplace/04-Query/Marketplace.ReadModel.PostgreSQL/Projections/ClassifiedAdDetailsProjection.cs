@@ -9,14 +9,19 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 	[Streaming(Stream.ClassifiedAd)]
 	public class ClassifiedAdDetailsProjection : IProjection
 	{
-		internal static List<ClassifiedAdDetail> ClassifiedAdDetails = new();
+		private readonly MarketplaceReadModelDbContext _databaseContext;
 
-		public Task Project(object @event, string stream, long eventNumberInStream, long version)
+		public ClassifiedAdDetailsProjection(MarketplaceReadModelDbContext databaseContext)
+		{
+			_databaseContext = databaseContext;
+		}
+
+		public async Task Project(object @event, string stream, long eventNumberInStream, long version)
 		{
 			switch (@event)
 			{
 				case ClassifiedAdCreated e:
-					ClassifiedAdDetails.Add(new ClassifiedAdDetail
+					_databaseContext.ClassifiedAdDetails.Add(new ClassifiedAdDetail
 					{
 						ClassifiedAdId = e.Id,
 						SellerId = e.OwnerId
@@ -41,12 +46,12 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 					break;
 			}
 
-			return Task.CompletedTask;
+			await _databaseContext.SaveChangesAsync();
 		}
 
 		private void UpdateItem(Guid id, Action<ClassifiedAdDetail> update)
 		{
-			var item = ClassifiedAdDetails.FirstOrDefault(x => x.ClassifiedAdId == id);
+			var item = _databaseContext.ClassifiedAdDetails.FirstOrDefault(x => x.ClassifiedAdId == id);
 
 			if (item == null) return;
 
@@ -56,7 +61,7 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 		private void UpdateMultipleItems(Func<ClassifiedAdDetail, bool> query,
 			Action<ClassifiedAdDetail> update)
 		{
-			foreach (var item in ClassifiedAdDetails.Where(query))
+			foreach (var item in _databaseContext.ClassifiedAdDetails.Where(query))
 			{
 				update(item);
 			}

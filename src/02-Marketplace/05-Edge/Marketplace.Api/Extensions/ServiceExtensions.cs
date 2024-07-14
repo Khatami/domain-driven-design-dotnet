@@ -13,6 +13,8 @@ using Marketplace.Domain.UserProfiles.Delegates;
 using Marketplace.Persistence.MSSQL;
 using Marketplace.Persistence.MSSQL.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
+using Marketplace.ReadModel.PostgreSQL;
+using Marketplace.ReadModel.PostgreSQL.Extensions;
 using Raven.Client.Documents;
 using System.Reflection;
 
@@ -156,6 +158,9 @@ namespace Marketplace.Api.Extensions
 				var marketplaceDbContext = app.ApplicationServices.GetRequiredService<MarketplaceDbContext>();
 				marketplaceDbContext.Database.EnsureCreated();
 			}
+
+			var marketplaceReadModelDbContext = app.ApplicationServices.GetRequiredService<MarketplaceReadModelDbContext>();
+			marketplaceReadModelDbContext.Database.EnsureCreated();
 		}
 
 		public static async void StartProjections(this IApplicationBuilder app, IConfiguration configuration)

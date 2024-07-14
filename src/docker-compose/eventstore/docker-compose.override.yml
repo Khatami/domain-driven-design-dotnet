@@ -8,6 +8,7 @@ services:
       - ConnectionStrings__SqlServerConnectionString=Server=mssql;Database=Marketplace;Persist Security Info=True;UID=sa;Password=QaAER#$12#!#!@#Fsfdf;MultipleActiveResultSets=True;TrustServerCertificate=True
       - ConnectionStrings__EventStoreConnectionString=esdb://eventstore:2113?tls=false&tlsVerifyCert=false
       - ConnectionStrings__RedisConnectionString=redis:6379
+      - ConnectionStrings__PostgresConnectionString=Host=postgres;Database=MarketplaceReadModel;Username=example;Password=QaAER#$12#!#!@#Fsfdf
       - RavenDB__Url=http://ravendb:8080
       - RavenDB__Database=Marketplace
       - ServiceSettings__PersistenceApproach=EntityFramework
@@ -65,7 +66,10 @@ services:
     container_name: postgres
     restart: always
     shm_size: 128mb
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: example  
+      POSTGRES_USER: example
+      POSTGRES_PASSWORD: QaAER#$12#!#!@#Fsfdf  

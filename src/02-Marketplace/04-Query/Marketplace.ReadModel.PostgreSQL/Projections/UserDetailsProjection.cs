@@ -8,14 +8,19 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 	[Streaming(Stream.UserProfile)]
 	public class UserDetailsProjection : IProjection
 	{
-		internal static List<UserDetail> UserDetails = new();
+		private readonly MarketplaceReadModelDbContext _databaseContext;
 
-		public Task Project(object @event, string stream, long eventNumberInStream, long version)
+		public UserDetailsProjection(MarketplaceReadModelDbContext databaseContext)
+		{
+			_databaseContext = databaseContext;
+		}
+
+		public async Task Project(object @event, string stream, long eventNumberInStream, long version)
 		{
 			switch (@event)
 			{
 				case UserRegistered e:
-					UserDetails.Add(new UserDetail
+					_databaseContext.UserDetails.Add(new UserDetail
 					{
 						UserProfileId = e.UserProfileId,
 						DisplayName = e.DisplayName
@@ -26,12 +31,12 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 					break;
 			}
 
-			return Task.CompletedTask;
+			await _databaseContext.SaveChangesAsync();
 		}
 
 		private void UpdateItem(Guid id, Action<UserDetail> update)
 		{
-			var item = UserDetails.FirstOrDefault(x => x.UserProfileId == id);
+			var item = _databaseContext.UserDetails.FirstOrDefault(x => x.UserProfileId == id);
 
 			if (item == null)
 			{
