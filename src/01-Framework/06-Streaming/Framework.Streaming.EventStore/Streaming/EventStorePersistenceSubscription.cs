@@ -1,10 +1,13 @@
 ﻿using EventStore.Client;
+using Framework.Application.BackgroundJob;
+using Framework.Application.Streaming;
 using Framework.Query.Attributes;
 using Framework.Query.Streaming;
 using Framework.Streaming.EventStore.Metadata;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using static Grpc.Core.Metadata;
 
 namespace Framework.Streaming.EventStore.Streaming
 {
@@ -12,13 +15,16 @@ namespace Framework.Streaming.EventStore.Streaming
 	{
 		private IProjection[] _projections;
 		private readonly EventStorePersistentSubscriptionsClient _client;
+		private readonly IBackgroundJobService _backgroundJobService;
 
 		private readonly string _groupName = "Marketplace";
 		public EventStorePersistenceSubscription(EventStorePersistentSubscriptionsClient client,
-			IProjection[] projections)
+			IProjection[] projections,
+			IBackgroundJobService backgroundJobService)
 		{
 			_client = client;
 			_projections = projections;
+			_backgroundJobService = backgroundJobService;
 		}
 
 		public async Task StartAsync()
@@ -72,11 +78,15 @@ namespace Framework.Streaming.EventStore.Streaming
 			var eventNumber = resolvedEvent.OriginalEventNumber.ToInt64();
 			var version = resolvedEvent.Event.EventNumber.ToInt64();
 
-			var projection = _projections
+			var projections = _projections
 				.Where(current => current.GetType().GetCustomAttribute<StreamingAttribute>(true)!.Streams.Contains(stream))
 				.ToList();
 
-			await Task.WhenAll(projection.Select(x => x.Project(@event, stream, eventNumber, version)));
+			foreach (var projection in projections)
+			{
+				_backgroundJobService.Enqueue(BackgroundJobConsts.Inbox,
+					() => projection.Project(@event, stream, eventNumber, version));
+			}
 
 			await subscription.Ack(resolvedEvent);
 		}

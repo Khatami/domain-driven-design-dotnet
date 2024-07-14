@@ -60,3 +60,12 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+
+  postgres:    
+    container_name: postgres
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example  
