@@ -158,7 +158,7 @@ namespace Marketplace.Api.Extensions
 			}
 		}
 
-		public static void StartProjections(this IApplicationBuilder app, IConfiguration configuration)
+		public static async void StartProjections(this IApplicationBuilder app, IConfiguration configuration)
 		{
 			var streamingApproach = configuration
 				.GetSection("ServiceSettings")
@@ -166,7 +166,8 @@ namespace Marketplace.Api.Extensions
 
 			if (streamingApproach == StreamingApproach.EventStore)
 			{
-				app.ApplicationServices.GetRequiredService<EventStoreProjectionManager>().Start();
+				//app.ApplicationServices.GetRequiredService<EventStoreProjectionManager>().Start();
+				await app.ApplicationServices.GetRequiredService<EventStorePersistenceSubscription>().StartAsync();
 			}
 		}
 

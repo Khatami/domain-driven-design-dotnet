@@ -1,21 +1,15 @@
-﻿using Framework.Query.Streaming;
+﻿using Framework.Query.Attributes;
+using Framework.Query.Streaming;
 using Marketplace.Domain.Events.ClassifiedAds;
 using Marketplace.Domain.Events.UserProfiles;
 using Marketplace.ReadModel.PostgreSQL.Models.ClassifiedAds;
 
 namespace Marketplace.ReadModel.PostgreSQL.Projections
 {
+	[Streaming(Stream.ClassifiedAd)]
 	public class ClassifiedAdDetailsProjection : IProjection
 	{
 		internal static List<ClassifiedAdDetail> ClassifiedAdDetails = new();
-
-		public IEnumerable<string> Streams
-		{
-			get
-			{
-				yield return "ClassifiedAd";
-			}
-		}
 
 		public Task Project(object @event)
 		{

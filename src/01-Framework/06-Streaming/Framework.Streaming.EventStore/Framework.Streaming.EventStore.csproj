@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="EventStore.Client.Grpc.Streams" Version="23.3.3" />
+		<PackageReference Include="EventStore.Client.Grpc.PersistentSubscriptions" Version="23.3.3" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 

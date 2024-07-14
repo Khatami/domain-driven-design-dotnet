@@ -1,20 +1,14 @@
-﻿using Framework.Query.Streaming;
+﻿using Framework.Query.Attributes;
+using Framework.Query.Streaming;
 using Marketplace.Domain.Events.UserProfiles;
 using Marketplace.ReadModel.PostgreSQL.Models.UserProfiles;
 
 namespace Marketplace.ReadModel.PostgreSQL.Projections
 {
+	[Streaming(Stream.UserProfile)]
 	public class UserDetailsProjection : IProjection
 	{
 		internal static List<UserDetail> UserDetails = new();
-
-		public IEnumerable<string> Streams
-		{
-			get
-			{
-				yield return "UserProfile";
-			}
-		}
 
 		public Task Project(object @event)
 		{

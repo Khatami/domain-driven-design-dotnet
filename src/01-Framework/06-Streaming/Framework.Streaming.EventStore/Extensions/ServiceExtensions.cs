@@ -1,8 +1,10 @@
 ﻿using EventStore.Client;
 using Framework.Application.Streaming;
+using Framework.Query.Streaming;
 using Framework.Streaming.EventStore.Streaming;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Framework.Streaming.EventStore.Extensions
 {
@@ -21,9 +23,13 @@ namespace Framework.Streaming.EventStore.Extensions
 			var settings = EventStoreClientSettings.Create(connectionString);
 			EventStoreClient client = new EventStoreClient(settings);
 			services.AddSingleton(client);
+			services.AddSingleton<EventStoreProjectionManager>();
+
+			var eventStorePersistentSubscriptionsClient = new EventStorePersistentSubscriptionsClient(settings);
+			services.AddSingleton(eventStorePersistentSubscriptionsClient);
+			services.AddSingleton<EventStorePersistenceSubscription>();
 
 			services.AddSingleton<IAggregateStore, AggregateStore>();
-			services.AddSingleton<EventStoreProjectionManager>();
 
 			return services;
 		}
