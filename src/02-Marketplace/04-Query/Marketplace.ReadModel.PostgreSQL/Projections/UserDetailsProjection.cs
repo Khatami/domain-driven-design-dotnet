@@ -40,8 +40,16 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 					}, version);
 					break;
 
-				default:
+				case UserFullNameUpdated e:
+					UpdateItem(e.UserId, x => { }, version);
 					break;
+
+				case ProfilePhotoUpdated e:
+					UpdateItem(e.UserId, x => { }, version);
+					break;
+
+				default:
+					throw new NotImplementedException($"the following event is not implemented: {@event.ToString()}");
 			}
 
 			await _databaseContext.SaveChangesAsync();

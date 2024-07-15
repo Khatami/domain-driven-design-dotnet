@@ -60,6 +60,8 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 							x.SellersDisplayName = e.DisplayName;
 						}, version);
 					break;
+				default:
+					throw new NotImplementedException($"the following event is not implemented: {@event.ToString()}");
 			}
 
 			await _databaseContext.SaveChangesAsync();
