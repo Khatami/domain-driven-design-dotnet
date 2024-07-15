@@ -2,6 +2,7 @@
 using Framework.Query.Streaming;
 using Marketplace.Domain.Events.ClassifiedAds;
 using Marketplace.Domain.Events.UserProfiles;
+using Marketplace.ReadModel.PostgreSQL.Exceptions;
 using Marketplace.ReadModel.PostgreSQL.Models.ClassifiedAds;
 
 namespace Marketplace.ReadModel.PostgreSQL.Projections
@@ -21,63 +22,80 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 			switch (@event)
 			{
 				case ClassifiedAdCreated e:
-					_databaseContext.ClassifiedAdDetails.Add(new ClassifiedAdDetail
+					var exists = _databaseContext.ClassifiedAdDetails.Any(x => x.ClassifiedAdId == e.Id);
+
+					if (exists == false)
 					{
-						ClassifiedAdId = e.Id,
-						SellerId = e.OwnerId,
-						Version = version
-					});
+						_databaseContext.ClassifiedAdDetails.Add(new ClassifiedAdDetail
+						{
+							ClassifiedAdId = e.Id,
+							SellerId = e.OwnerId,
+							Version = version
+						});
+					}
 					break;
 				case ClassifiedAdTitleChanged e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.Title = e.Title;
-						ad.Version = version;
-					});
+					}, version);
 					break;
 				case ClassifiedAdTextChanged e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.Description = e.AdText;
-						ad.Version = version;
-					});
+					}, version);
 					break;
 				case ClassifiedAdPriceUpdated e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.Price = e.Price;
 						ad.CurrencyCode = e.CurrencyCode;
-						ad.Version = version;
-					});
+					}, version);
 					break;
 				case UserDisplayNameUpdated e:
 					UpdateMultipleItems(x => x.SellerId == e.UserId,
 						x =>
 						{
 							x.SellersDisplayName = e.DisplayName;
-							x.Version = version;
-						});
+						}, version);
 					break;
 			}
 
 			await _databaseContext.SaveChangesAsync();
 		}
 
-		private void UpdateItem(Guid id, Action<ClassifiedAdDetail> update)
+		private void UpdateItem(Guid id, Action<ClassifiedAdDetail> update, long version)
 		{
 			var item = _databaseContext.ClassifiedAdDetails.FirstOrDefault(x => x.ClassifiedAdId == id);
 
-			if (item == null) return;
+			if (item == null)
+			{
+				throw new ArgumentNullException(nameof(item));
+			}
+
+			if (version <= item.Version)
+			{
+				return;
+			}
+
+			if (item.Version + 1 != version)
+			{
+				throw new ConcurrencyMismatchException();
+			}
+
+			item.Version = version;
 
 			update(item);
 		}
 
 		private void UpdateMultipleItems(Func<ClassifiedAdDetail, bool> query,
-			Action<ClassifiedAdDetail> update)
+			Action<ClassifiedAdDetail> update, 
+			long version)
 		{
 			foreach (var item in _databaseContext.ClassifiedAdDetails.Where(query))
 			{
-				update(item);
+				UpdateItem(item.ClassifiedAdId, update, version);
 			}
 		}
 	}

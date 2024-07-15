@@ -1,6 +1,7 @@
 ﻿using Framework.Query.Attributes;
 using Framework.Query.Streaming;
 using Marketplace.Domain.Events.UserProfiles;
+using Marketplace.ReadModel.PostgreSQL.Exceptions;
 using Marketplace.ReadModel.PostgreSQL.Models.UserProfiles;
 
 namespace Marketplace.ReadModel.PostgreSQL.Projections
@@ -20,26 +21,33 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 			switch (@event)
 			{
 				case UserRegistered e:
-					_databaseContext.UserDetails.Add(new UserDetail
+					var exists = _databaseContext.UserDetails.Any(x => x.UserProfileId == e.UserProfileId);
+
+					if (exists == false)
 					{
-						UserProfileId = e.UserProfileId,
-						DisplayName = e.DisplayName,
-						Version = version
-					});
+						_databaseContext.UserDetails.Add(new UserDetail
+						{
+							UserProfileId = e.UserProfileId,
+							DisplayName = e.DisplayName,
+							Version = version
+						});
+					}
 					break;
 				case UserDisplayNameUpdated e:
 					UpdateItem(e.UserId, x =>
 					{
 						x.DisplayName = e.DisplayName;
-						x.Version = version;
-					});
+					}, version);
+					break;
+
+				default:
 					break;
 			}
 
 			await _databaseContext.SaveChangesAsync();
 		}
 
-		private void UpdateItem(Guid id, Action<UserDetail> update)
+		private void UpdateItem(Guid id, Action<UserDetail> update, long version)
 		{
 			var item = _databaseContext.UserDetails.FirstOrDefault(x => x.UserProfileId == id);
 
@@ -47,6 +55,18 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 			{
 				return;
 			}
+
+			if (version <= item.Version)
+			{
+				return;
+			}
+
+			if (item.Version + 1 != version)
+			{
+				throw new ConcurrencyMismatchException();
+			}
+
+			item.Version = version;
 
 			update(item);
 		}
