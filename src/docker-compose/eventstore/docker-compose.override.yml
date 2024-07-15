@@ -9,6 +9,7 @@ services:
       - ConnectionStrings__EventStoreConnectionString=esdb://eventstore:2113?tls=false&tlsVerifyCert=false
       - ConnectionStrings__RedisConnectionString=redis:6379
       - ConnectionStrings__PostgresConnectionString=Host=postgres;Database=MarketplaceReadModel;Username=example;Password=QaAER#$12#!#!@#Fsfdf
+      - ConnectionStrings__KafkaConnectionString=127.0.0.1:9092
       - RavenDB__Url=http://ravendb:8080
       - RavenDB__Database=Marketplace
       - ServiceSettings__PersistenceApproach=EntityFramework

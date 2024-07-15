@@ -40,6 +40,9 @@ services:
   rest-proxy:
     image: confluentinc/cp-kafka-rest:7.5.3
 
+  postgres:
+    image: postgres:12.19
+
 volumes:
   sqlserver_data:
   ravendb_data:
@@ -54,3 +57,4 @@ volumes:
   kafka_connect_secrets:
   kafka_connect_kafkasecrets:
   kafka_connect_data:
+  postgres_data:  

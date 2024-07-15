@@ -2,6 +2,7 @@
 using Confluent.Kafka.Admin;
 using Framework.Application.Streaming;
 using Framework.Domain.Aggregation;
+using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
 
@@ -9,9 +10,14 @@ namespace Framework.Streaming.Kafka.Streaming
 {
 	internal class AggregateStore : IAggregateStore
 	{
-		static string Kafka_Server = "127.0.0.1:9092";
+		private readonly string _kafkaConnectionString;
 
-		public async Task<bool> Exists<T, TId>(TId aggregateId)
+		public AggregateStore(IConfiguration configuration)
+        {
+			_kafkaConnectionString = configuration.GetConnectionString("KafkaConnectionString")!;
+        }
+
+        public async Task<bool> Exists<T, TId>(TId aggregateId)
 		{
 			throw new NotImplementedException("EventSourcing has not been Implemented For Kafka yet");
 		}
@@ -60,10 +66,9 @@ namespace Framework.Streaming.Kafka.Streaming
 		{
 			var config = new ProducerConfig
 			{
-				BootstrapServers = Kafka_Server
+				BootstrapServers = _kafkaConnectionString
 			};
 
-			// TODO: must change
 			var topic = streamName.Split("-").First();
 			var id = streamName.Replace($"{streamName.Split("-").First()!}-", string.Empty);
 
@@ -96,7 +101,7 @@ namespace Framework.Streaming.Kafka.Streaming
 		{
 			var adminConfig = new AdminClientConfig
 			{
-				BootstrapServers = Kafka_Server
+				BootstrapServers = _kafkaConnectionString
 			};
 
 			using (var adminClient = new AdminClientBuilder(adminConfig).Build())
