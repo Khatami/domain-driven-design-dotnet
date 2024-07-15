@@ -23,11 +23,16 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 					_databaseContext.UserDetails.Add(new UserDetail
 					{
 						UserProfileId = e.UserProfileId,
-						DisplayName = e.DisplayName
+						DisplayName = e.DisplayName,
+						Version = version
 					});
 					break;
 				case UserDisplayNameUpdated e:
-					UpdateItem(e.UserId, x => x.DisplayName = e.DisplayName);
+					UpdateItem(e.UserId, x =>
+					{
+						x.DisplayName = e.DisplayName;
+						x.Version = version;
+					});
 					break;
 			}
 

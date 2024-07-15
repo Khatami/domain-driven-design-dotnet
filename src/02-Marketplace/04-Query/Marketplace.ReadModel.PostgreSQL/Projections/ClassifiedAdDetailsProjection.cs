@@ -24,25 +24,39 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 					_databaseContext.ClassifiedAdDetails.Add(new ClassifiedAdDetail
 					{
 						ClassifiedAdId = e.Id,
-						SellerId = e.OwnerId
+						SellerId = e.OwnerId,
+						Version = version
 					});
 					break;
 				case ClassifiedAdTitleChanged e:
-					UpdateItem(e.Id, ad => ad.Title = e.Title);
+					UpdateItem(e.Id, ad =>
+					{
+						ad.Title = e.Title;
+						ad.Version = version;
+					});
 					break;
 				case ClassifiedAdTextChanged e:
-					UpdateItem(e.Id, ad => ad.Description = e.AdText);
+					UpdateItem(e.Id, ad =>
+					{
+						ad.Description = e.AdText;
+						ad.Version = version;
+					});
 					break;
 				case ClassifiedAdPriceUpdated e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.Price = e.Price;
 						ad.CurrencyCode = e.CurrencyCode;
+						ad.Version = version;
 					});
 					break;
 				case UserDisplayNameUpdated e:
 					UpdateMultipleItems(x => x.SellerId == e.UserId,
-						 x => x.SellersDisplayName = e.DisplayName);
+						x =>
+						{
+							x.SellersDisplayName = e.DisplayName;
+							x.Version = version;
+						});
 					break;
 			}
 

@@ -6,6 +6,10 @@ namespace Marketplace.ReadModel.PostgreSQL.Models.UserProfiles
 	{
 		[Key]
 		public Guid UserProfileId { get; set; }
-		public string DisplayName { get; set; }
+
+		public string? DisplayName { get; set; }
+
+		[ConcurrencyCheck]
+		public long Version { get; set; }
 	}
 }
