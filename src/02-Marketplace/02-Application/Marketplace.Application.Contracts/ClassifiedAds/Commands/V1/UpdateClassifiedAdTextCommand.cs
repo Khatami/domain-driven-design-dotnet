@@ -6,5 +6,5 @@ public class UpdateClassifiedAdTextCommand : ICommand
 {
 	public Guid Id { get; set; }
 
-	public string Text { get; set; }
+	public required string Text { get; set; }
 }

@@ -29,5 +29,10 @@ namespace Marketplace.Persistence.RavenDB.Infrastucture
 		{
 			return _session.LoadAsync<T>(_entityId(id));
 		}
+
+		public void Remove(T entity)
+		{
+			_session.Delete(_entityId(entity.Id));
+		}
 	}
 }

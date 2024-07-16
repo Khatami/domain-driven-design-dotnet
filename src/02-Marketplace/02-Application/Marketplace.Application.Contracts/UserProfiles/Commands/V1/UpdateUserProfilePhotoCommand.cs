@@ -6,5 +6,5 @@ public class UpdateUserProfilePhotoCommand : ICommand
 {
 	public Guid UserId { get; set; }
 
-	public string PhotoUrl { get; set; }
+	public required string PhotoUrl { get; set; }
 }

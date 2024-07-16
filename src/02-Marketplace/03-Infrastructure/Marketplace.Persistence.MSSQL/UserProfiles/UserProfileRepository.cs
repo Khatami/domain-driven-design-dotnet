@@ -28,5 +28,10 @@ namespace Marketplace.Persistence.MSSQL.UserProfiles
 		{
 			return _dbContext.UserProfiles.FirstOrDefaultAsync(q => q.UserProfileId == id.Value);
 		}
+
+		public void Remove(UserProfile entity)
+		{
+			_dbContext.UserProfiles.Remove(entity);
+		}
 	}
 }

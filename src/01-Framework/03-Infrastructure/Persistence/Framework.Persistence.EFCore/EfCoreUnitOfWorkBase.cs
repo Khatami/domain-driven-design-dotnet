@@ -3,6 +3,7 @@ using Framework.Application.Streaming;
 using Framework.Application.UnitOfWork;
 using Framework.Domain.Aggregation;
 using Framework.Domain.Comparison;
+using Framework.Domain.Events;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,23 +44,37 @@ namespace Framework.Persistence.EFCore
 			{
 				foreach (EntityEntry<AggregateRootBase>? entry in entries)
 				{
-					var originalEntity = await GetOriginalEntityAsync(entry);
-
-					var checkEventStreaming = entry.Entity.CheckEventStreaming(originalEntity, _comparisonService);
-
-					if (checkEventStreaming == false)
+					if (entry.State != EntityState.Deleted)
 					{
-						throw new ApplicationException($"The latest state of the entity [{entry.Entity.GetType()}, Id={entry.Entity.GetId()}] does not match the existing events");
+						var originalEntity = await GetOriginalEntityAsync(entry);
+
+						var checkEventStreaming = entry.Entity.CheckEventStreaming(originalEntity, _comparisonService);
+
+						if (checkEventStreaming == false)
+						{
+							throw new ApplicationException($"The latest state of the entity [{entry.Entity.GetType()}, Id={entry.Entity.GetId()}] does not match the existing events");
+						}
+					}
+					else
+					{
+						if (entry.Entity.GetChanges()
+							.Any(current => current.GetType() == typeof(AggregationRemoved)) == false)
+						{
+							throw new ApplicationException($"For removing an aggregation, it is required to call Remove().");
+						}
 					}
 
 					var version = entry.Entity.GetLatestVersion();
 
+					string streamName = _aggregateStore.GetStreamName(entry.Entity);
+					var changes = entry.Entity.GetChanges();
+
 					_backgroundJobService.Enqueue(BackgroundJobConsts.Outbox,
-						() => _aggregateStore.Save(_aggregateStore.GetStreamName(entry.Entity), entry.Entity.Version, entry.Entity.GetChanges()));
+						() => _aggregateStore.Save(streamName, entry.Entity.Version, changes));
 
 					entry.Entity.ClearChanges();
 
-					entry.Property(q => q.Version).CurrentValue = version;
+					entry.Property(current => current.Version).CurrentValue = version;
 				}
 
 				await _dbContext.SaveChangesAsync(cancellationToken);

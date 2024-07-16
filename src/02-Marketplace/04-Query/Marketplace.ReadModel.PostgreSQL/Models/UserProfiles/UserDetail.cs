@@ -9,7 +9,9 @@ namespace Marketplace.ReadModel.PostgreSQL.Models.UserProfiles
 
 		public string? DisplayName { get; set; }
 
-		[ConcurrencyCheck]
+        public bool IsDeleted { get; set; }
+
+        [ConcurrencyCheck]
 		public long Version { get; set; }
 	}
 }

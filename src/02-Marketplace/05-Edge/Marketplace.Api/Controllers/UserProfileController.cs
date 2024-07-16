@@ -49,4 +49,13 @@ public class UserProfileController : ControllerBase
 
 		return Ok();
 	}
+
+	[HttpDelete]
+	[Route("remove")]
+	public async Task<IActionResult> Remove(RemoveUserCommand request, CancellationToken cancellationToken)
+	{
+		await _mediator.Send(request, cancellationToken);
+
+		return Ok();
+	}
 }

@@ -6,7 +6,7 @@ public class RegisterUserCommand : ICommand
 {
 	public Guid UserId { get; set; } = Guid.NewGuid();
 
-	public string FullName { get; set; }
+	public required string FullName { get; set; }
 
-	public string DisplayName { get; set; }
+	public required string DisplayName { get; set; }
 }

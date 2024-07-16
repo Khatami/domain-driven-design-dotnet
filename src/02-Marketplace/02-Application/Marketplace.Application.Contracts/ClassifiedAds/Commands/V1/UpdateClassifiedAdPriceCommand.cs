@@ -6,5 +6,5 @@ public class UpdateClassifiedAdPriceCommand : ICommand
 {
 	public Guid Id { get; set; }
 	public decimal Price { get; set; }
-	public string Currency { get; set; }
+	public required string Currency { get; set; }
 }

@@ -6,12 +6,12 @@ namespace Marketplace.Application.Contracts.ClassifiedAds.Commands.V1
 	{
 		public Guid Id { get; set; }
 
-		public string Title { get; set; }
+		public required string Title { get; set; }
 
 		public decimal Price { get; set; }
 
-		public string Currency { get; set; }
+		public required string Currency { get; set; }
 
-		public string Text { get; set; }
+		public required string Text { get; set; }
 	}
 }

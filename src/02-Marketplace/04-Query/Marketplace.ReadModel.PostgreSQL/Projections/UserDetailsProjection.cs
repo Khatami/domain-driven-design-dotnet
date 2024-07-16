@@ -1,4 +1,5 @@
-﻿using Framework.Query.Attributes;
+﻿using Framework.Domain.Events;
+using Framework.Query.Attributes;
 using Framework.Query.Streaming;
 using Marketplace.Domain.Events.UserProfiles;
 using Marketplace.ReadModel.PostgreSQL.Exceptions;
@@ -46,6 +47,13 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 
 				case ProfilePhotoUpdated e:
 					UpdateItem(e.UserId, x => { }, version);
+					break;
+
+				case AggregationRemoved e:
+					UpdateItem(Guid.Parse(e.Id), x =>
+					{
+						x.IsDeleted = true;
+					}, version);
 					break;
 
 				default:

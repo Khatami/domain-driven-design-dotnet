@@ -11,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\01-Framework\01-Domain\Framework.Domain.Events\Framework.Domain.Events.csproj" />
 	  <ProjectReference Include="..\..\01-Domain\Marketplace.Domain.Events\Marketplace.Domain.Events.csproj" />
 	  <ProjectReference Include="..\Marketplace.Queries.Contracts\Marketplace.Queries.Contracts.csproj" />
 	</ItemGroup>

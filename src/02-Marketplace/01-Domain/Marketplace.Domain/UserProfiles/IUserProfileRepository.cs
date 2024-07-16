@@ -9,5 +9,7 @@ namespace Marketplace.Domain.UserProfiles
 		Task AddAsync(UserProfile entity);
 
 		Task<bool> ExistsAsync(UserProfileId id);
+
+		void Remove(UserProfile entity);
 	}
 }

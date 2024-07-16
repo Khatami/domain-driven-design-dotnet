@@ -6,5 +6,5 @@ public class UpdateUserFullNameCommand : ICommand
 {
 	public Guid UserId { get; set; }
 
-	public string FullName { get; set; }
+	public required string FullName { get; set; }
 }
