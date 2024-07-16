@@ -5,8 +5,8 @@ namespace Marketplace.Queries.Contracts.ClassifiedAds.Filters
 {
 	public class GetPublishedAdsQueryFilter : IQuery<List<ClassifiedAdItemResult>>
 	{
-		public int Page { get; set; }
+		public int Page { get; set; } = 1;
 
-		public int pageSize { get; set; }
+		public int PageSize { get; set; } = 10;
 	}
 }
