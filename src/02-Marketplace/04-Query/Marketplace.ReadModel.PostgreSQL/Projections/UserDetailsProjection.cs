@@ -33,6 +33,7 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 						});
 					}
 					break;
+
 				case UserDisplayNameUpdated e:
 					UpdateItem(e.UserId, x =>
 					{

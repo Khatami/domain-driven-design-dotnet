@@ -81,7 +81,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Persistence.EFCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Streaming.Kafka", "01-Framework\06-Streaming\Framework.Streaming.Kafka\Framework.Streaming.Kafka.csproj", "{5312F57E-598E-49C8-A297-5B449ADA748F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Domain.Events", "01-Framework\01-Domain\Framework.Domain.Events\Framework.Domain.Events.csproj", "{61A12E3F-5274-4983-AD40-4CD9131BB077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Domain.Events", "01-Framework\01-Domain\Framework.Domain.Events\Framework.Domain.Events.csproj", "{61A12E3F-5274-4983-AD40-4CD9131BB077}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,7 +191,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9A4D9497-5B8A-4120-A0E6-48A4CC295610} = {CF92E5E3-BEC5-41A9-8309-A91A9C77198D}
-		{2E908D7F-B838-4119-8587-E4DC276625DD} = {CF92E5E3-BEC5-41A9-8309-A91A9C77198D}
+		{2E908D7F-B838-4119-8587-E4DC276625DD} = {4AC11E27-BA64-4BD8-8C83-824D2142DDF3}
 		{125F0354-5210-45BD-8C6F-9CBEC4BA126C} = {CF92E5E3-BEC5-41A9-8309-A91A9C77198D}
 		{6B8EACC5-F718-4C4F-BC18-C95E2A85229B} = {CF92E5E3-BEC5-41A9-8309-A91A9C77198D}
 		{4AC11E27-BA64-4BD8-8C83-824D2142DDF3} = {CF92E5E3-BEC5-41A9-8309-A91A9C77198D}

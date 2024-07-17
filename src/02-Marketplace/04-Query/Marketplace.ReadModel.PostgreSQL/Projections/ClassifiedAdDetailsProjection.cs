@@ -1,6 +1,7 @@
 ﻿using Framework.Query.Attributes;
 using Framework.Query.Streaming;
 using Marketplace.Domain.Events.ClassifiedAds;
+using Marketplace.Domain.Events.ClassifiedAds.Snapshot;
 using Marketplace.Domain.Events.UserProfiles;
 using Marketplace.ReadModel.PostgreSQL.Exceptions;
 using Marketplace.ReadModel.PostgreSQL.Models.ClassifiedAds;
@@ -34,18 +35,21 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 						});
 					}
 					break;
+
 				case ClassifiedAdTitleChanged e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.Title = e.Title;
 					}, version);
 					break;
+
 				case ClassifiedAdTextChanged e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.Description = e.AdText;
 					}, version);
 					break;
+
 				case ClassifiedAdPriceUpdated e:
 					UpdateItem(e.Id, ad =>
 					{
@@ -53,6 +57,7 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 						ad.CurrencyCode = e.CurrencyCode;
 					}, version);
 					break;
+
 				case UserDisplayNameUpdated e:
 					UpdateMultipleItems(x => x.SellerId == e.UserId,
 						x =>
@@ -60,12 +65,39 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 							x.SellersDisplayName = e.DisplayName;
 						}, version);
 					break;
+
 				case ClassifiedAdRemoved e:
 					UpdateItem(e.Id, ad =>
 					{
 						ad.IsDeleted = true;
 					}, version);
 					break;
+
+				case ClassifiedAdSnapshotted_V1 e:
+					UpdateItem(e.ClassifiedAdId, ad =>
+					{
+						ad.SellerId = e.OwnerId;
+						ad.Title = e.Title;
+						ad.CurrencyCode = e.CurrencyCode;
+						ad.Description = e.Text;
+						ad.PhotoUrls = e.Pictures.Select(current => current.Url).ToArray();
+						ad.Price = e.Price;
+					}, version);
+					break;
+
+				case ClassifiedAdSnapshotted_V2 e:
+					UpdateItem(e.ClassifiedAdId, ad =>
+					{
+						ad.SellerId = e.OwnerId;
+						ad.Title = e.Title;
+						ad.CurrencyCode = e.CurrencyCode;
+						ad.Description = e.Text;
+						ad.IsDeleted = e.IsDeleted;
+						ad.PhotoUrls = e.Pictures.Select(current => current.Url).ToArray();
+						ad.Price = e.Price;
+					}, version);
+					break;
+
 				default:
 					throw new NotImplementedException($"the following event is not implemented: {@event.ToString()}");
 			}
@@ -98,7 +130,7 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 		}
 
 		private void UpdateMultipleItems(Func<ClassifiedAdDetail, bool> query,
-			Action<ClassifiedAdDetail> update, 
+			Action<ClassifiedAdDetail> update,
 			long version)
 		{
 			foreach (var item in _databaseContext.ClassifiedAdDetails.Where(query))

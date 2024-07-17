@@ -173,6 +173,29 @@ namespace Marketplace.Domain.ClassifiedAds
 							new PictureSize(picture.Width, picture.Height), picture.Url, picture.Order));
 					}
 					break;
+
+				case ClassifiedAdSnapshotted_V2 e:
+					Id = new ClassifiedAdId(e.ClassifiedAdId);
+					ClassifiedAdId = e.ClassifiedAdId;
+					OwnerId = new UserProfileId(e.OwnerId);
+
+					Title = e.Title != null ? ClassifiedAdTitle.FromString(e.Title) : null;
+					Text = e.Text != null ? ClassifiedAdText.FromString(e.Text) : null;
+					Price = e.Price != null ? new Price(e.Price.Value, e.CurrencyCode!) : null;
+					ApprovedBy = e.ApprovedById != null ? new UserProfileId(e.ApprovedById.Value) : null;
+
+					State = (ClassifiedAdState)e.State;
+
+					IsDeleted = e.IsDeleted;
+					DeletedOn = e.DeletedOn;
+
+					_pictures.Clear();
+					foreach (var picture in e.Pictures)
+					{
+						_pictures.Add(Picture.FromSnapshot(picture.PictureId,
+							new PictureSize(picture.Width, picture.Height), picture.Url, picture.Order));
+					}
+					break;
 			}
 		}
 
@@ -225,13 +248,13 @@ namespace Marketplace.Domain.ClassifiedAds
 
 		public override object GetSnapshotEvent()
 		{
-			var pictures = Pictures.Select(picture => new ClassifiedAdPictureSnapshot_V1(picture.PictureId,
+			var pictures = Pictures.Select(picture => new ClassifiedAdPictureSnapshot_V2(picture.PictureId,
 				picture.Location.ToString(),
 				picture.Size.Height, picture.
 				Size.Width,
 				picture.Order)).ToList();
 
-			return new ClassifiedAdSnapshotted_V1(ClassifiedAdId: ClassifiedAdId,
+			return new ClassifiedAdSnapshotted_V2(ClassifiedAdId: ClassifiedAdId,
 				OwnerId: OwnerId,
 				Title: Title?.Title,
 				Text: Text?.Text,
@@ -239,7 +262,9 @@ namespace Marketplace.Domain.ClassifiedAds
 				CurrencyCode: Price?.Currency.CurrencyCode,
 				State: (int)State,
 				ApprovedById: ApprovedBy?.Value,
-				Pictures: pictures);
+				Pictures: pictures,
+				IsDeleted: IsDeleted,
+				DeletedOn: DeletedOn);
 		}
 	}
 }
