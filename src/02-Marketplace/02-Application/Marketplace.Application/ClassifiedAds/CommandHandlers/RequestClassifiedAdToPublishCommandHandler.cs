@@ -23,6 +23,11 @@ internal class RequestClassifiedAdToPublishCommandHandler : ICommandHandler<Requ
 			throw new InvalidOperationException($"Entity with id {request.Id} cannot be found");
 		}
 
+		if (classifiedAd.IsDeleted == true)
+		{
+			throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
+		}
+
 		classifiedAd.RequestToPublish(Guid.NewGuid());
 
 		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);

@@ -24,10 +24,15 @@ internal class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 
 	public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
 	{
-		var isExists = await _repository.ExistsAsync(new UserProfileId(request.UserId));
+		var fetchUserProfile = await _repository.GetAsync(new UserProfileId(request.UserId));
 
-		if (isExists)
+		if (fetchUserProfile != null)
 		{
+			if (fetchUserProfile.IsDeleted)
+			{
+				throw new InvalidOperationException($"Entity with id {request.UserId} has been removed");
+			}
+
 			throw new InvalidOperationException($"Entity with id {request.UserId} already exists");
 		}
 

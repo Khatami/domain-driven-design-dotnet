@@ -26,6 +26,11 @@ internal class UpdateUserFullNameCommandHandler : ICommandHandler<UpdateUserFull
 			throw new InvalidOperationException($"Entity with id {request.UserId} cannot be found");
 		}
 
+		if (userProfile.IsDeleted)
+		{
+			throw new InvalidOperationException($"Entity with id {userProfile.Id} has been removed");
+		}
+
 		userProfile.UpdateFullName(FullName.FromString(request.FullName));
 
 		await _unitOfWork.Commit(cancellationToken);

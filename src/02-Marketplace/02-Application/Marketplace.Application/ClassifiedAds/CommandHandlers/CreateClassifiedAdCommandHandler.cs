@@ -17,10 +17,15 @@ internal class CreateClassifiedAdCommandHandler : ICommandHandler<CreateClassifi
 
 	public async Task<Guid> Handle(CreateClassifiedAdCommand request, CancellationToken cancellationToken)
 	{
-		var exists = await _aggregateStore.Exists<ClassifiedAd, ClassifiedAdId>(new ClassifiedAdId(request.Id));
+		var fetchClassifiedAd = await _aggregateStore.Load<ClassifiedAd, ClassifiedAdId>(new ClassifiedAdId(request.Id));
 
-		if (exists)
+		if (fetchClassifiedAd != null)
 		{
+			if (fetchClassifiedAd.IsDeleted == true)
+			{
+				throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
+			}
+
 			throw new InvalidOperationException($"Entity with id {request.Id} already exists");
 		}
 

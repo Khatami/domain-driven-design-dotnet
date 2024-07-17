@@ -2,27 +2,22 @@
 using Framework.Application.Streaming;
 using Marketplace.Application.Contracts.ClassifiedAds.Commands.V1;
 using Marketplace.Domain.ClassifiedAds;
-using Marketplace.Domain.ClassifiedAds.Arguments;
-using Marketplace.Domain.ClassifiedAds.DomainServices;
-using Marketplace.Domain.ClassifiedAds.ValueObjects;
 using Marketplace.Domain.Shared.ValueObjects;
 
 namespace Marketplace.Application.ClassifiedAds.CommandHandlers
 {
-	internal class UpdateClassifiedAdCommandHandler : ICommandHandler<UpdateClassifiedAdCommand>
+	internal class RemoveClassifiedAdCommandHandler : ICommandHandler<RemoveClassifiedAdCommand>
 	{
 		private readonly IAggregateStore _aggregateStore;
-		private readonly ICurrencyLookup _currencyLookup;
-		public UpdateClassifiedAdCommandHandler(IAggregateStore aggregateStore, ICurrencyLookup currencyLookup)
+		public RemoveClassifiedAdCommandHandler(IAggregateStore aggregateStore)
 		{
 			_aggregateStore = aggregateStore;
-			_currencyLookup = currencyLookup;
 		}
 
-		public async Task Handle(UpdateClassifiedAdCommand request, CancellationToken cancellationToken)
+		public async Task Handle(RemoveClassifiedAdCommand request, CancellationToken cancellationToken)
 		{
 			var classifiedAd = await _aggregateStore.Load<ClassifiedAd, ClassifiedAdId>(new ClassifiedAdId(request.Id));
-
+			
 			if (classifiedAd == null)
 			{
 				throw new InvalidOperationException($"Entity with id {request.Id} cannot be found");
@@ -33,9 +28,7 @@ namespace Marketplace.Application.ClassifiedAds.CommandHandlers
 				throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
 			}
 
-			classifiedAd.SetTitle(ClassifiedAdTitle.FromString(request.Title));
-			classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(request.Price, request.Currency, _currencyLookup)));
-			classifiedAd.UpdateText(ClassifiedAdText.FromString(request.Text));
+			classifiedAd.Remove();
 
 			await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);
 		}

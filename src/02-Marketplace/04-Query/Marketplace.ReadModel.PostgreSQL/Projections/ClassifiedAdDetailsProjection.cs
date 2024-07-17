@@ -60,6 +60,12 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 							x.SellersDisplayName = e.DisplayName;
 						}, version);
 					break;
+				case ClassifiedAdRemoved e:
+					UpdateItem(e.Id, ad =>
+					{
+						ad.IsDeleted = true;
+					}, version);
+					break;
 				default:
 					throw new NotImplementedException($"the following event is not implemented: {@event.ToString()}");
 			}

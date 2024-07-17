@@ -16,51 +16,36 @@ namespace Framework.Streaming.EventStore.Streaming
 			_client = client;
 		}
 
-		public async Task<bool> Exists<T, TId>(TId aggregateId)
+		public async Task<T> Load<T, TId>(TId aggregateId) where T : AggregateRoot<TId>
 		{
 			try
 			{
+				if (aggregateId == null)
+				{
+					throw new ArgumentNullException(nameof(aggregateId));
+				}
+
 				var stream = GetStreamName<T, TId>(aggregateId);
 
-				var events = _client.ReadStreamAsync(Direction.Backwards, stream, StreamPosition.End, maxCount: 1);
+				var aggregate = (T?)Activator.CreateInstance(typeof(T), true);
+
+				if (aggregate == null)
+				{
+					throw new ArgumentNullException(nameof(aggregate));
+				}
+
+				var events = _client.ReadStreamAsync(Direction.Forwards, stream, StreamPosition.Start);
 
 				object[] history = await ReadEventsAsync(events);
 
-				var latestEvent = history.FirstOrDefault();
+				aggregate.Load(history);
 
-				// TODO: check it's the remove event
-
-				return latestEvent != null;
+				return aggregate;
 			}
 			catch (StreamNotFoundException)
 			{
-				return false;
+				return null!;
 			}
-		}
-
-		public async Task<T> Load<T, TId>(TId aggregateId) where T : AggregateRoot<TId>
-		{
-			if (aggregateId == null)
-			{
-				throw new ArgumentNullException(nameof(aggregateId));
-			}
-
-			var stream = GetStreamName<T, TId>(aggregateId);
-
-			var aggregate = (T?)Activator.CreateInstance(typeof(T), true);
-
-			if (aggregate == null)
-			{
-				throw new ArgumentNullException(nameof(aggregate));
-			}
-
-			var events = _client.ReadStreamAsync(Direction.Forwards, stream, StreamPosition.Start);
-
-			object[] history = await ReadEventsAsync(events);
-
-			aggregate.Load(history);
-
-			return aggregate;
 		}
 
 		public async Task Save<T, TId>(T aggregate, CancellationToken cancellationToken = default) where T : AggregateRoot<TId>

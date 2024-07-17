@@ -24,6 +24,11 @@ internal class UpdateClassifiedAdTextCommandHandler : ICommandHandler<UpdateClas
 			throw new InvalidOperationException($"Entity with id {request.Id} cannot be found");
 		}
 
+		if (classifiedAd.IsDeleted == true)
+		{
+			throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
+		}
+
 		classifiedAd.UpdateText(ClassifiedAdText.FromString(request.Text));
 
 		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);

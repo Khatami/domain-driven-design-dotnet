@@ -25,9 +25,12 @@ namespace Marketplace.Application.UserProfiles.CommandHandlers
 				throw new InvalidOperationException($"Entity with id {request.UserId} cannot be found");
 			}
 
-			userProfile.Remove();
+			if (userProfile.IsDeleted)
+			{
+				throw new InvalidOperationException($"Entity with id {userProfile.Id} has been removed");
+			}
 
-			_userProfileRepository.Remove(userProfile);
+			userProfile.Remove();
 
 			await _unitOfWork.Commit(cancellationToken);
 		}

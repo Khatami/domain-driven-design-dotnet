@@ -3,7 +3,6 @@ using Framework.Application.Streaming;
 using Framework.Application.UnitOfWork;
 using Framework.Domain.Aggregation;
 using Framework.Domain.Comparison;
-using Framework.Domain.Events;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,24 +43,13 @@ namespace Framework.Persistence.EFCore
 			{
 				foreach (EntityEntry<AggregateRootBase>? entry in entries)
 				{
-					if (entry.State != EntityState.Deleted)
-					{
-						var originalEntity = await GetOriginalEntityAsync(entry);
+					var originalEntity = await GetOriginalEntityAsync(entry);
 
-						var checkEventStreaming = entry.Entity.CheckEventStreaming(originalEntity, _comparisonService);
+					var checkEventStreaming = entry.Entity.CheckEventStreaming(originalEntity, _comparisonService);
 
-						if (checkEventStreaming == false)
-						{
-							throw new ApplicationException($"The latest state of the entity [{entry.Entity.GetType()}, Id={entry.Entity.GetId()}] does not match the existing events");
-						}
-					}
-					else
+					if (checkEventStreaming == false)
 					{
-						if (entry.Entity.GetChanges()
-							.Any(current => current.GetType() == typeof(AggregationRemoved)) == false)
-						{
-							throw new ApplicationException($"For removing an aggregation, it is required to call Remove().");
-						}
+						throw new ApplicationException($"The latest state of the entity [{entry.Entity.GetType()}, Id={entry.Entity.GetId()}] does not match the existing events");
 					}
 
 					var version = entry.Entity.GetLatestVersion();

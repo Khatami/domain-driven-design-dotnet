@@ -26,6 +26,11 @@ internal class SnapshotClassifiedAdCommandHandler : ICommandHandler<SnapshotClas
 			throw new InvalidOperationException($"Entity with id {request.Id} cannot be found");
 		}
 
+		if (classifiedAd.IsDeleted == true)
+		{
+			throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
+		}
+
 		classifiedAd.Snapshot(_comparisonService);
 
 		await _aggregateStore.Save(classifiedAd, cancellationToken);

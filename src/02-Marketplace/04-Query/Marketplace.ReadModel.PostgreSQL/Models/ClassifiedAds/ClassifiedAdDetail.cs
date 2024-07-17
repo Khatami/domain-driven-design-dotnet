@@ -21,6 +21,8 @@ namespace Marketplace.ReadModel.PostgreSQL.Models.ClassifiedAds
 
 		public string[]? PhotoUrls { get; set; }
 
+		public bool IsDeleted { get; set; }
+
 		[ConcurrencyCheck]
         public long Version { get; set; }
     }

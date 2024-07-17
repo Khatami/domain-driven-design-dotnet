@@ -1,6 +1,5 @@
 ﻿using Framework.Domain.Aggregation.Exceptions;
 using Framework.Domain.Comparison;
-using Framework.Domain.Events;
 
 namespace Framework.Domain.Aggregation
 {
@@ -95,11 +94,5 @@ namespace Framework.Domain.Aggregation
 		}
 
 		public TId Id { get; protected set; }
-
-		public void Remove()
-		{
-			var id = GetId().ToString()!;
-			Apply(new AggregationRemoved(id));
-		}
 	}
 }

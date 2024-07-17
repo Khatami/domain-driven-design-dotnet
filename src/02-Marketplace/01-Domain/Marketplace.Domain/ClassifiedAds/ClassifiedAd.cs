@@ -64,6 +64,11 @@ namespace Marketplace.Domain.ClassifiedAds
 			));
 		}
 
+		public void Remove()
+		{
+			Apply(new ClassifiedAdRemoved(Id, DateTime.UtcNow));
+		}
+
 		public Guid ClassifiedAdId { get; private set; }
 
 		public UserProfileId OwnerId { get; private set; }
@@ -77,6 +82,10 @@ namespace Marketplace.Domain.ClassifiedAds
 		public ClassifiedAdState State { get; private set; }
 
 		public UserProfileId? ApprovedBy { get; private set; }
+
+		public bool IsDeleted { get; private set; }
+
+		public DateTimeOffset DeletedOn { get; private set; }
 
 		private List<Picture> _pictures = new();
 		public IReadOnlyList<Picture> Pictures
@@ -138,6 +147,11 @@ namespace Marketplace.Domain.ClassifiedAds
 					var newPicture = new Picture(Apply);
 					ApplyToEntity(newPicture, e);
 					_pictures.Add(newPicture);
+					break;
+
+				case ClassifiedAdRemoved e:
+					IsDeleted = true;
+					DeletedOn = e.DeletedOn;
 					break;
 
 				case ClassifiedAdSnapshotted_V1 e:

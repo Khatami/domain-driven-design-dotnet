@@ -24,6 +24,11 @@ internal class SetClassifiedAdTitleCommandHandler : ICommandHandler<SetClassifie
 			throw new InvalidOperationException($"Entity with id {request.Id} cannot be found");
 		}
 
+		if (classifiedAd.IsDeleted == true)
+		{
+			throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
+		}
+
 		classifiedAd.SetTitle(ClassifiedAdTitle.FromString(request.Title));
 
 		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);

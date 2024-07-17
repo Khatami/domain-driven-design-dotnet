@@ -19,19 +19,10 @@ namespace Marketplace.Persistence.MSSQL.UserProfiles
 			return _dbContext.UserProfiles.AddAsync(entity).AsTask();
 		}
 
-		public Task<bool> ExistsAsync(UserProfileId id)
-		{
-			return _dbContext.UserProfiles.AnyAsync(q => q.UserProfileId == id.Value);
-		}
-
 		public Task<UserProfile?> GetAsync(UserProfileId id)
 		{
-			return _dbContext.UserProfiles.FirstOrDefaultAsync(q => q.UserProfileId == id.Value);
-		}
-
-		public void Remove(UserProfile entity)
-		{
-			_dbContext.UserProfiles.Remove(entity);
+			return _dbContext.UserProfiles
+				.FirstOrDefaultAsync(q => q.UserProfileId == id.Value);
 		}
 	}
 }

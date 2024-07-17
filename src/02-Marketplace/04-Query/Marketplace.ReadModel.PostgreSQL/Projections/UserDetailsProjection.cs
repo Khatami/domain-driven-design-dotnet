@@ -1,5 +1,4 @@
-﻿using Framework.Domain.Events;
-using Framework.Query.Attributes;
+﻿using Framework.Query.Attributes;
 using Framework.Query.Streaming;
 using Marketplace.Domain.Events.UserProfiles;
 using Marketplace.ReadModel.PostgreSQL.Exceptions;
@@ -49,8 +48,8 @@ namespace Marketplace.ReadModel.PostgreSQL.Projections
 					UpdateItem(e.UserId, x => { }, version);
 					break;
 
-				case AggregationRemoved e:
-					UpdateItem(Guid.Parse(e.Id), x =>
+				case UserRemoved e:
+					UpdateItem(e.UserId, x =>
 					{
 						x.IsDeleted = true;
 					}, version);

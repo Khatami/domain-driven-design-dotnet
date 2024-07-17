@@ -31,6 +31,11 @@ internal class UpdateUserDisplayNameCommandHandler : ICommandHandler<UpdateUserD
 			throw new InvalidOperationException($"Entity with id {request.UserId} cannot be found");
 		}
 
+		if (userProfile.IsDeleted)
+		{
+			throw new InvalidOperationException($"Entity with id {userProfile.Id} has been removed");
+		}
+
 		userProfile.UpdateDisplayName(DisplayName.FromString(request.DisplayName, _checkText));
 
 		await _unitOfWork.Commit(cancellationToken);

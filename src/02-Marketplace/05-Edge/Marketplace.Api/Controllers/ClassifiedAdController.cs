@@ -69,6 +69,15 @@ public class ClassifiedAdController : Controller
 		return Ok();
 	}
 
+	[HttpDelete]
+	[Route("remove")]
+	public async Task<IActionResult> Remove(RemoveClassifiedAdCommand request, CancellationToken cancellationToken)
+	{
+		await _mediator.Send(request, cancellationToken);
+
+		return Ok();
+	}
+
 	[HttpPost]
 	[Route("snapshot")]
 	public async Task<IActionResult> Put(SnapshotClassifiedAdCommand request, CancellationToken cancellationToken)

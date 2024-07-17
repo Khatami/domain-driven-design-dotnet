@@ -29,6 +29,11 @@ internal class UpdateClassifiedAdPriceCommandHandler : ICommandHandler<UpdateCla
 			throw new InvalidOperationException($"Entity with id {request.Id} cannot be found");
 		}
 
+		if (classifiedAd.IsDeleted == true)
+		{
+			throw new InvalidOperationException($"Entity with id {request.Id} has been removed");
+		}
+
 		classifiedAd.UpdatePrice(Price.FromDecimal(new MoneyArguments(request.Price, request.Currency, _currencyLookup)));
 
 		await _aggregateStore.Save<ClassifiedAd, ClassifiedAdId>(classifiedAd, cancellationToken);

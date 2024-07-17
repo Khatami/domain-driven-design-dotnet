@@ -39,6 +39,11 @@ namespace Marketplace.Domain.UserProfiles
 			Apply(new ProfilePhotoUpdated(Id, photoUri.ToString()));
 		}
 
+		public void Remove()
+		{
+			Apply(new UserRemoved(UserProfileId, DateTime.UtcNow));
+		}
+
 		public Guid UserProfileId { get; private set; }
 
 		public FullName FullName { get; private set; }
@@ -46,6 +51,10 @@ namespace Marketplace.Domain.UserProfiles
 		public DisplayName DisplayName { get; private set; }
 
 		public string? PhotoUrl { get; private set; }
+
+		public bool IsDeleted { get; private set; }
+
+		public DateTimeOffset DeletedOn { get; private set; }
 
 		protected override void When(object @event)
 		{
@@ -68,6 +77,11 @@ namespace Marketplace.Domain.UserProfiles
 
 				case ProfilePhotoUpdated e:
 					PhotoUrl = e.PhotoUrl;
+					break;
+
+				case UserRemoved e:
+					IsDeleted = true;
+					DeletedOn = e.DeletedOn;
 					break;
 
 				case UserProfileSnapshotted_V1 e:
