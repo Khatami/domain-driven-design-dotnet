@@ -18,6 +18,7 @@ namespace Marketplace.Queries.ClassifiedAds
 		public async Task<List<ClassifiedAdItemResult>> Handle(GetPublishedAdsQueryFilter request, CancellationToken cancellationToken)
 		{
 			return await _databaseContext.ClassifiedAdDetails
+				.Where(current => current.IsDeleted == false)
 				.OrderBy(current => current.ClassifiedAdId)
 				.Skip((request.Page - 1) * request.PageSize)
 				.Take(request.PageSize)
