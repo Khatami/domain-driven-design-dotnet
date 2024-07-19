@@ -10,6 +10,7 @@ namespace Framework.Streaming.Kafka.Extensions
 		public static IServiceCollection AddKafkaStreamingServices(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddSingleton<IAggregateStore, AggregateStore>();
+			services.AddSingleton<KafkaSubscription>();
 
 			return services;
 		}

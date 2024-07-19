@@ -7,6 +7,7 @@ using Framework.Query.Streaming;
 using Framework.Streaming.EventStore.Extensions;
 using Framework.Streaming.EventStore.Streaming;
 using Framework.Streaming.Kafka.Extensions;
+using Framework.Streaming.Kafka.Streaming;
 using Marketplace.Api.Infrastructure;
 using Marketplace.Domain.ClassifiedAds.DomainServices;
 using Marketplace.Domain.UserProfiles.Delegates;
@@ -14,7 +15,6 @@ using Marketplace.Persistence.MSSQL;
 using Marketplace.Persistence.MSSQL.Extensions;
 using Marketplace.Persistence.RavenDB.Extensions;
 using Marketplace.ReadModel.PostgreSQL;
-using Marketplace.ReadModel.PostgreSQL.Extensions;
 using Raven.Client.Documents;
 using System.Reflection;
 
@@ -119,32 +119,32 @@ namespace Marketplace.Api.Extensions
 			{
 				case StreamingApproach.EventStore:
 					services.AddEventStoreStreamingServices(configuration);
-
-					builder.ConfigureContainer<ContainerBuilder>(builder =>
-					{
-						var types = new[]
-						{
-							typeof(IProjection),
-						};
-
-						List<Assembly> assemblies = new List<Assembly>();
-
-						assemblies.Add(typeof(ReadModel.PostgreSQL.AppInfo).Assembly);
-
-						foreach (var type in types)
-						{
-							builder
-								.RegisterAssemblyTypes(assemblies.ToArray())
-								.Where(current => current.IsAssignableTo(type))
-								.AsImplementedInterfaces()
-								.InstancePerLifetimeScope();
-						}
-					});
 					break;
 				case StreamingApproach.Kafka:
 					services.AddKafkaStreamingServices(configuration);
 					break;
 			}
+
+			builder.ConfigureContainer<ContainerBuilder>(builder =>
+			{
+				var types = new[]
+				{
+					typeof(IProjection),
+				};
+
+				List<Assembly> assemblies = new List<Assembly>();
+
+				assemblies.Add(typeof(ReadModel.PostgreSQL.AppInfo).Assembly);
+
+				foreach (var type in types)
+				{
+					builder
+						.RegisterAssemblyTypes(assemblies.ToArray())
+						.Where(current => current.IsAssignableTo(type))
+						.AsImplementedInterfaces()
+						.InstancePerLifetimeScope();
+				}
+			});
 		}
 
 		public static void EnsureDatabaseCreated(this IApplicationBuilder app, IConfiguration configuration)
@@ -169,9 +169,14 @@ namespace Marketplace.Api.Extensions
 				.GetSection("ServiceSettings")
 				.GetValue<StreamingApproach>("StreamingApproach");
 
-			if (streamingApproach == StreamingApproach.EventStore)
+			switch (streamingApproach)
 			{
-				await app.ApplicationServices.GetRequiredService<EventStorePersistenceSubscription>().StartAsync();
+				case StreamingApproach.EventStore:
+					await app.ApplicationServices.GetRequiredService<EventStorePersistenceSubscription>().StartAsync();
+					break;
+				case StreamingApproach.Kafka:
+					await app.ApplicationServices.GetRequiredService<KafkaSubscription>().StartAsync();
+					break;
 			}
 		}
 

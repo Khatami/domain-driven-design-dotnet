@@ -6,6 +6,7 @@ services:
     build:
       context: ../../.
       dockerfile: 02-Marketplace/05-Edge/Marketplace.Api/Dockerfile
+    user: root
 
   ravendb:
     image: ravendb/ravendb:6.0.2-ubuntu.22.04-x64

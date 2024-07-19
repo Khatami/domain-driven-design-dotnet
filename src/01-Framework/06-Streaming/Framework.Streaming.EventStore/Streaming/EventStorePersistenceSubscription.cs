@@ -1,30 +1,31 @@
 ﻿using EventStore.Client;
 using Framework.Application.BackgroundJob;
-using Framework.Application.Streaming;
 using Framework.Query.Attributes;
 using Framework.Query.Streaming;
 using Framework.Streaming.EventStore.Metadata;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using static Grpc.Core.Metadata;
 
 namespace Framework.Streaming.EventStore.Streaming
 {
 	public class EventStorePersistenceSubscription
 	{
-		private IProjection[] _projections;
 		private readonly EventStorePersistentSubscriptionsClient _client;
+		private readonly IProjection[] _projections;
 		private readonly IBackgroundJobService _backgroundJobService;
+		private readonly string _groupName;
 
-		private readonly string _groupName = "Marketplace";
 		public EventStorePersistenceSubscription(EventStorePersistentSubscriptionsClient client,
 			IProjection[] projections,
-			IBackgroundJobService backgroundJobService)
+			IBackgroundJobService backgroundJobService,
+			IConfiguration configuration)
 		{
 			_client = client;
 			_projections = projections;
 			_backgroundJobService = backgroundJobService;
+			_groupName = configuration.GetSection("ServiceSettings:ServiceName").Get<string>()!;
 		}
 
 		public async Task StartAsync()
