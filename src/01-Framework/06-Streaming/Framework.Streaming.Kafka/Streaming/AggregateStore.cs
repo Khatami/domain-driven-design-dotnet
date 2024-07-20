@@ -72,8 +72,6 @@ namespace Framework.Streaming.Kafka.Streaming
 			var topic = streamName.Split("-").First();
 			var id = streamName.Replace($"{streamName.Split("-").First()!}-", string.Empty);
 
-			await CreateTopicIfNotExists(topic);
-
 			using (var producer = new ProducerBuilder<string, string>(config).Build())
 			{
 				int index = 1;
@@ -94,36 +92,6 @@ namespace Framework.Streaming.Kafka.Streaming
 				}
 
 				producer.Flush();
-			}
-		}
-
-		private async Task CreateTopicIfNotExists(string topicName)
-		{
-			var adminConfig = new AdminClientConfig
-			{
-				BootstrapServers = _kafkaConnectionString
-			};
-
-			using (var adminClient = new AdminClientBuilder(adminConfig).Build())
-			{
-				// Check if topic exists
-				var metadata = adminClient.GetMetadata(TimeSpan.FromSeconds(10));
-				bool topicExists = metadata.Topics.Exists(t => t.Topic == topicName);
-
-				if (!topicExists)
-				{
-					// Create topic if it does not exist
-					int numPartitions = 1;
-					short replicationFactor = 1;
-					var topicSpec = new TopicSpecification
-					{
-						Name = topicName,
-						NumPartitions = numPartitions,
-						ReplicationFactor = replicationFactor
-					};
-
-					await adminClient.CreateTopicsAsync(new TopicSpecification[] { topicSpec });
-				}
 			}
 		}
 	}
