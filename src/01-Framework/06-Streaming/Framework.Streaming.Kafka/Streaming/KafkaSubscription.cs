@@ -41,16 +41,16 @@ namespace Framework.Streaming.Kafka.Streaming
 				streams.AddRange(streamingAttribute!.Streams);
 			}
 
-			using (var consumer = new ConsumerBuilder<Ignore, string>(_config).Build())
+			using (var consumer = new ConsumerBuilder<Ignore, string>(_config).Build())			
 			{
 				consumer.Subscribe(streams);
 
-				while(true)
-				{
-					var consumeResult = consumer.Consume();
+				//while(true)
+				//{
+					//var consumeResult = consumer.Consume();
 
 					//consumer.Commit(consumeResult);
-				}
+				//}
 			}
 		}
 	}
